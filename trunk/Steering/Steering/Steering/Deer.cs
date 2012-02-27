@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Steering.Collision;
 
 namespace Steering
-{
+{ //blah
     public class Deer : Entity
     {
         const float preySpeed = 0.5f;
