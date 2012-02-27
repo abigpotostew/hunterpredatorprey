@@ -13,11 +13,11 @@ namespace Steering
         const float preySpeed = 0.5f;
         const float maxAccelleration = 0.3f;
 
-        public Deer(Texture2D image, Vector2 position)
+         public Deer(Texture2D image, Vector2 position)
             : base(image, position, maxAccelleration, preySpeed)
         {
-            boundingCircle = new Collision.Circle(position.X, position.Y, 75);
-            debugCircle = new PrimitiveLine(position, Color.Pink);
+            //boundingCircle = new Collision.Circle(position.X, position.Y, 75);
+            //debugCircle = new PrimitiveLine(position, Color.Pink);
         }
 
          public override void Update(SteeringOutput steering, GameTime time)
