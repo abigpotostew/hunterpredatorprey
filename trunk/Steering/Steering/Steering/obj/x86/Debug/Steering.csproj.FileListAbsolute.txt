@@ -51,3 +51,15 @@ C:\Users\Stew\Desktop\Steering\Steering\Steering\bin\x86\Debug\Content\Grass002.
 C:\Users\Stew\Desktop\Steering\Steering\Steering\bin\x86\Debug\Content\Grass003.xnb
 C:\Users\Stew\Desktop\Steering\Steering\Steering\bin\x86\Debug\Content\whitepixel.xnb
 C:\Users\Stew\Desktop\Steering\Steering\Steering\bin\x86\Debug\Content\Font.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\jaguardot.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass001.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass002.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass003.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\whitepixel.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Font.xnb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Steering.exe
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Steering.pdb
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\obj\x86\Debug\Steering.exe
+C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\obj\x86\Debug\Steering.pdb
