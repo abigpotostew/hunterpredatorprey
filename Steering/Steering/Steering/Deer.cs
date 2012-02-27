@@ -12,6 +12,7 @@ namespace Steering
     {
         const float preySpeed = 0.5f;
         const float maxAccelleration = 0.3f;
+        float fear;
 
          public Deer(Texture2D image, Vector2 position)
             : base(image, position, maxAccelleration, preySpeed)
