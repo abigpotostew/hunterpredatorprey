@@ -33,7 +33,7 @@ namespace Steering.Steering
             {
                 Vector2 direction = target.Position - character.Position;
                 float distanceSquared = direction.LengthSquared();
-                if (distanceSquared < thresholdSquared && distanceSquared > 625 )
+                if (distanceSquared < thresholdSquared && distanceSquared > 1000 )
                 {
                     averagePosition += target.Position;
                     ++averageCt;
