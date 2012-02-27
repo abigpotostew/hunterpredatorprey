@@ -39,7 +39,7 @@ namespace Steering
         public static Rectangle bounds = new Rectangle(0,0,1024,768);
         public static KeyboardState keyboard;
         public static MouseState mouse;
-        ISteering face, arrive, velocityMatch, separation, separationFromHunter, lookWhereGoing, flee, cohesion;
+        ISteering face, arrive, averageVelocityMatch, separation, separationFromHunter, lookWhereGoing, flee, seek, cohesion;
         
         Texture2D jaguar;
 
@@ -90,12 +90,13 @@ namespace Steering
 
             face = new Face( 0.1F, 2, 0.1f);
             arrive = new Arrive(10, 100, 0.1f);
-            //velocityMatch = new VelocityMatch();
-            separation = new Separation(50);
+            averageVelocityMatch = new AverageVelocityMatch(100,0.1f);
+            separation = new Separation(100);
             separationFromHunter = new Separation(300);
             lookWhereGoing = new LookWhereYourGoing( 0.1f, 2, 0.1f);
             flee = new Flee(10, 10, 0.1f);
-            cohesion = new Cohesion(100);
+            cohesion = new Cohesion(100,10, 50, 0.1f);
+            seek = new Seek(10,50,0.1f);
             
         }
 
@@ -120,7 +121,7 @@ namespace Steering
                 Entity d = deers[i];
                 deers.Remove(d);
                 d.Update(separation.getSteering(d, deers) + lookWhereGoing.getSteering(d, guy) +
-                    separationFromHunter.getSteering(d, guy),gameTime);// + cohesion.getSteering(d,deers), gameTime);//+ cohesion.getSteering(d,deers)
+                    separationFromHunter.getSteering(d, guy) + cohesion.getSteering(d,deers) + averageVelocityMatch.getSteering(d,deers), gameTime);//+ cohesion.getSteering(d,deers)
                 deers.Insert(i,d);
             }
 

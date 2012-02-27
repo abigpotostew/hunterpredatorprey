@@ -16,7 +16,7 @@ namespace Steering.Steering
         float threshold, thresholdSquared;
 
         //higher decayCoefficient makes the entity separate faster
-        const float decayCoefficient = 5f;
+        const float decayCoefficient = 10f;
 
         public Separation( float threshold)
         {

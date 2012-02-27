@@ -5,15 +5,16 @@
 
 namespace Steering.Steering
 {
-    class VelocityMatch : ISteering
+    public class VelocityMatch : ISteering
     {
-        float timeToTarget = 0.1f;
+        float timeToTarget;
 
-        public VelocityMatch(Entity character, Entity target)
+        public VelocityMatch(float timeToTarget)
         {
+            this.timeToTarget = timeToTarget;
         }
 
-        public SteeringOutput getSteering(Entity character, Entity target)
+        public virtual SteeringOutput getSteering(Entity character, Entity target)
         {
             SteeringOutput steering = new SteeringOutput();
 
@@ -31,7 +32,7 @@ namespace Steering.Steering
         }
 
 
-        public SteeringOutput getSteering(Entity character, System.Collections.Generic.List<Entity> targets)
+        public virtual SteeringOutput getSteering(Entity character, System.Collections.Generic.List<Entity> targets)
         {
             throw new System.NotImplementedException();
         }

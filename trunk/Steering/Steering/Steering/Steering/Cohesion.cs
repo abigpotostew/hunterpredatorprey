@@ -6,46 +6,46 @@ using Microsoft.Xna.Framework;
 
 namespace Steering.Steering
 {
-    public class Cohesion : ISteering
+    public class Cohesion : Seek
     {
         float threshold, thresholdSquared;
-        Seek seek;
+        //Seek seek;
 
-        public Cohesion(float threshold)
+        public Cohesion(float cohesionThreshold, float targetRadius, float slowRadius, float timeToTarget)
+            : base ( targetRadius,slowRadius,timeToTarget)
         {
-            this.threshold = threshold;
+            this.threshold = cohesionThreshold;
             thresholdSquared = threshold * threshold;
-            seek = new Seek(10, 50, 0.1f);
+            //seek = new Seek(10, 50, 0.1f);
         }
 
-        public SteeringOutput getSteering(Entity character, List<Entity> targets)
+        public override SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
             //Console.Write(" yo ");
             //SteeringOutput steering = new SteeringOutput();
 
             Vector2 averagePosition = new Vector2();
-            int averageCt = 0;
+            averagePosition += character.Position;
+            int averageCt = 1;
 
             //loop through each target here
             foreach (Entity target in targets)
             {
                 Vector2 direction = target.Position - character.Position;
                 float distanceSquared = direction.LengthSquared();
-                if (distanceSquared < thresholdSquared)
+                if (distanceSquared < thresholdSquared && distanceSquared > 625 )
                 {
                     averagePosition += target.Position;
                     ++averageCt;
-
-                    //direction.Normalize();
-                    //steering.linear -= strength * direction;
                 }
             }
+
 
             averagePosition /= averageCt;
 
             Entity averageEntity = new Entity(averagePosition);
 
-            return seek.getSteering(character, averageEntity);
+            return base.getSteering(character, averageEntity);
 
 
             //steering.linear += averagePosition;
@@ -53,7 +53,7 @@ namespace Steering.Steering
             //return steering;
         }
 
-        public SteeringOutput getSteering(Entity character, Entity target)
+        public override SteeringOutput getSteering(Entity character, Entity target)
         {
             List<Entity> tempList = new List<Entity>();
             tempList.Add(target);
