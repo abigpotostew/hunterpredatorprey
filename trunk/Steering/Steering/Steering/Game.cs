@@ -120,8 +120,12 @@ namespace Steering
             {
                 Entity d = deers[i];
                 deers.Remove(d);
-                d.Update(separation.getSteering(d, deers) + lookWhereGoing.getSteering(d, guy) +
-                    separationFromHunter.getSteering(d, guy) + cohesion.getSteering(d,deers) + averageVelocityMatch.getSteering(d,deers), gameTime);//+ cohesion.getSteering(d,deers)
+                d.Update(separation.getSteering(d, deers) + 
+                         lookWhereGoing.getSteering(d, guy) +
+                         separationFromHunter.getSteering(d, guy)+
+                         cohesion.getSteering(d,deers) +
+                         averageVelocityMatch.getSteering(d,deers),
+                         gameTime);//+ cohesion.getSteering(d,deers)
                 deers.Insert(i,d);
             }
 

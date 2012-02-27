@@ -37,10 +37,10 @@ namespace Steering.Steering
             }
 
 
-            averageVelocity /= averageCt;
+            if ( averageCt > 0 ) averageVelocity /= averageCt;
 
             Entity averageEntity = new Entity();
-            averageEntity.Velocity = averageVelocity;
+            averageEntity.Velocity = averageVelocity - character.Velocity;
 
             return base.getSteering(character, averageEntity);
 
