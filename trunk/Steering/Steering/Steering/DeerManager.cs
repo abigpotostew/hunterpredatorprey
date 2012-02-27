@@ -29,7 +29,7 @@ namespace Steering
             separationFromHunter = new Separation(300);
             lookWhereGoing = new LookWhereYourGoing(0.1f, 2, 0.1f);
             flee = new Flee(10, 10, 0.1f);
-            cohesion = new Cohesion(100);
+            cohesion = new Cohesion(200, 10, 50 , .1f);
         }
 
         public Entity AddDeer(Entity d)
