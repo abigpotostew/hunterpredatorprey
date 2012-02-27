@@ -23,7 +23,7 @@ namespace Steering.FSM
                 states.Add(s);
             }
         }
-
+        //pass deer into everything
         public List<IAction> UpdateFSM()
         {
             Transition triggeredTransition = null;
