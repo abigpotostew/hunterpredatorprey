@@ -9,10 +9,13 @@ namespace Steering.FSM
     {
          List<IAction> actions, entryActions, exitActions;
          List<ITransition> transitions;
+         Deer deer;
+         Game game;
 
-
-         public State(IAction entryAction, IAction action, IAction exitAction)
+         public State(Game game, Deer deer, IAction entryAction, IAction action, IAction exitAction)
          {
+             this.game = game;
+             this.deer = deer;
              actions = new List<IAction>();
              entryActions = new List<IAction>(); 
              exitActions = new List<IAction>();

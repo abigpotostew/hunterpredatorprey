@@ -111,15 +111,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collision\PrimitiveLine.cs" />
+    <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
+    <Compile Include="FSM\Actions\WanderAction.cs" />
+    <Compile Include="FSM\Conditions\FearGreaterThan.cs" />
+    <Compile Include="FSM\Conditions\FearLessThan.cs" />
     <Compile Include="FSM\Conditions\ICondition.cs" />
+    <Compile Include="FSM\Conditions\ThreatLevel.cs" />
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="FSM\States\State.cs" />
     <Compile Include="FSM\Transitions\ITranstition.cs" />
     <Compile Include="FSM\Transitions\Transition.cs" />
     <Compile Include="Hunter.cs" />
     <Compile Include="Deer.cs" />
+    <Compile Include="Lion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />

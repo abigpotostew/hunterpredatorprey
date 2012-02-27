@@ -10,6 +10,16 @@ namespace Steering.FSM
         public List<IAction> actions;
         public State targetState;
         public ICondition condition;
+        Deer deer;
+        Game game;
+
+        public Transition(Game game, Deer deer, ICondition condition, State targetState)
+        {
+            this.game = game;
+            this.deer = deer;
+            this.condition = condition;
+            this.targetState = targetState;
+        }
 
         public bool isTriggered()
         {

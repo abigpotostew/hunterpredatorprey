@@ -31,23 +31,23 @@ namespace Steering
         SpriteBatch spriteBatch;
         SpriteFont Font;
 
-        Hunter guy;
+        public Hunter guy;
+        public Lion lion;
         //Deer deer;
-        List<Entity> deers;
+
         const int deerCt = 20;
+        DeerManager deerManager;
 
         public static Rectangle bounds = new Rectangle(0,0,1024,768);
         public static KeyboardState keyboard;
         public static MouseState mouse;
-        ISteering face, arrive, averageVelocityMatch, separation, separationFromHunter, lookWhereGoing, flee, seek, cohesion;
-        
+            
         Texture2D jaguar;
 
         public static Texture2D whitepixel;
 
         World gameWorld;
         Random r;
-
 
         public Game()
         {
@@ -61,6 +61,7 @@ namespace Steering
 
             gameWorld = new World(graphics);
 
+            deerManager = new DeerManager(this);
         }
 
         protected override void Initialize()
@@ -81,24 +82,16 @@ namespace Steering
             whitepixel = Content.Load<Texture2D>("whitepixel");
 
             guy = new Hunter(jaguar,new Vector2(200,200));
+            lion = new Lion(jaguar, new Vector2(400, 400));
             //deer = new Deer(jaguar, new Vector2(600,450));
-            deers = new List<Entity>();
+           
             for (int i = 0; i < deerCt; ++i)
             {
                 Deer deerTmp = new Deer(jaguar,new Vector2((float)r.NextDouble()*bounds.Width,(float)r.NextDouble()*bounds.Height));
-                deers.Add ((Entity)deerTmp);
+
+                deerManager.AddDeer(deerTmp);
             }
 
-            face = new Face( 0.1F, 2, 0.1f);
-            arrive = new Arrive(10, 100, 0.1f);
-            averageVelocityMatch = new AverageVelocityMatch(100,0.1f);
-            separation = new Separation(100);
-            separationFromHunter = new Separation(300);
-            lookWhereGoing = new LookWhereYourGoing( 0.1f, 2, 0.1f);
-            flee = new Flee(10, 10, 0.1f);
-            cohesion = new Cohesion(200,10, 50, 0.1f);
-            seek = new Seek(10,50,0.1f);
-            
         }
 
         protected override void UnloadContent()
@@ -116,20 +109,8 @@ namespace Steering
             mouse = Mouse.GetState();
 
             guy.Update(new SteeringOutput(), gameTime);
-            //deer.Update(flee.getSteering(deer,guy)+ lookWhereGoing.getSteering(deer,guy), gameTime);
-            for (int i = 0; i < deers.Count; ++i)
-            {
-                Entity d = deers[i];
-                deers.Remove(d);
-                d.Update(separation.getSteering(d, deers) + 
-                         lookWhereGoing.getSteering(d, guy) +
-                         separationFromHunter.getSteering(d, guy)+
-                         cohesion.getSteering(d,deers) +
-                         averageVelocityMatch.getSteering(d,deers),
-                         gameTime);//+ cohesion.getSteering(d,deers)
-                deers.Insert(i,d);
-            }
-
+            lion.Update(new SteeringOutput(), gameTime);
+            deerManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -147,13 +128,10 @@ namespace Steering
             spriteBatch.Begin();
             gameWorld.draw(spriteBatch);
 
+            lion.Draw(gameTime, spriteBatch);
             guy.Draw(gameTime, spriteBatch);
             //deer.Draw(gameTime, spriteBatch);
-
-            foreach (Entity d in deers)
-            {
-                d.Draw(gameTime, spriteBatch);
-            }
+            deerManager.Draw(gameTime, spriteBatch);
 
 
             spriteBatch.DrawString(Font, "Use WASD to move & Q and E to rotate", Vector2.Zero, Color.Black);
