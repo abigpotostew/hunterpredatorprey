@@ -17,13 +17,13 @@ namespace Steering.Steering
             this.timeToTarget = timeToTarget;
         }
 
-        public SteeringOutput getSteering(Entity character, Entity target)
+        public virtual SteeringOutput getSteering(Entity character, Entity target)
         {
             SteeringOutput steering = new SteeringOutput();
             float targetSpeed;
             Vector2 targetVelocity;
 
-            Vector2 direction = character.Position - target.Position;
+            Vector2 direction = target.Position - character.Position;
             //Vector2 direction = character.Position - target.Position;
             float distance = direction.Length();
 
@@ -61,7 +61,7 @@ namespace Steering.Steering
         }
 
 
-        public SteeringOutput getSteering(Entity character, List<Entity> targets)
+        public virtual SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
             throw new NotImplementedException();
         }

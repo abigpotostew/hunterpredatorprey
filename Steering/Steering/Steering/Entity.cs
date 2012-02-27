@@ -27,7 +27,7 @@ namespace Steering
         public Vector2 Position { get { return position; } }
         public float MaxSpeed { get { return maxSpeed; } }
         public float MaxAcceleration { get { return maxAcceleration; } }
-        public Vector2 Velocity { get { return velocity; } }
+        public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
         public float MaxAngularAcceleration { get { return maxAngularAcceleration; } }
         public float MaxRotation { get { return maxRotation; } }
         public float Orientation { get { return orientation; } set { orientation = value; } }
@@ -36,7 +36,7 @@ namespace Steering
         public Entity(Texture2D image, Vector2 position, float maxAcc, float maxSpe)
         {
             boundingCircle = new Circle(position.X, position.Y, 50);
-            debugCircle = new PrimitiveLine(position, Color.Bisque);
+            debugCircle = new PrimitiveLine(position, Color.Tomato);
             debugCircle.CreateCircle(50, 20);
 
             velocity = new Vector2();
