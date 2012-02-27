@@ -42,6 +42,7 @@ namespace Steering.Steering
                     float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
 
                     direction.Normalize();
+                    direction *= 5f;
                     steering.linear -= strength * direction;
                 }
             }
