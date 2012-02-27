@@ -66,6 +66,6 @@ namespace Steering
             {
                 d.Draw(gameTime, sb);
             }
-    }
         }
+    }
 }
