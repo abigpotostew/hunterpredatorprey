@@ -14,7 +14,7 @@ namespace Steering
         protected Vector2 position, velocity;
         //rotation is changed by steering, orientation is actual direction this entity is facing.
         public float rotation, orientation;
-        protected float maxAcceleration, maxSpeed, maxAngularAcceleration, maxRotation;
+        protected float maxAcceleration, maxSpeed, maxSpeedSq, maxAngularAcceleration, maxRotation;
         protected Texture2D image;
         //an entity is drawn in the center of it image
         protected Vector2 offsetToCenter;
@@ -33,6 +33,7 @@ namespace Steering
         public float Orientation { get { return orientation; } set { orientation = value; } }
         public float Rotation { get { return rotation; } set { rotation = value; } }
 
+        #region Constructors
         public Entity(Texture2D image, Vector2 position, float maxAcc, float maxSpe)
         {
             boundingCircle = new Circle(position.X, position.Y, 50);
@@ -51,6 +52,8 @@ namespace Steering
             //for now, make max angular rotation and rotation statndard
             this.maxRotation = 0.2f;
             this.maxAngularAcceleration = 1;
+
+            maxSpeedSq = maxSpeed * maxSpeed;
         }
 
         public Entity(Vector2 position)
@@ -58,7 +61,7 @@ namespace Steering
             image = null;
             this.position = position;
             offsetToCenter = Vector2.Zero;
-            maxAcceleration = maxSpeed = rotation =
+            maxAcceleration = maxSpeed = maxSpeedSq = rotation =
                 orientation = maxRotation = maxAngularAcceleration = 0;
         }
 
@@ -66,9 +69,10 @@ namespace Steering
         {
             image = null;
             position = offsetToCenter = Vector2.Zero;
-            maxAcceleration = maxSpeed = rotation =
+            maxAcceleration = maxSpeed = maxSpeedSq = rotation =
                 orientation = maxRotation = maxAngularAcceleration = 0;
         }
+        #endregion
 
         public virtual void Update(SteeringOutput steering, GameTime time)
         {
@@ -77,6 +81,12 @@ namespace Steering
 
             velocity += steering.linear;
             orientation += steering.angular;
+
+            if (velocity.LengthSquared() > maxSpeedSq)
+            {
+                velocity.Normalize();
+                velocity *= maxSpeed;
+            }
 
             boundingCircle.position = position;
             debugCircle.Position = position;

@@ -11,17 +11,17 @@ namespace Steering
 { 
     public class Deer : Entity
     {
-        const float preySpeed = 0.5f;
+        const float maxDeerSpeed = 3f;
         const float maxAccelleration = 0.3f;
         public float fear;
 
         //FiniteStateMachine fsm = new FiniteStateMachine();
 
          public Deer(Texture2D image, Vector2 position)
-            : base(image, position, maxAccelleration, preySpeed)
+            : base(image, position, maxAccelleration, maxDeerSpeed)
         {
-            boundingCircle = new Collision.Circle(position.X, position.Y, 75);
-            debugCircle = new PrimitiveLine(position, Color.Pink);
+            //boundingCircle = new Collision.Circle(position.X, position.Y, 75);
+            //debugCircle = new PrimitiveLine(position, Color.Pink);
         }
 
          public override void Update(SteeringOutput steering, GameTime time)
