@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Steering
 {
-    public class Hunter : Entity
+    public class Lion : Entity
     {
+
         //private KeyboardState keyboard;
         //private MouseState mouse;
         public float threat;
 
-        public Hunter(Texture2D image, Vector2 position)
+        public Lion(Texture2D image, Vector2 position)
             : base(image, position, 1, 4)
         {
             //orientation
@@ -27,22 +28,22 @@ namespace Steering
 
             bool keyPressed = false;
 
-            if (Game.keyboard.IsKeyDown(Keys.A))
+            if (Game.keyboard.IsKeyDown(Keys.Left))
             {
                 velocity.X -= maxAcceleration;
                 keyPressed = true;
             }
-            if (Game.keyboard.IsKeyDown(Keys.D))
+            if (Game.keyboard.IsKeyDown(Keys.Right))
             {
                 velocity.X += maxAcceleration;
                 keyPressed = true;
             }
-            if (Game.keyboard.IsKeyDown(Keys.W))
+            if (Game.keyboard.IsKeyDown(Keys.Up))
             {
                 velocity.Y -= maxAcceleration;
                 keyPressed = true;
             }
-            if (Game.keyboard.IsKeyDown(Keys.S))
+            if (Game.keyboard.IsKeyDown(Keys.Down))
             {
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
@@ -64,5 +65,6 @@ namespace Steering
 
             base.Update(steering, time);
         }
+        
     }
 }

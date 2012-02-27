@@ -10,9 +10,13 @@ namespace Steering.FSM
         List<State> states;
         State initalState;
         State currentState;
+        Deer deer;
+        Game game;
 
-        public FiniteStateMachine(State intialS, params State[] state)
+        public FiniteStateMachine(Game game, Deer deer, State intialS, params State[] state)
         {
+            this.game = game;
+            this.deer = deer;
             this.initalState = intialS;
             currentState = this.initalState;
             states = new List<State>();
@@ -23,6 +27,7 @@ namespace Steering.FSM
                 states.Add(s);
             }
         }
+        
         //pass deer into everything
         public List<IAction> UpdateFSM()
         {
