@@ -113,7 +113,6 @@
     <Compile Include="Collision\PrimitiveLine.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
-    <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\ICondition.cs" />
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="FSM\States\State.cs" />
@@ -128,11 +127,11 @@
     <Compile Include="Steering\Align.cs" />
     <Compile Include="Steering\Arrive.cs" />
     <Compile Include="Steering\Cohesion.cs" />
+    <Compile Include="Steering\Seek.cs" />
     <Compile Include="Steering\Flee.cs" />
     <Compile Include="Steering\Face.cs" />
     <Compile Include="Steering\ISteering.cs" />
     <Compile Include="Steering\LookWhereYourGoing.cs" />
-    <Compile Include="Steering\Seek.cs" />
     <Compile Include="Steering\Separation.cs" />
     <Compile Include="Steering\VelocityMatch.cs" />
     <Compile Include="World.cs" />
