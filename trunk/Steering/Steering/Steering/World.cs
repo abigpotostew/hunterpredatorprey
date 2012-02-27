@@ -24,9 +24,8 @@ namespace Steering
 
         public World(GraphicsDeviceManager graphics)
         {
-            x_dim = graphics.PreferredBackBufferWidth / 50;
-            x_dim++;
-            y_dim = graphics.PreferredBackBufferHeight / 50;
+            x_dim = (graphics.PreferredBackBufferWidth / 50) + 1;
+            y_dim = (graphics.PreferredBackBufferHeight / 50) + 1;
             int temp = 0;
 
             textures = new int[x_dim, y_dim];
@@ -67,6 +66,7 @@ namespace Steering
                         case 1: toDraw = tile1; break;
                         case 2: toDraw = tile2; break;
                         case 3: toDraw = tile3; break;
+                        default: toDraw = tile2; break;
                     }
 
                     if (toDraw != null)
