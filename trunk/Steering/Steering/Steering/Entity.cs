@@ -42,7 +42,7 @@ namespace Steering
         public Entity(Texture2D image, Vector2 position, float maxAcc, float maxSpe)
         {
             boundingCircle = new Circle(position.X, position.Y, 50);
-            debugCircle = new PrimitiveLine(position, Color.Black);
+            debugCircle = new PrimitiveLine(position, Color.White);
             debugCircle.CreateCircle(50, 20);
 
             velocity = new Vector2();
@@ -116,7 +116,7 @@ namespace Steering
         public virtual void Draw(GameTime time, SpriteBatch sb)
         {
             if (isColliding) debugCircle.Colour = Color.Tomato;
-            else debugCircle.Colour = Color.Black;
+            else debugCircle.Colour = Color.White;
             debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
