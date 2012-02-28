@@ -88,7 +88,6 @@ namespace Steering
             for (int i = 0; i < deerCt; ++i)
             {
                 Deer deerTmp = new Deer(jaguar,new Vector2((float)r.NextDouble()*bounds.Width,(float)r.NextDouble()*bounds.Height));
-
                 deerManager.AddDeer(deerTmp);
             }
 
@@ -130,7 +129,6 @@ namespace Steering
 
             lion.Draw(gameTime, spriteBatch);
             guy.Draw(gameTime, spriteBatch);
-            //deer.Draw(gameTime, spriteBatch);
             deerManager.Draw(gameTime, spriteBatch);
 
 

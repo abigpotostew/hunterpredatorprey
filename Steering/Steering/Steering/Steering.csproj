@@ -132,7 +132,6 @@
     <Compile Include="SteeringOutput.cs" />
     <Compile Include="Steering\Align.cs" />
     <Compile Include="Steering\Arrive.cs" />
-    <Compile Include="Steering\AverageVelocityMatch.cs" />
     <Compile Include="Steering\Cohesion.cs" />
     <Compile Include="Steering\Seek.cs" />
     <Compile Include="Steering\Flee.cs" />

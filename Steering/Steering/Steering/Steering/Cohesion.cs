@@ -31,21 +31,24 @@ namespace Steering.Steering
             //loop through each target here
             foreach (Entity target in targets)
             {
-                Vector2 direction = target.Position - character.Position;
-                float distanceSquared = direction.LengthSquared();
-                if (distanceSquared < thresholdSquared && distanceSquared > 1000 )
-                {
+                //Vector2 direction = target.Position - character.Position;
+                //float distanceSquared = direction.LengthSquared();
+                //if (distanceSquared < thresholdSquared && distanceSquared > 1000 )
+                //{
                     averagePosition += target.Position;
                     ++averageCt;
-                }
+                //}
             }
 
+            if (averageCt > 1)
+            {
+                averagePosition /= averageCt;
 
-            averagePosition /= averageCt;
+                Entity averageEntity = new Entity(averagePosition);
 
-            Entity averageEntity = new Entity(averagePosition);
-
-            return base.getSteering(character, averageEntity);
+                return base.getSteering(character, averageEntity);
+            }
+            else return new SteeringOutput();
 
 
             //steering.linear += averagePosition;

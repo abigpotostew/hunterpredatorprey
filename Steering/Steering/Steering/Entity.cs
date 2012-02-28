@@ -21,8 +21,12 @@ namespace Steering
         //private SteeringOutput prevSteering = new SteeringOutput();
 
         public Circle boundingCircle;
-        protected PrimitiveLine debugCircle;
+        public PrimitiveLine debugCircle;
 
+        public List<Entity> neighbors;
+        public bool isColliding = false;
+
+        #region Properties
         public Texture2D Image { get { return image; } set { image = value; } }
         public Vector2 Position { get { return position; } }
         public float MaxSpeed { get { return maxSpeed; } }
@@ -32,12 +36,13 @@ namespace Steering
         public float MaxRotation { get { return maxRotation; } }
         public float Orientation { get { return orientation; } set { orientation = value; } }
         public float Rotation { get { return rotation; } set { rotation = value; } }
+        #endregion
 
         #region Constructors
         public Entity(Texture2D image, Vector2 position, float maxAcc, float maxSpe)
         {
             boundingCircle = new Circle(position.X, position.Y, 50);
-            debugCircle = new PrimitiveLine(position, Color.Tomato);
+            debugCircle = new PrimitiveLine(position, Color.Black);
             debugCircle.CreateCircle(50, 20);
 
             velocity = new Vector2();
@@ -54,6 +59,8 @@ namespace Steering
             this.maxAngularAcceleration = 1;
 
             maxSpeedSq = maxSpeed * maxSpeed;
+
+            neighbors = new List<Entity>();
         }
 
         public Entity(Vector2 position)
@@ -63,6 +70,7 @@ namespace Steering
             offsetToCenter = Vector2.Zero;
             maxAcceleration = maxSpeed = maxSpeedSq = rotation =
                 orientation = maxRotation = maxAngularAcceleration = 0;
+
         }
 
         public Entity()
@@ -107,9 +115,16 @@ namespace Steering
 
         public virtual void Draw(GameTime time, SpriteBatch sb)
         {
+            if (isColliding) debugCircle.Colour = Color.Tomato;
+            else debugCircle.Colour = Color.Black;
             debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
         }
+
+        /*public bool isColliding(Entity other)
+        {
+            return ( this.boundingCircle.Intersects(other.boundingCircle) );
+        }*/
     }
 }
