@@ -24,7 +24,8 @@ namespace Steering
 
             face = new Face(0.1F, 2, 0.1f);
             arrive = new Arrive(10, 100, 0.1f);
-            averageVelocityMatch = new AverageVelocityMatch(100, 0.1f);
+            //averageVelocityMatch = new AverageVelocityMatch(100, 0.1f);
+            velocityMatch = new VelocityMatch(0.1f);
             separation = new Separation(100);
             separationFromHunter = new Separation(300);
             lookWhereGoing = new LookWhereYourGoing(0.1f, 2, 0.1f);
@@ -42,20 +43,57 @@ namespace Steering
             return d;
         }
 
-        public void Update(GameTime gameTime)
+        void UpdateDeerNeighbors()
         {
+            for ( int i = 0; i < deers.Count; ++i)
+            {
+                deers[i].isColliding = false;
+                if (deers[i].neighbors.Count > 0) deers[i].neighbors.Clear();
+            }
 
             for (int i = 0; i < deers.Count; ++i)
             {
-                Entity d = deers[i];
-                deers.Remove(d);
-                d.Update(separation.getSteering(d, deers) +
-                         lookWhereGoing.getSteering(d, game.guy) +
+                //Deer iDeer = (Deer)deers[i];
+                for (int j = 0; j < deers.Count; ++j)
+                {
+                    if (i != j && (deers[i].Position - deers[i].Position).LengthSquared() < 2500)//deers[i].isColliding(deers[j])
+                    {
+                        deers[i].isColliding = deers[j].isColliding = true;
+                        //deers[i].debugCircle.Colour = Color.Tomato;
+                        //deers[j].debugCircle.Colour = Color.Tomato;
+                        deers[i].neighbors.Add(deers[j]);
+                    }
+                }
+            }
+
+            /*foreach (Deer deer in deers)
+            {
+                foreach (Deer subDeer in deers)
+                {
+                    if (!deer.Equals(subDeer) && deer.isColliding(subDeer))
+                    {
+                        deer.debugCircle.Colour = Color.Tomato;
+                        deer.neighbors.Add(subDeer);
+                    }
+                }
+            }*/
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            UpdateDeerNeighbors();
+
+            for (int i = 0; i < deers.Count; ++i)
+            {
+                Deer d = (Deer)deers[i];
+                //deers.Remove(d);
+                d.Update(separation.getSteering(d, d.neighbors) +
+                         lookWhereGoing.getSteering(d, d) +
                          separationFromHunter.getSteering(d, game.guy) +
-                         cohesion.getSteering(d, deers) +
-                         averageVelocityMatch.getSteering(d, deers),
+                         cohesion.getSteering(d, d.neighbors) +
+                         velocityMatch.getSteering(d, d.neighbors),
                          gameTime);//+ cohesion.getSteering(d,deers)
-                deers.Insert(i, d);
+                //deers.Insert(i, d);
             }
         }
 

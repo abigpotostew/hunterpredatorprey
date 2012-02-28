@@ -75,7 +75,7 @@ namespace Steering.Collision
 
         public bool Intersects(Circle shape)
         {
-            this.distanceSquared = (shape.Center.X - Center.X) * (shape.Center.X - Center.X) + (shape.Center.Y - Center.Y) * (shape.Center.Y - Center.Y);
+            distanceSquared = (shape.Center.X - Center.X) * (shape.Center.X - Center.X) + (shape.Center.Y - Center.Y) * (shape.Center.Y - Center.Y);
             return ((distanceSquared > 0) && (distanceSquared < (Radius + shape.Radius) * (Radius + shape.Radius)));
             
         }

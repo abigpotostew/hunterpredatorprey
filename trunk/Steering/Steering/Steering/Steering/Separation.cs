@@ -20,9 +20,6 @@ namespace Steering.Steering
 
         public Separation( float threshold)
         {
-            //this.character = character;
-            //this.targets = targets;
-            //this.target = target;
             this.threshold = threshold;
             thresholdSquared = threshold * threshold;
         }
@@ -37,28 +34,17 @@ namespace Steering.Steering
             {
                 Vector2 direction = target.Position - character.Position;
                 float distanceSquared = direction.LengthSquared();
-                if (distanceSquared < thresholdSquared)
-                {
+                //if (distanceSquared < thresholdSquared)
+                //{
                     float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
 
                     direction.Normalize();
                     direction *= 5f;
                     steering.linear -= strength * direction;
-                }
+                //}
             }
             return steering;
         }
-
-        /*public Entity Target
-        {
-            get;// { return target; }
-            set;
-        }
-
-        public Entity Character
-        {
-            get { return character; }
-        }*/
 
         public SteeringOutput getSteering(Entity character, Entity target)
         {
