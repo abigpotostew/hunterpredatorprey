@@ -11,7 +11,7 @@ namespace Steering
 { 
     public class Deer : Entity
     {
-        const float maxDeerSpeed = 3f;
+        const float maxDeerSpeed = 2f;
         const float maxAccelleration = 0.3f;
 
         public float fear;

@@ -56,27 +56,13 @@ namespace Steering
                 //Deer iDeer = (Deer)deers[i];
                 for (int j = 0; j < deers.Count; ++j)
                 {
-                    if (i != j && (deers[i].Position - deers[i].Position).LengthSquared() < 2500)//deers[i].isColliding(deers[j])
+                    if (i != j && (deers[i].Position - deers[j].Position).LengthSquared() < 10000)
                     {
                         deers[i].isColliding = deers[j].isColliding = true;
-                        //deers[i].debugCircle.Colour = Color.Tomato;
-                        //deers[j].debugCircle.Colour = Color.Tomato;
                         deers[i].neighbors.Add(deers[j]);
                     }
                 }
             }
-
-            /*foreach (Deer deer in deers)
-            {
-                foreach (Deer subDeer in deers)
-                {
-                    if (!deer.Equals(subDeer) && deer.isColliding(subDeer))
-                    {
-                        deer.debugCircle.Colour = Color.Tomato;
-                        deer.neighbors.Add(subDeer);
-                    }
-                }
-            }*/
         }
 
         public void Update(GameTime gameTime)
@@ -86,14 +72,12 @@ namespace Steering
             for (int i = 0; i < deers.Count; ++i)
             {
                 Deer d = (Deer)deers[i];
-                //deers.Remove(d);
                 d.Update(separation.getSteering(d, d.neighbors) +
                          lookWhereGoing.getSteering(d, d) +
                          separationFromHunter.getSteering(d, game.guy) +
                          cohesion.getSteering(d, d.neighbors) +
                          velocityMatch.getSteering(d, d.neighbors),
                          gameTime);//+ cohesion.getSteering(d,deers)
-                //deers.Insert(i, d);
             }
         }
 
