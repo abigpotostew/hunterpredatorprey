@@ -65,5 +65,10 @@ namespace Steering.Steering
         {
             throw new NotImplementedException();
         }
+
+        public SteeringOutput getSteering(Entity character)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

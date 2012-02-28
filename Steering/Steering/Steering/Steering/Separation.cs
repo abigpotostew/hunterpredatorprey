@@ -8,10 +8,6 @@ namespace Steering.Steering
 {
     public class Separation : ISteering
     {
-        //target should be a list of targets for the future
-        //Entity character;
-        //List<Entity> targets;
-        //Entity target;
 
         float threshold, thresholdSquared;
 
@@ -51,6 +47,11 @@ namespace Steering.Steering
             List<Entity> tempList = new List<Entity>();
             tempList.Add(target);
             return this.getSteering(character, tempList);
+        }
+
+        public SteeringOutput getSteering(Entity character)
+        {
+            throw new NotImplementedException();
         }
     }
 }

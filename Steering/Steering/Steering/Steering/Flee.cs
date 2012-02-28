@@ -15,9 +15,6 @@ namespace Steering.Steering
             this.slowRadius = slowRadius;
             this.targetRadius = targetRadius;
             this.timeToTarget = timeToTarget;
-
-            //this.Character = character;
-            //this.Target = target;
         }
 
         public SteeringOutput getSteering(Entity character, Entity target)
@@ -65,6 +62,11 @@ namespace Steering.Steering
 
 
         public SteeringOutput getSteering(Entity character, List<Entity> targets)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SteeringOutput getSteering(Entity character)
         {
             throw new NotImplementedException();
         }
