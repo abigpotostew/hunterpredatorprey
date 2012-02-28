@@ -12,7 +12,9 @@ namespace Steering
     {
         List<Entity> deers, deerRemoval;
         int deerCount;
-        ISteering face, arrive, velocityMatch, separation, separationFromHunter, lookWhereGoing, flee, cohesion, averageVelocityMatch, seek;
+        public ISteering face, arrive, velocityMatch, separation, separationFromHunter,
+            lookWhereGoing, flee, cohesion, averageVelocityMatch, seek,
+            wander;
         Game game;
 
         public DeerManager(Game game)
@@ -22,7 +24,7 @@ namespace Steering
             deerCount = 0;
             this.game = game;
 
-            face = new Face(0.1F, 2, 0.1f);
+            face = new Face(0.1f, 2, 0.1f);
             arrive = new Arrive(10, 100, 0.1f);
             //averageVelocityMatch = new AverageVelocityMatch(100, 0.1f);
             velocityMatch = new VelocityMatch(0.1f);
@@ -32,7 +34,7 @@ namespace Steering
             flee = new Flee(10, 10, 0.1f);
             cohesion = new Cohesion(50, 10, 50, 0.1f);
             seek = new Seek(10, 50, 0.1f);
-
+            wander = new Wander(50, 10, 0.5f, 0.1f, 2, 0.1f);
 
         }
 
@@ -73,11 +75,14 @@ namespace Steering
             {
                 Deer d = (Deer)deers[i];
                 d.Update(separation.getSteering(d, d.neighbors) +
-                         lookWhereGoing.getSteering(d, d) +
+                         lookWhereGoing.getSteering(d) +
                          separationFromHunter.getSteering(d, game.guy) +
                          cohesion.getSteering(d, d.neighbors) +
                          velocityMatch.getSteering(d, d.neighbors),
-                         gameTime);//+ cohesion.getSteering(d,deers)
+                         //wander.getSteering(d),
+                         //separation.getSteering(d,d.neighbors)+
+                         //seek.getSteering(d,game.guy),
+                         gameTime);
             }
         }
 

@@ -14,11 +14,10 @@ namespace Steering
         protected Vector2 position, velocity;
         //rotation is changed by steering, orientation is actual direction this entity is facing.
         public float rotation, orientation;
-        protected float maxAcceleration, maxSpeed, maxSpeedSq, maxAngularAcceleration, maxRotation;
+        protected float maxAcceleration, maxSpeed, maxSpeedSq, maxAngularAcceleration, maxRotation, wanderOrientation, wanderSpeed;
         protected Texture2D image;
         //an entity is drawn in the center of it image
         protected Vector2 offsetToCenter;
-        //private SteeringOutput prevSteering = new SteeringOutput();
 
         public Circle boundingCircle;
         public PrimitiveLine debugCircle;
@@ -36,6 +35,8 @@ namespace Steering
         public float MaxRotation { get { return maxRotation; } }
         public float Orientation { get { return orientation; } set { orientation = value; } }
         public float Rotation { get { return rotation; } set { rotation = value; } }
+        public float WanderOrientation { get { return wanderOrientation; } set { wanderOrientation = value; } }
+        public float WanderSpeed { get { return wanderSpeed; } set { wanderSpeed = value; } }
         #endregion
 
         #region Constructors
@@ -51,7 +52,7 @@ namespace Steering
             this.position = position;
             this.maxAcceleration = maxAcc;
             this.maxSpeed = maxSpe;
-            rotation = orientation = 0;
+            rotation = orientation =  wanderOrientation = 0;
             offsetToCenter = new Vector2(image.Width/2, image.Height/2);
 
             //for now, make max angular rotation and rotation statndard
@@ -61,6 +62,8 @@ namespace Steering
             maxSpeedSq = maxSpeed * maxSpeed;
 
             neighbors = new List<Entity>();
+
+            wanderSpeed = 0.1f;
         }
 
         public Entity(Vector2 position)
@@ -69,7 +72,7 @@ namespace Steering
             this.position = position;
             offsetToCenter = Vector2.Zero;
             maxAcceleration = maxSpeed = maxSpeedSq = rotation =
-                orientation = maxRotation = maxAngularAcceleration = 0;
+                orientation = maxRotation = maxAngularAcceleration =  wanderOrientation = 0;
 
         }
 
@@ -78,7 +81,7 @@ namespace Steering
             image = null;
             position = offsetToCenter = Vector2.Zero;
             maxAcceleration = maxSpeed = maxSpeedSq = rotation =
-                orientation = maxRotation = maxAngularAcceleration = 0;
+                orientation = maxRotation = maxAngularAcceleration = wanderOrientation = 0;
         }
         #endregion
 
@@ -109,7 +112,7 @@ namespace Steering
                 position.Y = Game.bounds.Height;
 
             //decay rotation and velocity
-            rotation *= 0.97f;
+            //rotation *= 0.97f;
             //velocity *= 0.99f;
         }
 

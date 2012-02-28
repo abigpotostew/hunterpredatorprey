@@ -60,5 +60,10 @@ namespace Steering.Steering
 
             return this.getSteering(character, averageEntity);
         }
+
+        public SteeringOutput getSteering(Entity character)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

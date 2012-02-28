@@ -17,7 +17,7 @@ namespace Steering.Steering
             //this.Target = target;
         }
 
-        public override SteeringOutput getSteering(Entity character, Entity target)
+        public override SteeringOutput getSteering(Entity character)
         {
             if (character.Velocity.Length() == 0)
             {

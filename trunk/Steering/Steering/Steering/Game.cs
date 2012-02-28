@@ -43,6 +43,7 @@ namespace Steering
         public static MouseState mouse;
             
         Texture2D jaguar;
+        Texture2D hunter;
 
         public static Texture2D whitepixel;
 
@@ -80,8 +81,9 @@ namespace Steering
             gameWorld.loadTiles(this);
             jaguar = Content.Load<Texture2D>("jaguardot");
             whitepixel = Content.Load<Texture2D>("whitepixel");
+            hunter = Content.Load<Texture2D>("hunter");
 
-            guy = new Hunter(jaguar,new Vector2(200,200));
+            guy = new Hunter(hunter,new Vector2(200,200));
             lion = new Lion(jaguar, new Vector2(400, 400));
             //deer = new Deer(jaguar, new Vector2(600,450));
            
@@ -107,7 +109,7 @@ namespace Steering
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            guy.Update(new SteeringOutput(), gameTime);
+            guy.Update(deerManager.lookWhereGoing.getSteering(guy), gameTime);
             lion.Update(new SteeringOutput(), gameTime);
             deerManager.Update(gameTime);
             base.Update(gameTime);

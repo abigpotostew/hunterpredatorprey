@@ -140,6 +140,7 @@
     <Compile Include="Steering\LookWhereYourGoing.cs" />
     <Compile Include="Steering\Separation.cs" />
     <Compile Include="Steering\VelocityMatch.cs" />
+    <Compile Include="Steering\Wander.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>

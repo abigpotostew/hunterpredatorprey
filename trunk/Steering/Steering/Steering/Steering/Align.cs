@@ -63,7 +63,12 @@ namespace Steering.Steering
         }
 
 
-        public SteeringOutput getSteering(Entity character, System.Collections.Generic.List<Entity> targets)
+        public virtual SteeringOutput getSteering(Entity character, System.Collections.Generic.List<Entity> targets)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual SteeringOutput getSteering(Entity character)
         {
             throw new NotImplementedException();
         }
