@@ -63,7 +63,7 @@ namespace Steering
 
             r = new Random();
 
-            gameWorld = new World(graphics);
+            gameWorld = new World(graphics, 20);
 
             deerManager = new DeerManager(this);
         }

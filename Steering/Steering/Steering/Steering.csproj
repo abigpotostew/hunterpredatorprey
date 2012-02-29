@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bush.cs" />
     <Compile Include="Collision\Circle.cs">
       <SubType>Code</SubType>
     </Compile>

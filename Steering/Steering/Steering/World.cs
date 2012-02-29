@@ -19,16 +19,17 @@ namespace Steering
         int x_dim;
         int y_dim;
         int[,] textures;
-        int[,] bushes;
-        private Texture2D tile1, tile2, tile3;
+        List<Bush> bushes;
+        private Texture2D tile1, tile2, tile3, bush;
 
-        public World(GraphicsDeviceManager graphics)
+        public World(GraphicsDeviceManager graphics, int numBushes)
         {
             x_dim = (graphics.PreferredBackBufferWidth / 50) + 1;
             y_dim = (graphics.PreferredBackBufferHeight / 50) + 1;
             int temp = 0;
 
             textures = new int[x_dim, y_dim];
+            bushes = new List<Bush>();
 
             for (int i = 0; i < y_dim; i++)
             {
@@ -40,6 +41,15 @@ namespace Steering
 
             }
 
+            for (int l = 0; l < numBushes; l++)
+            {
+                int random_x = levelRand.Next(0, x_dim - 1);
+                int random_y = levelRand.Next(0, y_dim - 1);
+                Vector2 position = new Vector2(random_x * 50, random_y * 50);
+                Bush b = new Bush(position);
+                bushes.Add(b);
+            }
+
         }
 
         public void loadTiles(Game game)
@@ -47,6 +57,7 @@ namespace Steering
             tile1 = game.Content.Load<Texture2D>("Grass001");
             tile2 = game.Content.Load<Texture2D>("Grass002");
             tile3 = game.Content.Load<Texture2D>("Grass003");
+            bush = game.Content.Load<Texture2D>("Bush");
         }
 
         public void draw(SpriteBatch batch)
@@ -76,6 +87,11 @@ namespace Steering
 
                 }
 
+            }
+
+            foreach (Bush b in bushes)
+            {
+                b.draw(batch, bush);
             }
 
         }
