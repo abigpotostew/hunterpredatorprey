@@ -19,15 +19,15 @@ namespace Steering.FSM.Conditions
             timer = seconds;
         }
 
-        public bool test(GameTime gameTime)
+        public bool test()
         {
-            if (gameTime.ElapsedGameTime.Seconds - originalTime.Seconds >= timer)
-            {
-                originalTime = gameTime.ElapsedGameTime;
-                return true;
-            }
-            else
-                --timer;
+            /*  if (gameTime.ElapsedGameTime.Seconds - originalTime.Seconds >= timer)
+              {
+                  originalTime = gameTime.ElapsedGameTime;
+                  return true;
+              }
+              else
+                --timer; */
             return false;
         }
     }
