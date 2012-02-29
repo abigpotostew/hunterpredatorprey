@@ -35,7 +35,7 @@ namespace Steering
         public Lion lion;
         //Deer deer;
 
-        const int deerCt = 50;
+        const int deerCt = 5;
         DeerManager deerManager;
 
         public static Rectangle bounds = new Rectangle(0,0,1024,768);

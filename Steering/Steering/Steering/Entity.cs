@@ -37,6 +37,7 @@ namespace Steering
         public float Rotation { get { return rotation; } set { rotation = value; } }
         public float WanderOrientation { get { return wanderOrientation; } set { wanderOrientation = value; } }
         public float WanderSpeed { get { return wanderSpeed; } set { wanderSpeed = value; } }
+        public float fear;
         #endregion
 
         #region Constructors
@@ -125,6 +126,28 @@ namespace Steering
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
         }
 
+        public void addFear(float fear)
+        {
+            if (this.fear < 100)
+            {
+                this.fear += fear;
+            }
+            else
+            {
+                this.fear = 100f;
+            }
+        }
+        public void decayFear()
+        {
+            if (this.fear > 1)
+            {
+                this.fear *= .99f;
+            }
+            else
+            {
+                this.fear = 1f;
+            }
+        }
         /*public bool isColliding(Entity other)
         {
             return ( this.boundingCircle.Intersects(other.boundingCircle) );
