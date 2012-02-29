@@ -29,13 +29,13 @@ namespace Steering
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont Font;
+        public static SpriteFont Font;
 
         public Hunter guy;
         public Lion lion;
         //Deer deer;
 
-        const int deerCt = 5;
+        const int deerCt = 50;
         DeerManager deerManager;
 
         Timer timer;

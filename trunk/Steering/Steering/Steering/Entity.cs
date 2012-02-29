@@ -37,7 +37,7 @@ namespace Steering
         public float Rotation { get { return rotation; } set { rotation = value; } }
         public float WanderOrientation { get { return wanderOrientation; } set { wanderOrientation = value; } }
         public float WanderSpeed { get { return wanderSpeed; } set { wanderSpeed = value; } }
-        public float fear;
+        public float fear, fearToBeAdded, maxFear = 2;
         #endregion
 
         #region Constructors
@@ -124,17 +124,28 @@ namespace Steering
             debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
+            sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
         }
 
-        public void addFear(float fear)
+        public void updateFear()
         {
-            if (this.fear < 100)
+            this.fear += this.fearToBeAdded;
+            this.fearToBeAdded = 0;
+        }
+
+        public void addFear(float f)
+        {
+            if (f > maxFear) f = maxFear;
+            else if (f < -maxFear) f = -maxFear;
+            
+
+            if( f + this.fear > 100)
             {
-                this.fear += fear;
+                this.fearToBeAdded = 100 + this.fearToBeAdded - this.fear;
             }
             else
             {
-                this.fear = 100f;
+                this.fearToBeAdded += f;
             }
         }
         public void decayFear()

@@ -16,6 +16,7 @@ namespace Steering
             lookWhereGoing, flee, cohesion, averageVelocityMatch, seek,
             wander;
         Game game;
+        
 
         public DeerManager(Game game)
         {
@@ -45,24 +46,44 @@ namespace Steering
             return d;
         }
 
-        public void incrementDeersFear() //change all deer fear
+        float avgFear;
+        public void calcDeersFear() //change all deer fear
         {
-            UpdateDeerNeighbors();
             for (int i = 0; i < deers.Count; ++i)
             {
-                float fear = deers[i].fear * .1f;
-                if (deers[i].fear > 20 && deers[i].neighbors.Count > 0) //if deer has fear greater than 20, and has neighbors
+                Deer d = (Deer) deers[i];
+                Vector2 dirFromLion = (d.Position - game.lion.Position);
+                float distance = dirFromLion.Length();
+                if (distance < 200) //if the lion is within a distance ///////////////////
+                {
+                    float fear = 200 / distance; //200/dist so 1 to 200 counts (hopefully works right)
+                    deers[i].addFear(fear * .4f); // did this because fear goes up waay to quick
+                    deers[i].addFear(game.lion.Velocity.Length());
+                }
+                else if (distance > 250)//created a deadzone inbetween, like alert zone
+                    deers[i].decayFear();
+            }
+
+
+            for (int i = 0; i < deers.Count; ++i)
+            {
+                if ( deers[i].neighbors.Count > 0) //if deer has fear greater than 20, and has neighbors
                 {
                     for (int j = 0; j < deers[i].neighbors.Count; ++j)
                     {
+                        avgFear += deers[i].neighbors[j].fear;
                         //loop through them and add deer[i]'s fear to them
-                        if (i != j)
-                        {
-                            deers[j].addFear(fear);
-                        }
+                           // deers[j].addFear(fear);
                     }
+                    avgFear /= deers[i].neighbors.Count;
+                    //avgFear *= .3f;
+                    if(deers[i].fear > avgFear)
+                        deers[i].addFear(-avgFear);
+                    else
+                        deers[i].addFear(avgFear);
                 }
-            }
+                avgFear = 0;
+            } 
         }
 
         void UpdateDeerNeighbors()
@@ -89,20 +110,16 @@ namespace Steering
 
         public void Update(GameTime gameTime)
         {
-            //UpdateDeerNeighbors();
-            incrementDeersFear(); 
+            UpdateDeerNeighbors();
+            calcDeersFear(); 
+            foreach (Entity d in deers)
+            {
+                d.updateFear();
+            }
             for (int i = 0; i < deers.Count; ++i)
             {
                 Deer d = (Deer)deers[i];
 
-                Vector2 distFromLion = (d.Position - game.lion.Position);
-                if ((distFromLion).LengthSquared() < 80000) //if the lion is within a distance ///////////////////
-                {
-                    float fear = 200 / distFromLion.Length(); //200/dist so 1 to 200 counts (hopefully works right)
-                    if(fear > 1) deers[i].addFear(fear * .1f); // did this because fear goes up waay to quick
-                }
-                else  if ((distFromLion).LengthSquared() > 90000)//created a deadzone inbetween, like alert zone
-                    deers[i].decayFear();
 
                 d.Update(separation.getSteering(d, d.neighbors) +
                          lookWhereGoing.getSteering(d) +
@@ -122,7 +139,7 @@ namespace Steering
             foreach (Entity d in deers)
             {
                 d.Draw(gameTime, sb);
-               // Console.WriteLine("d:" + d.Position + " fear:" + d.fear);
+               
             }
         }
     }

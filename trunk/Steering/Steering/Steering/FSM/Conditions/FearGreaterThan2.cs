@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Steering.FSM.Conditions
 {
-    class FearGreaterThan : ICondition
+    class FearGreaterThan2 : ICondition
     {
         Deer deer;
         Game game;
         float threshold;
 
-        public FearGreaterThan(Game game, Deer deer, float threshold)
+        public FearGreaterThan2(Game game, Deer deer, float threshold)
         {
             this.game = game;
             this.deer = deer;
