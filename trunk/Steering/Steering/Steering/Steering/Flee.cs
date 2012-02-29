@@ -27,7 +27,7 @@ namespace Steering.Steering
             Vector2 direction = character.Position - target.Position;
             float distance = direction.Length();
 
-            if (distance < targetRadius)
+            if (distance > targetRadius)
                 //if we've arrived, return a blank steering
                 return steering;
 
@@ -63,7 +63,12 @@ namespace Steering.Steering
 
         public SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
-            throw new NotImplementedException();
+            SteeringOutput result = new SteeringOutput();
+            foreach (Entity e in targets)
+            {
+                result += this.getSteering(character, e);
+            }
+            return result;
         }
 
         public SteeringOutput getSteering(Entity character)

@@ -7,12 +7,7 @@ namespace Steering.FSM.Actions
 {
     class GrazeAction : IAction
     {
-        SteeringOutput IAction.execute(Entity character, Entity target)
-        {
-            throw new NotImplementedException();
-        }
-
-        SteeringOutput IAction.execute(Entity character, List<Entity> targets)
+        SteeringOutput IAction.execute(Game game, Entity character)
         {
             throw new NotImplementedException();
         }

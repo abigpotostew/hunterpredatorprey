@@ -7,7 +7,7 @@ namespace Steering.FSM
 {
 	public interface ITransition
 	{
-        bool isTriggered();
+        bool isTriggered(Game g, Entity e);
         State getTargetState();
         List<IAction> getActions();
 	}

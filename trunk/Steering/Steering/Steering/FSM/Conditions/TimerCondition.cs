@@ -8,18 +8,16 @@ namespace Steering.FSM.Conditions
 {
     class TimerCondition : ICondition
     {
-        Game game;
         int timer;
         TimeSpan originalTime;
  
-        public TimerCondition(Game game, TimeSpan intialTime, int seconds)
+        public TimerCondition(TimeSpan intialTime, int seconds)
         {
-            this.game = game;
             originalTime = intialTime;
             timer = seconds;
         }
 
-        public bool test()
+        public bool test(Game game, Entity character)
         {
             /*  if (gameTime.ElapsedGameTime.Seconds - originalTime.Seconds >= timer)
               {

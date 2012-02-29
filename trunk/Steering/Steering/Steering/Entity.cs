@@ -111,10 +111,6 @@ namespace Steering
                 position.Y = 0;
             if (position.Y < 0)
                 position.Y = Game.bounds.Height;
-
-            //decay rotation and velocity
-            //rotation *= 0.97f;
-            //velocity *= 0.99f;
         }
 
         public virtual void Draw(GameTime time, SpriteBatch sb)

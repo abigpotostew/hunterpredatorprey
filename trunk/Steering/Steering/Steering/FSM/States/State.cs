@@ -9,23 +9,29 @@ namespace Steering.FSM
     {
          List<IAction> actions, entryActions, exitActions;
          List<ITransition> transitions;
-         Deer deer;
-         Game game;
+         //Deer deer;
+         //Game game;
 
-         public State(Game game, Deer deer, IAction entryAction, IAction action, IAction exitAction)
+         public State()
          {
-             this.game = game;
-             this.deer = deer;
              actions = new List<IAction>();
-             entryActions = new List<IAction>(); 
+             entryActions = new List<IAction>();
              exitActions = new List<IAction>();
              transitions = new List<ITransition>();
+         }
 
+         public State(/*Game game, Deer deer,*/ IAction entryAction, IAction action, IAction exitAction)
+             : this()
+         {
              entryActions.Add(entryAction);
              actions.Add(action);
              exitActions.Add(exitAction);
+         }
 
-            
+         public State(IAction action)
+             : this()
+         {
+             actions.Add(action);
          }
 
 

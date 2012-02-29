@@ -7,7 +7,6 @@ namespace Steering.FSM
 {
     public interface IAction
     {
-        SteeringOutput execute(Entity character, Entity target);
-        SteeringOutput execute(Entity character, List<Entity> targets);
+        SteeringOutput execute(Game game, Entity character);
     }
 }

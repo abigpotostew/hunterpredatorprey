@@ -7,17 +7,13 @@ namespace Steering.FSM.Conditions
 {
     class ThreatLevel : ICondition
     {
-        Deer deer;
-        Game game;
         float threshold;
 
-        public ThreatLevel(Game game, Deer deer, float threshold)
+        public ThreatLevel(float threshold)
         {
-            this.game = game;
-            this.deer = deer;
             this.threshold = threshold;
         }
-        public bool test()
+        public bool test(Game game, Entity character)
         {
             if (game.guy.threat > threshold)
                 return true;
