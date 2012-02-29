@@ -38,7 +38,7 @@ namespace Steering.Steering
                     direction.Normalize();
                     direction *= 5f;
 
-                    steering.linear += strength * direction;
+                    steering.linear -= strength * direction;
                 //}
             }
             return steering;
