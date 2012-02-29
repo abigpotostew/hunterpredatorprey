@@ -13,7 +13,7 @@ namespace Steering
         List<Entity> deers, deerRemoval;
         int deerCount;
         public ISteering face, arrive, velocityMatch, separation, separationFromHunter,
-            lookWhereGoing, flee, cohesion, averageVelocityMatch, seek,
+            lookWhereGoing, flee, cohesion, averageVelocityMatch, seek, bushSeparation,
             wander;
         Game game;
         
@@ -24,10 +24,14 @@ namespace Steering
             deerRemoval = new List<Entity>();
             deerCount = 0;
             this.game = game;
+            
+            
 
             face = new Face(0.1f, 2, 0.1f);
             arrive = new Arrive(10, 100, 0.1f);
             //averageVelocityMatch = new AverageVelocityMatch(100, 0.1f);
+
+            bushSeparation = new Separation(40);
             velocityMatch = new VelocityMatch(0.1f);
             separation = new Separation(100);
             separationFromHunter = new Separation(300);
@@ -120,6 +124,22 @@ namespace Steering
             {
                 Deer d = (Deer)deers[i];
 
+
+                foreach (Bush b in bshs)
+                {
+                    if ((d.Position - b.position).Length() < 33)
+                    {
+                        if (!b.occupied)
+                        {
+                            d.Velocity *= .55f;
+                            b.occupied = true;
+                            continue;
+                        }
+
+                    }
+
+                }
+                
 
                 d.Update(separation.getSteering(d, d.neighbors) +
                          lookWhereGoing.getSteering(d) +

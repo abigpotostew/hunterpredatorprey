@@ -19,7 +19,7 @@ namespace Steering
         int x_dim;
         int y_dim;
         int[,] textures;
-        List<Bush> bushes;
+        private List<Bush> bushes;
         private Texture2D tile1, tile2, tile3, bush;
 
         public World(GraphicsDeviceManager graphics, int numBushes)
@@ -50,6 +50,11 @@ namespace Steering
                 bushes.Add(b);
             }
 
+        }
+
+        public List<Bush> getBushes()
+        {
+            return bushes;
         }
 
         public void loadTiles(Game game)

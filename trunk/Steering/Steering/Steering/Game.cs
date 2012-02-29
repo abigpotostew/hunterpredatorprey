@@ -50,7 +50,7 @@ namespace Steering
 
         public static Texture2D whitepixel;
 
-        World gameWorld;
+        public World gameWorld;
         Random r;
 
         public Game()
@@ -62,8 +62,6 @@ namespace Steering
             graphics.PreferredBackBufferHeight = bounds.Height;
 
             r = new Random();
-
-            gameWorld = new World(graphics, 20);
 
             deerManager = new DeerManager(this);
         }
@@ -80,10 +78,13 @@ namespace Steering
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Font = Content.Load<SpriteFont>("Font");
-            
+
+            whitepixel = Content.Load<Texture2D>("whitepixel");
+
+            gameWorld = new World(graphics, 7);
+
             gameWorld.loadTiles(this);
             jaguar = Content.Load<Texture2D>("jaguardot");
-            whitepixel = Content.Load<Texture2D>("whitepixel");
             hunter = Content.Load<Texture2D>("hunter");
 
             timer = new Timer();
