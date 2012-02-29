@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\jaguardot.xnb</Output>
-      <Time>2012-02-27T20:27:49.0898426-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\jaguardot.xnb</Output>
+      <Time>2012-02-27T11:11:05.155882-08:00</Time>
     </Item>
     <Item>
       <Source>Grass001.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass001.xnb</Output>
-      <Time>2012-02-27T20:27:49.1078436-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\Grass001.xnb</Output>
+      <Time>2012-02-27T12:40:36.8184937-08:00</Time>
     </Item>
     <Item>
       <Source>Grass002.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass002.xnb</Output>
-      <Time>2012-02-27T20:27:49.1248446-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\Grass002.xnb</Output>
+      <Time>2012-02-27T11:11:05.1858822-08:00</Time>
     </Item>
     <Item>
       <Source>Grass003.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Grass003.xnb</Output>
-      <Time>2012-02-27T20:27:49.1408455-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\Grass003.xnb</Output>
+      <Time>2012-02-27T12:40:36.8344945-08:00</Time>
     </Item>
     <Item>
       <Source>whitepixel.jpg</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\whitepixel.xnb</Output>
-      <Time>2012-02-27T20:27:49.0488403-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\whitepixel.xnb</Output>
+      <Time>2012-02-27T11:11:05.1158817-08:00</Time>
     </Item>
     <Item>
       <Source>hunter.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\hunter.xnb</Output>
-      <Time>2012-02-27T20:27:49.1538463-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\hunter.xnb</Output>
+      <Time>2012-02-27T21:14:11.783446-08:00</Time>
     </Item>
     <Item>
       <Source>Font.spritefont</Source>
@@ -61,8 +61,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\Font.xnb</Output>
-      <Time>2012-02-27T20:27:49.0768419-08:00</Time>
+      <Output>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\Font.xnb</Output>
+      <Time>2012-02-27T11:11:05.1358818-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -70,39 +70,39 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\SteeringContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\SteeringContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\SteeringContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\SteeringContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-07-01T18:00:04.091203-07:00</Value>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2012-02-27T10:52:23.9769039-08:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
