@@ -7,8 +7,8 @@ namespace Steering
 {
     class Timer
     {
-        float milliseconds;
-        int seconds;
+        public float milliseconds;
+        public int seconds;
 
         public Timer()
         {
@@ -24,13 +24,13 @@ namespace Steering
         public void startTimer()
         {
             milliseconds += 1;
-            if (milliseconds == 1000)
+            if (milliseconds % 61 == 0)
                 seconds += 1;
         }
-        public void stopTimer(float milliseconds, int seconds)
+  
+        public void stopTimer(float millisecs)
         {
-            this.milliseconds = milliseconds;
-            this.seconds = seconds;
+            milliseconds = millisecs;
         }
         //print this out on screen later
 
