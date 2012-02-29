@@ -7,12 +7,7 @@ namespace Steering.FSM.Actions
 {
     class WanderAction : IAction
     {
-        public SteeringOutput execute(Entity character, Entity target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SteeringOutput execute(Entity character, List<Entity> targets)
+        public SteeringOutput execute(Game game, Entity character)
         {
             throw new NotImplementedException();
         }

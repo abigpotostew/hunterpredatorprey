@@ -57,10 +57,6 @@ namespace Steering
                 velocity *= maxSpeed;
             }
 
-            if (Game.keyboard.IsKeyDown(Keys.E)) rotation += .01f;
-            if (Game.keyboard.IsKeyDown(Keys.Q)) rotation -= .01f;
-
-            if (Game.keyboard.IsKeyDown(Keys.Space)) rotation = 0;
 
 
             base.Update(steering, time);

@@ -7,6 +7,6 @@ namespace Steering.FSM
 {
     public interface ICondition
     {
-        bool test();
+        bool test(Game g, Entity e);
     }
 }

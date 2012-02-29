@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Steering.Steering;
 
 namespace Steering.FSM.Actions
 {
     class ScaredAction : IAction
     {
-        SteeringOutput IAction.execute(Entity character, Entity target)
+        SteeringOutput IAction.execute(Game game, Entity character)
         {
-            throw new NotImplementedException();
-        }
-
-        SteeringOutput IAction.execute(Entity character, List<Entity> targets)
-        {
-            throw new NotImplementedException();
+            return Steerings.separation.getSteering(character, character.neighbors) +
+                   Steerings.separationFromHunter.getSteering(character, game.guy) +
+                   Steerings.cohesion.getSteering(character, character.neighbors) +
+                   Steerings.velocityMatch.getSteering(character, character.neighbors) +
+                   Steerings.flee200.getSteering(character, game.lion);
         }
     }
 }

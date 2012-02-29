@@ -114,7 +114,7 @@
     <Compile Include="Collision\PrimitiveLine.cs" />
     <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="FSM\Actions\FleeAction.cs" />
+    <Compile Include="FSM\Actions\FleeFromLionAction.cs" />
     <Compile Include="FSM\Actions\FlockAction.cs" />
     <Compile Include="FSM\Actions\GrazeAction.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
@@ -137,7 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="SteeringOutput.cs" />
+    <Compile Include="Steering\SteeringOutput.cs" />
     <Compile Include="Steering\Align.cs" />
     <Compile Include="Steering\Arrive.cs" />
     <Compile Include="Steering\Cohesion.cs" />
@@ -147,6 +147,7 @@
     <Compile Include="Steering\ISteering.cs" />
     <Compile Include="Steering\LookWhereYourGoing.cs" />
     <Compile Include="Steering\Separation.cs" />
+    <Compile Include="Steering\Steerings.cs" />
     <Compile Include="Steering\VelocityMatch.cs" />
     <Compile Include="Steering\Wander.cs" />
     <Compile Include="Timer.cs" />

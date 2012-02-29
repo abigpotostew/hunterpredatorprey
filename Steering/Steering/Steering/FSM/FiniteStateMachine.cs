@@ -10,13 +10,13 @@ namespace Steering.FSM
         List<State> states;
         State initalState;
         State currentState;
-        Deer deer;
-        Game game;
+        //Deer deer;
+        //Game game;
 
-        public FiniteStateMachine(Game game, Deer deer, State intialS, params State[] state)
+        public FiniteStateMachine(/*Game game, Deer deer,*/ State intialS, params State[] state)
         {
-            this.game = game;
-            this.deer = deer;
+            /*this.game = game;
+            this.deer = deer;*/
             this.initalState = intialS;
             currentState = this.initalState;
             states = new List<State>();
@@ -29,14 +29,14 @@ namespace Steering.FSM
         }
         
         //pass deer into everything
-        public List<IAction> UpdateFSM()
+        public List<IAction> UpdateFSM(Game g, Entity e)
         {
             Transition triggeredTransition = null;
             
 
             foreach (Transition t in currentState.getTransitions())
             {
-                if (t.isTriggered())
+                if (t.isTriggered(g,e))
                 {
                     triggeredTransition = t;
                     break;

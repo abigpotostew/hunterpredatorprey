@@ -14,10 +14,10 @@ namespace Steering.FSM.Conditions
             this.a = a;
             this.b = b;
         }
-        public bool test()
+        public bool test(Game g, Entity e)
         {
             //if fear is less than a certain number then return true
-            return a.test() && b.test();
+            return a.test(g,e) && b.test(g,e);
         }
     }
 }

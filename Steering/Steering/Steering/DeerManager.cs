@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Steering.Steering;
 using Microsoft.Xna.Framework.Graphics;
+using Steering.FSM;
+using Steering.FSM.Actions;
 
 namespace Steering
 {
@@ -12,9 +14,6 @@ namespace Steering
     {
         List<Entity> deers, deerRemoval;
         int deerCount;
-        public ISteering face, arrive, velocityMatch, separation, separationFromHunter,
-            lookWhereGoing, flee, cohesion, averageVelocityMatch, seek, bushSeparation,
-            wander;
         Game game;
         
 
@@ -27,27 +26,27 @@ namespace Steering
             
             
 
-            face = new Face(0.1f, 2, 0.1f);
-            arrive = new Arrive(10, 100, 0.1f);
-            //averageVelocityMatch = new AverageVelocityMatch(100, 0.1f);
-
-            bushSeparation = new Separation(40);
-            velocityMatch = new VelocityMatch(0.1f);
-            separation = new Separation(100);
-            separationFromHunter = new Separation(300);
-            lookWhereGoing = new LookWhereYourGoing(0.1f, 2, 0.1f);
-            flee = new Flee(10, 10, 0.1f);
-            cohesion = new Cohesion(50, 10, 50, 0.1f);
-            seek = new Seek(10, 50, 0.1f);
-            wander = new Wander(50, 10, 0.5f, 0.1f, 2, 0.1f);
-
         }
 
-        public Entity AddDeer(Entity d)
+        private void AttatchNewDeerFSM(Deer deer)
         {
-            deers.Add(d);
-            deerCount++;
-            return d;
+            ScaredAction scaredAction = new ScaredAction();
+            State scaredState = new State(scaredAction);
+            FiniteStateMachine newFSM = new FiniteStateMachine(scaredState);
+            deer.fsm = newFSM;
+        }
+
+        public void CreateDeer(int deerCt, Texture2D deerImg)
+        {
+            for (int i = 0; i < deerCt; ++i)
+            {
+                Deer deerTmp = new Deer(game, deerImg, new Vector2((float)Game.r.NextDouble() * Game.bounds.Width, (float)Game.r.NextDouble() * Game.bounds.Height));
+                deers.Add(deerTmp);
+                deerCount++;
+                AttatchNewDeerFSM(deerTmp);
+                
+            }
+            //return d;
         }
 
         float avgFear;
@@ -125,7 +124,7 @@ namespace Steering
                 Deer d = (Deer)deers[i];
 
 
-                foreach (Bush b in bshs)
+                foreach (Bush b in game.gameWorld.getBushes())
                 {
                     if ((d.Position - b.position).Length() < 33)
                     {
@@ -139,17 +138,8 @@ namespace Steering
                     }
 
                 }
-                
 
-                d.Update(separation.getSteering(d, d.neighbors) +
-                         lookWhereGoing.getSteering(d) +
-                         separationFromHunter.getSteering(d, game.guy) +
-                         cohesion.getSteering(d, d.neighbors) +
-                         velocityMatch.getSteering(d, d.neighbors),
-                         //wander.getSteering(d),
-                         //separation.getSteering(d,d.neighbors)+
-                         //seek.getSteering(d,game.guy),
-                         gameTime);
+                d.Update(new SteeringOutput(),gameTime);
             }
         }
 
