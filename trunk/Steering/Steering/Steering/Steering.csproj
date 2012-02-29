@@ -113,7 +113,11 @@
     <Compile Include="Collision\PrimitiveLine.cs" />
     <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="FSM\Actions\FleeAction.cs" />
+    <Compile Include="FSM\Actions\FlockAction.cs" />
+    <Compile Include="FSM\Actions\GrazeAction.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
+    <Compile Include="FSM\Actions\ScaredAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan.cs" />
     <Compile Include="FSM\Conditions\FearLessThan.cs" />

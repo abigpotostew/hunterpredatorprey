@@ -14,7 +14,7 @@ namespace Steering
         const float maxDeerSpeed = 2f;
         const float maxAccelleration = 0.3f;
 
-        public float fear;
+        
 
         //public List<Entity> neighbors;
 

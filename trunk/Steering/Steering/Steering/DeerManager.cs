@@ -45,6 +45,26 @@ namespace Steering
             return d;
         }
 
+        public void incrementDeersFear() //change all deer fear
+        {
+            UpdateDeerNeighbors();
+            for (int i = 0; i < deers.Count; ++i)
+            {
+                float fear = deers[i].fear * .1f;
+                if (deers[i].fear > 20 && deers[i].neighbors.Count > 0) //if deer has fear greater than 20, and has neighbors
+                {
+                    for (int j = 0; j < deers[i].neighbors.Count; ++j)
+                    {
+                        //loop through them and add deer[i]'s fear to them
+                        if (i != j)
+                        {
+                            deers[j].addFear(fear);
+                        }
+                    }
+                }
+            }
+        }
+
         void UpdateDeerNeighbors()
         {
             for ( int i = 0; i < deers.Count; ++i)
@@ -69,11 +89,21 @@ namespace Steering
 
         public void Update(GameTime gameTime)
         {
-            UpdateDeerNeighbors();
-
+            //UpdateDeerNeighbors();
+            incrementDeersFear(); 
             for (int i = 0; i < deers.Count; ++i)
             {
                 Deer d = (Deer)deers[i];
+
+                Vector2 distFromLion = (d.Position - game.lion.Position);
+                if ((distFromLion).LengthSquared() < 80000) //if the lion is within a distance ///////////////////
+                {
+                    float fear = 200 / distFromLion.Length(); //200/dist so 1 to 200 counts (hopefully works right)
+                    if(fear > 1) deers[i].addFear(fear * .1f); // did this because fear goes up waay to quick
+                }
+                else  if ((distFromLion).LengthSquared() > 90000)//created a deadzone inbetween, like alert zone
+                    deers[i].decayFear();
+
                 d.Update(separation.getSteering(d, d.neighbors) +
                          lookWhereGoing.getSteering(d) +
                          separationFromHunter.getSteering(d, game.guy) +
@@ -92,6 +122,7 @@ namespace Steering
             foreach (Entity d in deers)
             {
                 d.Draw(gameTime, sb);
+               // Console.WriteLine("d:" + d.Position + " fear:" + d.fear);
             }
         }
     }
