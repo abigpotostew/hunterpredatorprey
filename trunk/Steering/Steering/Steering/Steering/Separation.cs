@@ -33,10 +33,12 @@ namespace Steering.Steering
                 //if (distanceSquared < thresholdSquared)
                 //{
                     float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
+                   // strength *= 5f;
 
                     direction.Normalize();
                     direction *= 5f;
-                    steering.linear -= strength * direction;
+
+                    steering.linear += strength * direction;
                 //}
             }
             return steering;
