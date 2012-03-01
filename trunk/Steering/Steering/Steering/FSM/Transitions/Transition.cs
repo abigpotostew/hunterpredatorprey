@@ -19,6 +19,7 @@ namespace Steering.FSM
             this.deer = deer;*/
             this.condition = condition;
             this.targetState = targetState;
+            actions = new List<IAction>();
         }
 
         public bool isTriggered(Game g, Entity e)
@@ -30,7 +31,10 @@ namespace Steering.FSM
         {
             return targetState;
         }
-
+        public void addActions(IAction a)
+        {
+            actions.Add(a);
+        }
         public List<IAction> getActions()
         {
             return actions;
