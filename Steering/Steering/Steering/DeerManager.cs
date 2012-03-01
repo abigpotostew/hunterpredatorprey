@@ -7,6 +7,7 @@ using Steering.Steering;
 using Microsoft.Xna.Framework.Graphics;
 using Steering.FSM;
 using Steering.FSM.Actions;
+using Steering.FSM.Conditions;
 
 namespace Steering
 {
@@ -23,16 +24,29 @@ namespace Steering
             deerRemoval = new List<Entity>();
             deerCount = 0;
             this.game = game;
-            
-            
-
         }
 
         private void AttatchNewDeerFSM(Deer deer)
         {
+            //add states into fsm
             ScaredAction scaredAction = new ScaredAction();
+            WanderAction wanderAction = new WanderAction();
+
             State scaredState = new State(scaredAction);
-            FiniteStateMachine newFSM = new FiniteStateMachine(scaredState);
+            State wanderState = new State(wanderAction);
+
+            FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
+            FearLessThan fearLessThan40 = new FearLessThan(40);
+            Transition gotoWander = new Transition(fearLessThan40, wanderState);
+            Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
+
+            gotoWander.addActions(wanderAction);
+            gotoScared.addActions(scaredAction);
+
+            scaredState.addTransition(gotoWander);
+            wanderState.addTransition(gotoScared);
+
+            FiniteStateMachine newFSM = new FiniteStateMachine(wanderState);
             deer.fsm = newFSM;
         }
 

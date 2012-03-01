@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Steering.Steering;
 
 namespace Steering.FSM.Actions
 {
@@ -9,7 +10,9 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
-            throw new NotImplementedException();
+            return Steerings.wander.getSteering(character) +
+                   Steerings.separation.getSteering(character, character.neighbors) +
+                   Steerings.cohesion.getSteering(character, character.neighbors);
         }
     }
 }
