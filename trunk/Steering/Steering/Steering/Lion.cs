@@ -57,7 +57,7 @@ namespace Steering
                 velocity *= maxSpeed;
             }
 
-
+            this.threat = velocity.Length();
 
             base.Update(steering, time);
         }

@@ -8,7 +8,7 @@ namespace Steering.FSM.Conditions
 {
     class TimerCondition : ICondition
     {
-        int timer;
+        int timer = 3600; //3600
         TimeSpan originalTime;
  
         public TimerCondition(TimeSpan intialTime, int seconds)
@@ -26,6 +26,8 @@ namespace Steering.FSM.Conditions
               }
               else
                 --timer; */
+            --timer;
+            if (timer == 0) return true;
             return false;
         }
     }

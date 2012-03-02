@@ -23,7 +23,7 @@ namespace Steering
         public PrimitiveLine debugCircle;
 
         public List<Entity> neighbors;
-        public bool isColliding = false;
+        public bool isColliding = false, wander;
 
         #region Properties
         public Texture2D Image { get { return image; } set { image = value; } }
