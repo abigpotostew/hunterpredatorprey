@@ -30,15 +30,13 @@ namespace Steering.Steering
             {
                 Vector2 direction = target.Position - character.Position;
                 float distanceSquared = direction.LengthSquared();
-                //if (distanceSquared < thresholdSquared)
-                //{
-                    float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
+                float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
                    // strength *= 5f;
 
-                    direction.Normalize();
-                    direction *= 5f;
+                direction.Normalize();
+                direction *= character.MaxSpeed;
 
-                    steering.linear -= strength * direction;
+                steering.linear -= strength * direction;
                 //}
             }
             return steering;

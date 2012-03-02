@@ -13,7 +13,7 @@ namespace Steering
     public class Deer : Entity
     {
         const float maxDeerSpeed = 2f;
-        const float maxAccelleration = 0.3f;
+        const float maxAccelleration = 0.5f;
 
         //INTELLIGENCE is between 0 and 1,
         //1 is smart and will rarely wander away from herd
@@ -34,6 +34,8 @@ namespace Steering
             game = g;
             intelligence = 2*(float)Game.r.NextDouble();
             if (intelligence > 1) intelligence = 1;
+
+            wanderSpeed = 1f;
         }
 
          public override void Update(SteeringOutput steering, GameTime time)
@@ -44,9 +46,9 @@ namespace Steering
                  steering += steeringAction.execute(game, this);
              }
 
-             base.Update(Steerings.lookWhereGoing.getSteering(this) + steering, time);
-
              //always do look where going 
+             base.Update(Steerings.lookWhereGoing.getSteering(this) + steering, time);
+             
          }
 
          

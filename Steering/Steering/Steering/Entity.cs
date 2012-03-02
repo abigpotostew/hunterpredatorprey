@@ -64,7 +64,7 @@ namespace Steering
 
             neighbors = new List<Entity>();
 
-            wanderSpeed = 0.1f;
+            wanderSpeed = 0.5f;
         }
 
         public Entity(Vector2 position)
@@ -94,10 +94,15 @@ namespace Steering
             velocity += steering.linear;
             orientation += steering.angular;
 
-            if (velocity.LengthSquared() > maxSpeedSq)
+            //velocity needs to be capped based on steering maxspeed
+            float tmpMaxSpeed;
+            if (steering.maxSpeed > 0) tmpMaxSpeed = steering.maxSpeed;
+            else tmpMaxSpeed = maxSpeed;
+
+            if (velocity.LengthSquared() > tmpMaxSpeed*tmpMaxSpeed)
             {
                 velocity.Normalize();
-                velocity *= maxSpeed;
+                velocity *= tmpMaxSpeed;
             }
 
             boundingCircle.position = position;

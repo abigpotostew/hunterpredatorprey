@@ -29,22 +29,23 @@ namespace Steering
         private void AttatchNewDeerFSM(Deer deer)
         {
             //add states into fsm
-            ScaredAction scaredAction = new ScaredAction();
+
+            //ScaredAction scaredAction = new ScaredAction();
             WanderAction wanderAction = new WanderAction();
 
-            State scaredState = new State(scaredAction);
+            //State scaredState = new State(scaredAction);
             State wanderState = new State(wanderAction);
 
-            FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
-            FearLessThan fearLessThan40 = new FearLessThan(40);
-            Transition gotoWander = new Transition(fearLessThan40, wanderState);
-            Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
+            //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
+            //FearLessThan fearLessThan40 = new FearLessThan(40);
+           // Transition gotoWander = new Transition(fearLessThan40, wanderState);
+            //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
 
-            gotoWander.addActions(wanderAction);
-            gotoScared.addActions(scaredAction);
+            //gotoWander.addActions(wanderAction);
+            //gotoScared.addActions(scaredAction);
 
-            scaredState.addTransition(gotoWander);
-            wanderState.addTransition(gotoScared);
+            //scaredState.addTransition(gotoWander);
+            //wanderState.addTransition(gotoScared);
 
             FiniteStateMachine newFSM = new FiniteStateMachine(wanderState);
             deer.fsm = newFSM;
