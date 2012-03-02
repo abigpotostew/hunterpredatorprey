@@ -121,15 +121,20 @@
     <Compile Include="FSM\Actions\ScaredAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
+    <Compile Include="FSM\Conditions\Persuasion.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan2.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan.cs" />
     <Compile Include="FSM\Conditions\FearLessThan.cs" />
     <Compile Include="FSM\Conditions\ICondition.cs" />
     <Compile Include="FSM\Conditions\ThreatLevel.cs" />
-    <Compile Include="FSM\Conditions\WanderCondition.cs" />
     <Compile Include="FSM\FiniteStateMachine.cs" />
+    <Compile Include="FSM\States\FleeState.cs" />
+    <Compile Include="FSM\States\FlockState.cs" />
+    <Compile Include="FSM\States\GrazeState.cs" />
+    <Compile Include="FSM\States\ScaredState.cs" />
     <Compile Include="FSM\States\State.cs" />
+    <Compile Include="FSM\States\WanderState.cs" />
     <Compile Include="FSM\Transitions\ITranstition.cs" />
     <Compile Include="FSM\Transitions\Transition.cs" />
     <Compile Include="Hunter.cs" />
@@ -151,7 +156,6 @@
     <Compile Include="Steering\Steerings.cs" />
     <Compile Include="Steering\VelocityMatch.cs" />
     <Compile Include="Steering\Wander.cs" />
-    <Compile Include="Timer.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
