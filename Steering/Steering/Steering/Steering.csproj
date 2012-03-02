@@ -127,6 +127,7 @@
     <Compile Include="FSM\Conditions\FearLessThan.cs" />
     <Compile Include="FSM\Conditions\ICondition.cs" />
     <Compile Include="FSM\Conditions\ThreatLevel.cs" />
+    <Compile Include="FSM\Conditions\WanderCondition.cs" />
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="FSM\States\State.cs" />
     <Compile Include="FSM\Transitions\ITranstition.cs" />

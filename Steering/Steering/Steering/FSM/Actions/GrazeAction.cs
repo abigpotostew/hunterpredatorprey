@@ -10,7 +10,9 @@ namespace Steering.FSM.Actions
     {
         SteeringOutput IAction.execute(Game game, Entity character)
         {
-            throw new NotImplementedException();
+            return Steerings.wander.getSteering(character);
+            //Steerings.separation.getSteering(character, character.neighbors) +
+            //Steerings.cohesion.getSteering(character, character.neighbors);
         }
     }
 }

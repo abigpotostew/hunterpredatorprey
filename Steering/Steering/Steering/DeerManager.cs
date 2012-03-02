@@ -75,7 +75,7 @@ namespace Steering
                 {
                     float fear = 200 / distance; //200/dist so 1 to 200 counts (hopefully works right)
                     deers[i].addFear(fear * .4f); // did this because fear goes up waay to quick
-                    deers[i].addFear(game.lion.Velocity.Length());
+                    //deers[i].addFear(game.lion.Velocity.Length());
                 }
                 else if (distance > 250)//created a deadzone inbetween, like alert zone
                     deers[i].decayFear();
