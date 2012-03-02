@@ -10,9 +10,9 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
-            return Steerings.wander.getSteering(character) +
-                   Steerings.separation.getSteering(character, character.neighbors) +
-                   Steerings.cohesion.getSteering(character, character.neighbors);
+            return Steerings.wander.getSteering(character);
+                   //Steerings.separation.getSteering(character, character.neighbors) +
+                   //Steerings.cohesion.getSteering(character, character.neighbors);
         }
     }
 }
