@@ -12,12 +12,22 @@ namespace Steering
     {
         //private KeyboardState keyboard;
         //private MouseState mouse;
+        int health = 2;
+        
         public float threat;
+        
+        bool spearJab;
+        bool spearThrow;
+        DateTime timing;
+        const double holdKeyWait = 0.25;
+
 
         public Hunter(Texture2D image, Vector2 position)
             : base(image, position, 1, 4)
         {
             //orientation
+            spearJab = false;
+            spearThrow = false;
         }
 
         public override void Update(SteeringOutput steering, GameTime time)
@@ -47,7 +57,17 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
-
+            if (Game.keyboard.IsKeyDown(Keys.Space))
+            {
+                keyPressed = true;
+                spearJab = true;
+            }
+            if (Game.keyboard.IsKeyDown(Keys.Space) &&
+                DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))
+            {
+                keyPressed = true;
+                spearThrow = true;
+            } 
             if (!keyPressed) velocity = new Vector2();
 
             if (velocity.Length() > MaxSpeed)

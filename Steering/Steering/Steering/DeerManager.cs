@@ -15,8 +15,9 @@ namespace Steering
     {
         List<Entity> deers, deerRemoval;
         int deerCount;
+        TimeSpan initialTime;
         Game game;
-        
+
 
         public DeerManager(Game game)
         {
@@ -30,19 +31,64 @@ namespace Steering
         {
             //add states into fsm
 
-            //ScaredAction scaredAction = new ScaredAction();
+            ScaredAction scaredAction = new ScaredAction();
             WanderAction wanderAction = new WanderAction();
+            GrazeAction grazeAction = new GrazeAction();
+            FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
+            FlockAction flockAction = new FlockAction();
 
-            //State scaredState = new State(scaredAction);
+            State scaredState = new State(scaredAction);
             State wanderState = new State(wanderAction);
+            State grazeState = new State(grazeAction);
+            State fleeState = new State(fleeFromLionAction);
+            State flockState = new State(flockAction);
+
+
+
+            FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
+            FearLessThan fearLessThan40 = new FearLessThan(40);
+            Persuasion persuasion = new Persuasion();
+            ThreatLevel lowThreatLevel = new ThreatLevel(20f);
+            //AndCondition andConditionWander = new AndCondition(persuasion, lowThreatLevel);
+            //AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
+            FearGreaterThan2 fearGreaterThan100 = new FearGreaterThan2(100);
+            TimerCondition timerCondition = new TimerCondition(initialTime, 10);
+            //AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
 
             //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             //FearLessThan fearLessThan40 = new FearLessThan(40);
-           // Transition gotoWander = new Transition(fearLessThan40, wanderState);
+            // Transition gotoWander = new Transition(fearLessThan40, wanderState);
             //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
+
+            Transition gotoWanderFromScared = new Transition(fearLessThan40, wanderState);
+            //Transition gotoWanderFromGraze = new Transition(andConditionWander, wanderState);
+            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState);
+            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState);
+            //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
+            Transition gotoFlee = new Transition(fearGreaterThan100, fleeState);
+            Transition gotoScaredFromFlee = new Transition(fearLessThan40, scaredState);
+            //Transition gotoFlock = new Transition(andConditionFlock,flockState);
+
+            gotoWanderFromScared.addActions(wanderAction);
+            //gottoWanderFromGraze.addActions(wanderAction);
+            gotoScaredFromWander.addActions(scaredAction);
+            gotoScaredFromGraze.addActions(scaredAction);
+            //gotoGraze.addActions(grazeAction);
+            gotoFlee.addActions(fleeFromLionAction);
+            gotoScaredFromFlee.addActions(scaredAction);
+            //gotoFlock.addActions(flockAction);
 
             //gotoWander.addActions(wanderAction);
             //gotoScared.addActions(scaredAction);
+
+            scaredState.addTransition(gotoWanderFromScared);
+            //scaredState.addTransition(gotoFlock);
+            scaredState.addTransition(gotoFlee);
+            wanderState.addTransition(gotoScaredFromWander);
+            //wanderState.addTransition(gotoGraze);
+            //grazeState.addTransition(gotoWanderFromGraze);
+            grazeState.addTransition(gotoScaredFromGraze);
+            fleeState.addTransition(gotoScaredFromFlee);
 
             //scaredState.addTransition(gotoWander);
             //wanderState.addTransition(gotoScared);
