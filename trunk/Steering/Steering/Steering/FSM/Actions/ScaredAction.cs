@@ -10,7 +10,7 @@ namespace Steering.FSM.Actions
     {
         SteeringOutput IAction.execute(Game game, Entity character)
         {
-            return Steerings.separation.getSteering(character, character.neighbors) +
+            return Steerings.separationFromDeer.getSteering(character, character.neighbors) +
                    Steerings.separationFromHunter.getSteering(character, game.guy) +
                    Steerings.cohesion.getSteering(character, character.neighbors) +
                    Steerings.velocityMatch.getSteering(character, character.neighbors) +
