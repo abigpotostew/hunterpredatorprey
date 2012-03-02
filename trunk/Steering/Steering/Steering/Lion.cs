@@ -16,7 +16,7 @@ namespace Steering
         public float threat;
 
         public Lion(Texture2D image, Vector2 position)
-            : base(image, position, 1, 4)
+            : base(image, position, 0.01f, 4)
         {
             //orientation
         }
