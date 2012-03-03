@@ -11,5 +11,10 @@ namespace Steering.FSM.Conditions
         {
  
         }
+
+        public bool test(Game g, Entity e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

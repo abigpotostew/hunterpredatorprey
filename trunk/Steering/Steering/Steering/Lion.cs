@@ -20,6 +20,7 @@ namespace Steering
         HierarchicalStateMachine hfsm;
         Game game;
         public Bush closestBushTarget;
+        public bool visible = true;
 
         public Lion(Texture2D image, Vector2 position, Game game)
             : base(image, position, 0.1f, 4)
@@ -33,7 +34,7 @@ namespace Steering
         {
             //WanderAction wanderAction = new WanderAction();
             //State wanderState = new State(wanderAction);
-            State hideState = new State(new SetTargetToClosestBush(), new HideAction(), null);
+            State hideState = new State("hide", new SetTargetToClosestBush(), new HideAction(), null);
             this.hfsm = new HierarchicalStateMachine(hideState);
 
         }

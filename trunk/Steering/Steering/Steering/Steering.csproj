@@ -118,9 +118,11 @@
     <Compile Include="FSM\Actions\FleeFromLionAction.cs" />
     <Compile Include="FSM\Actions\FlockAction.cs" />
     <Compile Include="FSM\Actions\GrazeAction.cs" />
+    <Compile Include="FSM\Actions\HideAction.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
     <Compile Include="FSM\Actions\resetWander.cs" />
     <Compile Include="FSM\Actions\ScaredAction.cs" />
+    <Compile Include="FSM\Actions\SetTargetToClosestBush.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountCondition.cs" />
