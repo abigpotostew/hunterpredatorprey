@@ -126,7 +126,8 @@
     <Compile Include="FSM\Actions\WaitInBushAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
-    <Compile Include="FSM\Conditions\NeighborCountCondition.cs" />
+    <Compile Include="FSM\Conditions\NeighborCountLessCondition.cs" />
+    <Compile Include="FSM\Conditions\NeighborCountGreaterCondition.cs" />
     <Compile Include="FSM\Conditions\RandomCondition.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan2.cs" />
