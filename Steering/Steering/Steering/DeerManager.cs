@@ -35,8 +35,8 @@ namespace Steering
 
         private void AttatchNewDeerFSM(Deer deer, Game game)
         {
-            //add states into fsm
 
+            //Declaring Actions for states
             ScaredAction scaredAction = new ScaredAction();
             WanderAction wanderAction = new WanderAction();
             GrazeAction grazeAction = new GrazeAction();
@@ -45,6 +45,7 @@ namespace Steering
             emptyAction emptyAction = new emptyAction();
             FlockAction flockAction = new FlockAction();
 
+            //Declaring States for FSM
             State scaredState = new State("scared", scaredAction);
             State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
             State grazeState = new State("graze", grazeAction);
@@ -52,83 +53,76 @@ namespace Steering
             State flockState = new State("flock", flockAction);
 
 
-
+            //Declaring conditions used for transitions
             FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
-           // Persuasion persuasion = new Persuasion();
             ThreatLevel lowThreatLevel = new ThreatLevel(20f);
-            NeighborCountCondition neighborCount = new NeighborCountCondition(5);
-            //AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
+            NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
+            NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
             TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 2000);
             TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer); //800 to 1200
-            TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, shortTimer);
+            TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, 600);
+            TimerCondition grazetoFlockTimer = new TimerCondition(initialTime, 600);
             RandomCondition randomCondition = new RandomCondition(10, 5);
-            
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
-            AndCondition andRandomNeighborCount = new AndCondition(randomCondition, neighborCount);
+            AndCondition andRandomNeighborCountGreater = new AndCondition(randomCondition, neighborCountGreater);
+            AndCondition andRandomNeighborCountLess = new AndCondition(grazetoFlockTimer, neighborCountLess);
+            //AndCondition andRNCRandom = new AndCondition(andRandomNeighborCount, grazetoFlockTimer);
             WanderCondition wanderTrue = new WanderCondition();
-            //AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
+
             
-
-            //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
-            //FearLessThan fearLessThan40 = new FearLessThan(40);
-            // Transition gotoWander = new Transition(fearLessThan40, wanderState);
-            //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
-
+            //Declaring Transitions
             Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState, 0);
             Transition gotoWanderFromGraze = new Transition(wanderTrue, wanderState, 0);
+            Transition gotoWanderFromGraze2 = new Transition(andRandomNeighborCountLess, wanderState, 0);
 
             Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState, 0);
             Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState, 0);
 
-            Transition gotoFlockfromGraze = new Transition(andRandomNeighborCount, flockState, 0);
+            Transition gotoFlockfromGraze = new Transition(andRandomNeighborCountGreater, flockState, 0);
             Transition gotoGrazefromFlock = new Transition(flocktoGrazeTimer, grazeState, 0);
 
             Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState, 0);
             Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState, 0);
             Transition gotoScaredFromFlock = new Transition(fearGreaterThan60, scaredState, 0);
             
-            //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
             Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
             Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
-            //Transition gotoFlock = new Transition(andConditionFlock,flockState);
 
+            //Declaring actions for transitions
             gotoWanderFromScared.addActions(wanderAction);
             gotoWanderFromGraze.addActions(wanderAction);
+            gotoWanderFromGraze2.addActions(wanderAction);
             gotoGrazeFromScared.addActions(grazeAction);
             gotoGrazeFromWander.addActions(grazeAction);
+            gotoGrazefromFlock.addActions(grazeAction);
             gotoScaredFromWander.addActions(scaredAction);
             gotoScaredFromGraze.addActions(scaredAction);
-            //gotoGraze.addActions(grazeAction);
             gotoFlee.addActions(fleeFromLionAction);
-            gotoScaredFromFlee.addActions(scaredAction);
             gotoFlockfromGraze.addActions(flockAction);
-            gotoGrazefromFlock.addActions(grazeAction);
             gotoScaredFromFlock.addActions(scaredAction);
+            gotoScaredFromFlee.addActions(scaredAction);
 
-            //gotoWander.addActions(wanderAction);
-            //gotoScared.addActions(scaredAction);
 
+            //Hooking up transitions to states
             scaredState.addTransition(gotoWanderFromScared);
             scaredState.addTransition(gotoGrazeFromScared);
-            //scaredState.addTransition(gotoFlock);
             scaredState.addTransition(gotoFlee);
+
             wanderState.addTransition(gotoScaredFromWander);
             wanderState.addTransition(gotoGrazeFromWander);
-            //wanderState.addTransition(gotoGraze);
-            //grazeState.addTransition(gotoWanderFromGraze);
+
             grazeState.addTransition(gotoScaredFromGraze);
             grazeState.addTransition(gotoWanderFromGraze);
             grazeState.addTransition(gotoFlockfromGraze);
+            grazeState.addTransition(gotoWanderFromGraze2);
+
             fleeState.addTransition(gotoScaredFromFlee);
+
             flockState.addTransition(gotoGrazefromFlock);
             flockState.addTransition(gotoScaredFromFlock);
 
-            
-
-            //scaredState.addTransition(gotoWander);
-            //wanderState.addTransition(gotoScared);
 
             FiniteStateMachine newFSM = new FiniteStateMachine(wanderState);
             deer.fsm = newFSM;
@@ -155,10 +149,14 @@ namespace Steering
                 Deer d = (Deer) deers[i];
                 Vector2 dirFromLion = (d.Position - game.lion.Position);
                 float distance = dirFromLion.Length();
-                if (distance < 200) //if the lion is within a distance ///////////////////
+                if (distance < 100)
+                {
+                    d.addFear(100);
+                }
+                else if (distance < 200) //if the lion is within a distance ///////////////////
                 {
                     float fear = 200 / distance; //200/dist so 1 to 200 counts (hopefully works right)
-                    deers[i].addFear(fear * .4f); // did this because fear goes up waay to quick
+                    d.addFear(fear * .6f); // did this because fear goes up waay to quick
                     //deers[i].addFear(game.lion.Velocity.Length());
                 }
                 else if (distance > 250)//created a deadzone inbetween, like alert zone
