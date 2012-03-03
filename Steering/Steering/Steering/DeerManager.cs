@@ -14,9 +14,10 @@ namespace Steering
     public class DeerManager
     {
         List<Entity> deers, deerRemoval;
-        int deerCount;
+        int deerCount, timer;
         TimeSpan initialTime;
         Game game;
+        Random random;
 
 
         public DeerManager(Game game)
@@ -25,6 +26,8 @@ namespace Steering
             deerRemoval = new List<Entity>();
             deerCount = 0;
             this.game = game;
+            random = new Random();
+            timer = 1800;
         }
 
         private void AttatchNewDeerFSM(Deer deer)
@@ -36,9 +39,11 @@ namespace Steering
             GrazeAction grazeAction = new GrazeAction();
             FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
             FlockAction flockAction = new FlockAction();
+            resetWander resetWander = new resetWander();
+            emptyAction emptyAction = new emptyAction();
 
             State scaredState = new State(scaredAction);
-            State wanderState = new State(wanderAction);
+            State wanderState = new State(emptyAction, wanderAction, resetWander);
             State grazeState = new State(grazeAction);
             State fleeState = new State(fleeFromLionAction);
             State flockState = new State(flockAction);
@@ -49,28 +54,39 @@ namespace Steering
             FearLessThan fearLessThan40 = new FearLessThan(40);
             Persuasion persuasion = new Persuasion();
             ThreatLevel lowThreatLevel = new ThreatLevel(20f);
-            //AndCondition andConditionWander = new AndCondition(persuasion, lowThreatLevel);
+           
             //AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
-            FearGreaterThan2 fearGreaterThan100 = new FearGreaterThan2(100);
-            TimerCondition timerCondition = new TimerCondition(initialTime, 10);
+            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 1800);
+            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, 600);
+            RandomCondition randomCondition = new RandomCondition();
+            AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
+            WanderCondition wanderTrue = new WanderCondition();
             //AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
+            
 
             //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             //FearLessThan fearLessThan40 = new FearLessThan(40);
             // Transition gotoWander = new Transition(fearLessThan40, wanderState);
             //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
 
-            Transition gotoWanderFromScared = new Transition(fearLessThan40, wanderState,0);
-            //Transition gotoWanderFromGraze = new Transition(andConditionWander, wanderState);
-            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState,0);
-            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState,0);
+            Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState);
+            Transition gotoWanderFromGraze = new Transition(wanderTrue, wanderState);
+
+            Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState);
+            Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState);
+            
+            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState);
+            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState);
+            
             //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
-            Transition gotoFlee = new Transition(fearGreaterThan100, fleeState,0);
-            Transition gotoScaredFromFlee = new Transition(fearLessThan40, scaredState,0);
+            Transition gotoFlee = new Transition(fearGreaterThan60, fleeState);
+            Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState);
             //Transition gotoFlock = new Transition(andConditionFlock,flockState);
 
             gotoWanderFromScared.addActions(wanderAction);
-            //gottoWanderFromGraze.addActions(wanderAction);
+            gotoWanderFromGraze.addActions(wanderAction);
+            gotoGrazeFromScared.addActions(grazeAction);
+            gotoGrazeFromWander.addActions(grazeAction);
             gotoScaredFromWander.addActions(scaredAction);
             gotoScaredFromGraze.addActions(scaredAction);
             //gotoGraze.addActions(grazeAction);
@@ -82,13 +98,17 @@ namespace Steering
             //gotoScared.addActions(scaredAction);
 
             scaredState.addTransition(gotoWanderFromScared);
+            scaredState.addTransition(gotoGrazeFromScared);
             //scaredState.addTransition(gotoFlock);
             scaredState.addTransition(gotoFlee);
             wanderState.addTransition(gotoScaredFromWander);
+            wanderState.addTransition(gotoGrazeFromWander);
             //wanderState.addTransition(gotoGraze);
             //grazeState.addTransition(gotoWanderFromGraze);
             grazeState.addTransition(gotoScaredFromGraze);
+            grazeState.addTransition(gotoWanderFromGraze);
             fleeState.addTransition(gotoScaredFromFlee);
+            
 
             //scaredState.addTransition(gotoWander);
             //wanderState.addTransition(gotoScared);
@@ -180,11 +200,19 @@ namespace Steering
             {
                 d.updateFear();
             }
+            int deerWander = random.Next(1, deerCount);
             for (int i = 0; i < deers.Count; ++i)
             {
                 Deer d = (Deer)deers[i];
-
-
+                //check what state and timer cooldown
+                if (timer == 0)
+                {
+                    if (i == deerWander)
+                    {
+                        d.wander = true;
+                    }
+                    timer = 1800;
+                }
                 foreach (Bush b in game.gameWorld.getBushes())
                 {
                     if ((d.Position - b.position).Length() < 33)
