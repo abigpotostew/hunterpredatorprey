@@ -126,6 +126,7 @@ namespace Steering
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
             sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
+            //sb.DrawString(Game.Font, 
         }
 
         public void updateFear()

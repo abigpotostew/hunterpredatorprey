@@ -11,6 +11,7 @@ namespace Steering.FSM
     {
          List<IAction> actions, entryActions, exitActions;
          List<ITransition> transitions;
+         public String name;
          //Deer deer;
          //Game game;
 
@@ -22,17 +23,19 @@ namespace Steering.FSM
              transitions = new List<ITransition>();
          }
 
-         public State(/*Game game, Deer deer,*/ IAction entryAction, IAction action, IAction exitAction)
+         public State(/*Game game, Deer deer,*/  String name, IAction entryAction, IAction action, IAction exitAction)
              : this()
          {
+             this.name = name;
              entryActions.Add(entryAction);
              actions.Add(action);
              exitActions.Add(exitAction);
          }
 
-         public State(IAction action)
+         public State(String name, IAction action)
              : this()
          {
+             this.name = name;
              actions.Add(action);
          }
 

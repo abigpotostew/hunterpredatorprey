@@ -42,11 +42,11 @@ namespace Steering
             resetWander resetWander = new resetWander();
             emptyAction emptyAction = new emptyAction();
 
-            State scaredState = new State(scaredAction);
-            State wanderState = new State(emptyAction, wanderAction, resetWander);
-            State grazeState = new State(grazeAction);
-            State fleeState = new State(fleeFromLionAction);
-            State flockState = new State(flockAction);
+            State scaredState = new State("scared", scaredAction);
+            State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
+            State grazeState = new State("graze", grazeAction);
+            State fleeState = new State("flee", fleeFromLionAction);
+            State flockState = new State("flock", flockAction);
 
 
 
@@ -69,18 +69,18 @@ namespace Steering
             // Transition gotoWander = new Transition(fearLessThan40, wanderState);
             //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
 
-            Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState);
-            Transition gotoWanderFromGraze = new Transition(wanderTrue, wanderState);
+            Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState, 0);
+            Transition gotoWanderFromGraze = new Transition(wanderTrue, wanderState, 0);
 
-            Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState);
-            Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState);
-            
-            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState);
-            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState);
+            Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState, 0);
+            Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState, 0);
+
+            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState, 0);
+            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState, 0);
             
             //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
-            Transition gotoFlee = new Transition(fearGreaterThan60, fleeState);
-            Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState);
+            Transition gotoFlee = new Transition(fearGreaterThan60, fleeState, 0);
+            Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
             //Transition gotoFlock = new Transition(andConditionFlock,flockState);
 
             gotoWanderFromScared.addActions(wanderAction);
@@ -238,6 +238,7 @@ namespace Steering
             foreach (Entity d in deers)
             {
                 d.Draw(gameTime, sb);
+                
                
             }
         }

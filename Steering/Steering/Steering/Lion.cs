@@ -17,6 +17,7 @@ namespace Steering
         //private KeyboardState keyboard;
         //private MouseState mouse;
         public float threat;
+        public bool visible;
         HierarchicalStateMachine hfsm;
         Game game;
 
@@ -30,7 +31,7 @@ namespace Steering
         void AttachLionHFSM()
         {
             WanderAction wanderAction = new WanderAction();
-            State wanderState = new State(wanderAction);
+            State wanderState = new State("wander", wanderAction);
             this.hfsm = new HierarchicalStateMachine(wanderState);
 
         }

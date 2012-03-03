@@ -51,6 +51,11 @@ namespace Steering
              
          }
 
+         public override void Draw(GameTime gt, SpriteBatch sb)
+         {
+             base.Draw(gt, sb);
+             sb.DrawString(Game.Font, "" + this.fsm.toString(), position - new Vector2(10, 10), Color.White);
+         }
          
     }
 }
