@@ -20,6 +20,7 @@ namespace Steering
         HierarchicalStateMachine hfsm;
         Game game;
         public Bush closestBushTarget;
+        public Deer closestDeerTarget;
         public bool visible = true;
 
         public Lion(Texture2D image, Vector2 position, Game game)
@@ -34,9 +35,15 @@ namespace Steering
         {
             //WanderAction wanderAction = new WanderAction();
             //State wanderState = new State(wanderAction);
-            State hideState = new State("hide", new SetTargetToClosestBush(), new HideAction(), null);
+            State hideState = new State("hide",new SetTargetToClosestBush(), new HideAction(), null);
             this.hfsm = new HierarchicalStateMachine(hideState);
 
+        }
+
+        public override void Draw(GameTime time, SpriteBatch sb)
+        {
+            base.Draw(time, sb);
+            sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
         }
 
         public override void Update(SteeringOutput steering, GameTime time)
