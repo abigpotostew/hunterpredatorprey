@@ -43,11 +43,13 @@ namespace Steering
             FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
             resetWander resetWander = new resetWander();
             emptyAction emptyAction = new emptyAction();
+            FlockAction flockAction = new FlockAction();
 
             State scaredState = new State("scared", scaredAction);
             State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
             State grazeState = new State("graze", grazeAction);
             State fleeState = new State("flee", fleeFromLionAction);
+            State flockState = new State("flock", flockAction);
             
 
 
