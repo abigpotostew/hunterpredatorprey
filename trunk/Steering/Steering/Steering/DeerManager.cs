@@ -14,7 +14,8 @@ namespace Steering
     public class DeerManager
     {
         List<Entity> deers, deerRemoval;
-        int deerCount, timer;
+        int deerCount, wanderTimer;
+        int longTimer, shortTimer;
         TimeSpan initialTime;
         Game game;
         Random random;
@@ -27,7 +28,9 @@ namespace Steering
             deerCount = 0;
             this.game = game;
             random = new Random();
-            timer = 1800;
+            longTimer = random.Next(1600, 1800);
+            shortTimer = random.Next(400, 600);
+            wanderTimer = 1800;
         }
 
         private void AttatchNewDeerFSM(Deer deer, Game game)
@@ -53,12 +56,14 @@ namespace Steering
             FearLessThan fearLessThan40 = new FearLessThan(40);
             Persuasion persuasion = new Persuasion();
             ThreatLevel lowThreatLevel = new ThreatLevel(20f);
-           
+            NeighborCountCondition neighborCount = new NeighborCountCondition(5);
             AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
-            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 1800);
-            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, 600);
-            RandomCondition randomCondition = new RandomCondition();
+            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, longTimer);
+            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer);
+            TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, shortTimer);
+            RandomCondition randomCondition = new RandomCondition(10, 5);
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
+            AndCondition andRandomNeighborCount = new AndCondition(randomCondition, neighborCount);
             WanderCondition wanderTrue = new WanderCondition();
             AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
             
@@ -74,8 +79,12 @@ namespace Steering
             Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState, 0);
             Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState, 0);
 
+            Transition gotoFlockfromGraze = new Transition(andRandomNeighborCount, flockState, 0);
+            Transition gotoGrazefromFlock = new Transition(flocktoGrazeTimer, grazeState, 0);
+
             Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState, 0);
             Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState, 0);
+            Transition gotoScaredFromFlock = new Transition(fearGreaterThan60, scaredState, 0);
             
             //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
             Transition gotoFlee = new Transition(fearGreaterThan60, fleeState, 0);
@@ -91,7 +100,9 @@ namespace Steering
             //gotoGraze.addActions(grazeAction);
             gotoFlee.addActions(fleeFromLionAction);
             gotoScaredFromFlee.addActions(scaredAction);
-            //gotoFlock.addActions(flockAction);
+            gotoFlockfromGraze.addActions(flockAction);
+            gotoGrazefromFlock.addActions(grazeAction);
+            gotoScaredFromFlock.addActions(scaredAction);
 
             //gotoWander.addActions(wanderAction);
             //gotoScared.addActions(scaredAction);
@@ -106,7 +117,11 @@ namespace Steering
             //grazeState.addTransition(gotoWanderFromGraze);
             grazeState.addTransition(gotoScaredFromGraze);
             grazeState.addTransition(gotoWanderFromGraze);
+            grazeState.addTransition(gotoFlockfromGraze);
             fleeState.addTransition(gotoScaredFromFlee);
+            flockState.addTransition(gotoGrazefromFlock);
+            flockState.addTransition(gotoScaredFromFlock);
+
             
 
             //scaredState.addTransition(gotoWander);
@@ -204,13 +219,13 @@ namespace Steering
             {
                 Deer d = (Deer)deers[i];
                 //check what state and timer cooldown
-                if (timer == 0)
+                if (wanderTimer == 0)
                 {
                     if (i == deerWander)
                     {
                         d.wander = true;
                     }
-                    timer = 1800;
+                    wanderTimer = 1800;
                 }
                 foreach (Bush b in game.gameWorld.getBushes())
                 {
