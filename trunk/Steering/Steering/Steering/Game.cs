@@ -94,7 +94,7 @@ namespace Steering
             //timer = new Timer();
 
             guy = new Hunter(hunter,new Vector2(200,200));
-            lion = new Lion(lionImg , new Vector2(400, 400));
+            lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 
             deerManager.CreateDeer(deerCt, jaguar);

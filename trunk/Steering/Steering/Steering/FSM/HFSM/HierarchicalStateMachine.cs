@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Steering.HFSM;
+using System;
 
 namespace Steering.FSM.HFSM
 {
@@ -16,8 +17,8 @@ namespace Steering.FSM.HFSM
         {
             this.initialState = initialState;
             this.states = new List<State>();
-            foreach ( State s in states)
-                this.states.Add(s);
+            for(int i = 0; i < states.Length; ++i)
+                this.states.Add(states[i]);
         }
 
         public HierarchicalStateMachine(State initialState)
@@ -25,8 +26,7 @@ namespace Steering.FSM.HFSM
         {
             this.initialState = initialState;
             this.states = new List<State>();
-            foreach (State s in states)
-                this.states.Add(s);
+            //this.states.Add(initialState);
         }
 
         public override List<State> GetStates()
@@ -42,6 +42,7 @@ namespace Steering.FSM.HFSM
 
             if (currentState == null)
             {
+                
                 currentState = initialState;
                 result = new UpdateResult(currentState.getEntryAction(), null, 0);
                 return result;
@@ -67,6 +68,7 @@ namespace Steering.FSM.HFSM
 
             else
             {
+                
                 result = currentState.Update();
             }
 
@@ -115,7 +117,8 @@ namespace Steering.FSM.HFSM
             {
                 //do normal action if there's no transition
                 foreach (IAction a in getActions())
-                    return result;
+                    result.actions.Add(a);
+                
             }
 
 
