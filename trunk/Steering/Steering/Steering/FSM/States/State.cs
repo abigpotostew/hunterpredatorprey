@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Steering.HFSM;
 
 namespace Steering.FSM
 {
-     public class State
+     public class State : HSMBase
     {
          List<IAction> actions, entryActions, exitActions;
          List<ITransition> transitions;
@@ -32,6 +33,13 @@ namespace Steering.FSM
              : this()
          {
              actions.Add(action);
+         }
+
+         public override List<State> GetStates()
+         {
+             List<State> states = base.GetStates();
+             states.Add(this);
+             return states;
          }
 
 

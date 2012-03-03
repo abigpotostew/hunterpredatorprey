@@ -38,7 +38,7 @@ namespace Steering
         const int deerCt = 50;
         DeerManager deerManager;
 
-        Timer timer;
+        //Timer timer;
         //float milliseconds;
 
         public static Rectangle bounds = new Rectangle(0,0,1024,768);
@@ -91,7 +91,7 @@ namespace Steering
             hunter = Content.Load<Texture2D>("hunter");
             lionImg = Content.Load<Texture2D>("lion");
 
-            timer = new Timer();
+            //timer = new Timer();
 
             guy = new Hunter(hunter,new Vector2(200,200));
             lion = new Lion(lionImg , new Vector2(400, 400));
@@ -115,10 +115,10 @@ namespace Steering
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            timer.startTimer();
+            /*timer.startTimer();
 
             if (timer.seconds == 15)
-                timer.stopTimer(0);
+                timer.stopTimer(0);*/
 
             guy.Update(Steerings.lookWhereGoing.getSteering(guy), gameTime);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
@@ -144,7 +144,7 @@ namespace Steering
             guy.Draw(gameTime, spriteBatch);
             deerManager.Draw(gameTime, spriteBatch);
 
-            spriteBatch.DrawString(Font, "Timer: " + timer.seconds.ToString(), new Vector2(0, 60), Color.Black);
+            //spriteBatch.DrawString(Font, "Timer: " + timer.seconds.ToString(), new Vector2(0, 60), Color.Black);
             //spriteBatch.DrawString(Font, "Use WASD to move & Q and E to rotate", Vector2.Zero, Color.Black);
             //spriteBatch.DrawString(Font, "Deer ori: "+deer.orientation, new Vector2(0, 20), Color.Black);
             //spriteBatch.DrawString(Font, "Deer Vel: " + deer.Velocity, new Vector2(0, 40), Color.Black);

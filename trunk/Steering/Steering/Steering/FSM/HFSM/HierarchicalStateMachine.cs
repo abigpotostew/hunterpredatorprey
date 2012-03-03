@@ -1,0 +1,146 @@
+﻿using System.Collections.Generic;
+using Steering.HFSM;
+
+namespace Steering.FSM.HFSM
+{
+    public class HierarchicalStateMachine : State
+    {
+        List<State> states;
+        State initialState;
+        protected State currentState;
+
+        Game game;
+
+        public HierarchicalStateMachine(State initialState, params State[] states)
+            :base()
+        {
+            this.initialState = initialState;
+            this.states = new List<State>();
+            foreach ( State s in states)
+                this.states.Add(s);
+        }
+
+        public HierarchicalStateMachine(State initialState)
+            : base()
+        {
+            this.initialState = initialState;
+            this.states = new List<State>();
+            foreach (State s in states)
+                this.states.Add(s);
+        }
+
+        public override List<State> GetStates()
+        {
+            if ( currentState != null )
+                return currentState.GetStates();
+            else return new List<State>();
+        }
+
+        public override UpdateResult Update()
+        {
+            UpdateResult result;
+
+            if (currentState == null)
+            {
+                currentState = initialState;
+                result = new UpdateResult(currentState.getEntryAction(), null, 0);
+                return result;
+            }
+
+            Transition triggeredTransition = null;
+            foreach ( Transition t in currentState.getTransitions() )
+            {
+                if (t.isTriggered(game, game.lion))
+                {
+                    triggeredTransition = t;
+                    break;
+                }
+            }
+
+            if (triggeredTransition != null)
+            {
+                result = new UpdateResult();
+                result.actions = new List<IAction>();
+                result.transition = triggeredTransition;
+                result.level = triggeredTransition.getLevel();
+            }
+
+            else
+            {
+                result = currentState.Update();
+            }
+
+            if (result.transition != null)
+            {
+                State targetState;
+                if (result.level == 0)
+                {
+                    targetState = result.transition.getTargetState();
+                    foreach (IAction a in currentState.getExitAction())
+                        result.actions.Add(a);
+                    foreach (IAction a in result.transition.getActions())
+                        result.actions.Add(a);
+                    foreach (IAction a in targetState.getEntryAction())
+                        result.actions.Add(a);
+
+                    currentState = targetState;
+
+                    foreach (IAction a in getActions())
+                        result.actions.Add(a);
+
+                    result.transition = null;
+                }
+                else if (result.level > 0)
+                {
+                    foreach (IAction a in currentState.getExitAction())
+                        result.actions.Add(a);
+                    currentState = null;
+
+                    result.level -= 1;
+                }
+                else
+                {
+                    targetState = result.transition.getTargetState();
+                    HierarchicalStateMachine targetMachine = targetState.parent;
+                    foreach (IAction a in result.transition.getActions())
+                        result.actions.Add(a);
+                    foreach (IAction a in targetMachine.UpdateDown(targetState, -result.level-1))
+                        result.actions.Add(a);
+
+                    result.transition = null;
+
+                }
+            }
+            else
+            {
+                //do normal action if there's no transition
+                foreach (IAction a in getActions())
+                    return result;
+            }
+
+
+            return result;
+        }
+
+        public List<IAction> UpdateDown( State state, int level)
+        {
+            List<IAction> actions;
+            if (level > 0)
+                actions = parent.UpdateDown(this, level - 1);
+            else actions = new List<IAction>();
+
+            if (currentState != null)
+                foreach (IAction a in currentState.getExitAction())
+                    actions.Add(a);
+
+            currentState = state;
+            foreach (IAction a in state.getEntryAction())
+                actions.Add(a);
+
+            return actions;
+
+        }
+
+        
+    }
+}

@@ -60,13 +60,13 @@ namespace Steering
             // Transition gotoWander = new Transition(fearLessThan40, wanderState);
             //Transition gotoScared = new Transition(fearGreaterThan60, scaredState);
 
-            Transition gotoWanderFromScared = new Transition(fearLessThan40, wanderState);
+            Transition gotoWanderFromScared = new Transition(fearLessThan40, wanderState,0);
             //Transition gotoWanderFromGraze = new Transition(andConditionWander, wanderState);
-            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState);
-            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState);
+            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState,0);
+            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState,0);
             //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
-            Transition gotoFlee = new Transition(fearGreaterThan100, fleeState);
-            Transition gotoScaredFromFlee = new Transition(fearLessThan40, scaredState);
+            Transition gotoFlee = new Transition(fearGreaterThan100, fleeState,0);
+            Transition gotoScaredFromFlee = new Transition(fearLessThan40, scaredState,0);
             //Transition gotoFlock = new Transition(andConditionFlock,flockState);
 
             gotoWanderFromScared.addActions(wanderAction);

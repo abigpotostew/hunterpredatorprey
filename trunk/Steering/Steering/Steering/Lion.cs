@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Steering.FSM.HFSM;
 
 namespace Steering
 {
@@ -14,11 +15,18 @@ namespace Steering
         //private KeyboardState keyboard;
         //private MouseState mouse;
         public float threat;
+        HierarchicalStateMachine hsfm;
 
         public Lion(Texture2D image, Vector2 position)
             : base(image, position, 0.01f, 4)
         {
             //orientation
+        }
+
+        void AttachLionHFSM()
+        {
+
+
         }
 
         public override void Update(SteeringOutput steering, GameTime time)

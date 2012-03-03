@@ -10,16 +10,18 @@ namespace Steering.FSM
         public List<IAction> actions;
         public State targetState;
         public ICondition condition;
+        public int level;
         //Deer deer;
         //Game game;
 
-        public Transition(/*Game game, Deer deer,*/ ICondition condition, State targetState)
+        public Transition(/*Game game, Deer deer,*/ ICondition condition, State targetState, int level)
         {
             /*this.game = game;
             this.deer = deer;*/
             this.condition = condition;
             this.targetState = targetState;
             actions = new List<IAction>();
+            this.level = level;
         }
 
         public bool isTriggered(Game g, Entity e)
@@ -38,6 +40,11 @@ namespace Steering.FSM
         public List<IAction> getActions()
         {
             return actions;
+        }
+
+        public int getLevel()
+        {
+            return level;
         }
     }
 }

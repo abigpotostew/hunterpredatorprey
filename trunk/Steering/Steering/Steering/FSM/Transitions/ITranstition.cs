@@ -10,5 +10,6 @@ namespace Steering.FSM
         bool isTriggered(Game g, Entity e);
         State getTargetState();
         List<IAction> getActions();
+        int getLevel();
 	}
 }
