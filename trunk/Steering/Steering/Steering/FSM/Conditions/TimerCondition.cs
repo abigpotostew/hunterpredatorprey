@@ -8,13 +8,16 @@ namespace Steering.FSM.Conditions
 {
     class TimerCondition : ICondition
     {
-        int timer = 3600; //3600
+        int timer;
+        int seconds;
         TimeSpan originalTime;
  
         public TimerCondition(TimeSpan intialTime, int seconds)
         {
             originalTime = intialTime;
+            this.seconds = seconds;
             timer = seconds;
+            
         }
 
         public bool test(Game game, Entity character)
@@ -27,7 +30,11 @@ namespace Steering.FSM.Conditions
               else
                 --timer; */
             --timer;
-            if (timer == 0) return true;
+            if (timer == 0)
+            {
+                timer = seconds;
+                return true;
+            }
             return false;
         }
     }

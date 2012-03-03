@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Steering.Steering;
+using System.Timers;
 
 namespace Steering
 {
@@ -114,12 +115,12 @@ namespace Steering
 
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
-
+            /*
             /*timer.startTimer();
 
             if (timer.seconds == 15)
                 timer.stopTimer(0);*/
-
+            */
             guy.Update(Steerings.lookWhereGoing.getSteering(guy), gameTime);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
             deerManager.Update(gameTime);
