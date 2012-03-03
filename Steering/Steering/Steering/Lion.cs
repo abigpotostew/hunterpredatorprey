@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Steering.FSM.HFSM;
+using Steering.FSM.Actions;
+using Steering.FSM;
 
 namespace Steering
 {
@@ -15,17 +17,21 @@ namespace Steering
         //private KeyboardState keyboard;
         //private MouseState mouse;
         public float threat;
-        HierarchicalStateMachine hsfm;
+        HierarchicalStateMachine hfsm;
+        Game game;
 
-        public Lion(Texture2D image, Vector2 position)
-            : base(image, position, 0.01f, 4)
+        public Lion(Texture2D image, Vector2 position, Game game)
+            : base(image, position, 0.1f, 4)
         {
             //orientation
+            AttachLionHFSM();
         }
 
         void AttachLionHFSM()
         {
-
+            WanderAction wanderAction = new WanderAction();
+            State wanderState = new State(wanderAction);
+            this.hfsm = new HierarchicalStateMachine(wanderState);
 
         }
 
@@ -57,15 +63,20 @@ namespace Steering
                 keyPressed = true;
             }
 
-            if (!keyPressed) velocity = new Vector2();
+            //if (!keyPressed) velocity = new Vector2();
 
-            if (velocity.Length() > MaxSpeed)
+            /*if (velocity.Length() > MaxSpeed)
             {
                 velocity.Normalize();
                 velocity *= maxSpeed;
-            }
+            }*/
 
             this.threat = velocity.Length();
+
+            UpdateResult result = hfsm.Update();
+            foreach (IAction a in result.actions)
+                steering += a.execute(game, this);
+            //Console.Write(" " + result.actions.Count + " ");
 
             base.Update(steering, time);
         }

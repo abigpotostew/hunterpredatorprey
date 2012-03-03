@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Steering.HFSM;
+using Steering.FSM.HFSM;
 
 namespace Steering.FSM
 {
@@ -43,6 +44,7 @@ namespace Steering.FSM
          }
 
 
+
          public List<IAction> getAction()
          {
              return actions;
@@ -67,6 +69,12 @@ namespace Steering.FSM
              {
                  transitions.Add(tran);
              }
+         }
+
+
+         public override UpdateResult Update()
+         {
+             return new UpdateResult(getAction(), null, 0);
          }
     }
 }
