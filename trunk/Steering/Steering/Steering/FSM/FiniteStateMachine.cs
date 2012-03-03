@@ -70,5 +70,10 @@ namespace Steering.FSM
 
 
         }
+
+        public String toString()
+        {
+            return currentState.name;
+        }
     }
 }
