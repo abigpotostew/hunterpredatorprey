@@ -29,8 +29,8 @@ namespace Steering
             this.game = game;
             random = new Random();
             longTimer = random.Next(1600, 1800);
-            shortTimer = random.Next(400, 600);
-            wanderTimer = 1800;
+            shortTimer = random.Next(800, 1200);
+            wanderTimer = random.Next(600, 1500);
         }
 
         private void AttatchNewDeerFSM(Deer deer, Game game)
@@ -50,24 +50,25 @@ namespace Steering
             State grazeState = new State("graze", grazeAction);
             State fleeState = new State("flee", fleeFromLionAction);
             State flockState = new State("flock", flockAction);
-            
 
 
 
+            FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
-            Persuasion persuasion = new Persuasion();
+           // Persuasion persuasion = new Persuasion();
             ThreatLevel lowThreatLevel = new ThreatLevel(20f);
             NeighborCountCondition neighborCount = new NeighborCountCondition(5);
-            AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
-            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, longTimer);
-            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer);
+            //AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
+            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 2000);
+            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer); //800 to 1200
             TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, shortTimer);
             RandomCondition randomCondition = new RandomCondition(10, 5);
+            
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
             AndCondition andRandomNeighborCount = new AndCondition(randomCondition, neighborCount);
             WanderCondition wanderTrue = new WanderCondition();
-            AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
+            //AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
             
 
             //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
@@ -89,7 +90,7 @@ namespace Steering
             Transition gotoScaredFromFlock = new Transition(fearGreaterThan60, scaredState, 0);
             
             //Transition gotoGraze = new Transition(andConditionGraze, grazeState);
-            Transition gotoFlee = new Transition(fearGreaterThan60, fleeState, 0);
+            Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
             Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
             //Transition gotoFlock = new Transition(andConditionFlock,flockState);
 
@@ -140,7 +141,7 @@ namespace Steering
                 Deer deerTmp = new Deer(game, deerImg, new Vector2((float)Game.r.NextDouble() * Game.bounds.Width, (float)Game.r.NextDouble() * Game.bounds.Height));
                 deers.Add(deerTmp);
                 deerCount++;
-                AttatchNewDeerFSM(deerTmp);
+                AttatchNewDeerFSM(deerTmp, game);
                 
             }
             //return d;
@@ -221,13 +222,14 @@ namespace Steering
             {
                 Deer d = (Deer)deers[i];
                 //check what state and timer cooldown
+                --wanderTimer;
                 if (wanderTimer == 0)
                 {
                     if (i == deerWander)
                     {
                         d.wander = true;
                     }
-                    wanderTimer = 1800;
+                    wanderTimer = random.Next(600, 1500);
                 }
                 foreach (Bush b in game.gameWorld.getBushes())
                 {
