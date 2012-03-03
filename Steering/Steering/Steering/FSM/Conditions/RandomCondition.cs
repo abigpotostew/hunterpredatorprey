@@ -7,16 +7,18 @@ namespace Steering.FSM.Conditions
 {
     class RandomCondition: ICondition
     {
+        int range, chance;
         Random r = new Random();
         int testrandom;
-        public RandomCondition()
+        public RandomCondition(int range, int chance)
         {
-            //Random r = new Random();
+            this.range = range;
+            this.chance = chance;
         }
         public bool test(Game g, Entity e)
         {
-            testrandom = r.Next(1, 10);
-            if (testrandom == 5) return true;
+            testrandom = r.Next(1, range);
+            if (testrandom == chance) return true;
             else return false;
         }
     }
