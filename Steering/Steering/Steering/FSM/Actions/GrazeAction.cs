@@ -10,8 +10,10 @@ namespace Steering.FSM.Actions
     {
         SteeringOutput IAction.execute(Game game, Entity character)
         {
+            character.Velocity *= 0.9f;
             return Steerings.separationFromDeer.getSteering(character, character.neighbors) +
-            Steerings.cohesion.getSteering(character, character.neighbors);
+            Steerings.cohesion.getSteering(character, character.neighbors);//+
+            //Steerings.arriveGraze.getSteering(character,character.neighbors);
         }
     }
 }

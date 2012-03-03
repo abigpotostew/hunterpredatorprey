@@ -17,24 +17,24 @@ namespace Steering
         //private KeyboardState keyboard;
         //private MouseState mouse;
         public float threat;
-        public bool visible;
         HierarchicalStateMachine hfsm;
         Game game;
-        bool isVisible;
+        public Bush closestBushTarget;
 
         public Lion(Texture2D image, Vector2 position, Game game)
             : base(image, position, 0.1f, 4)
         {
             //orientation
+            this.game = game;
             AttachLionHFSM();
-            isVisible = true;
         }
 
         void AttachLionHFSM()
         {
-            WanderAction wanderAction = new WanderAction();
-            State wanderState = new State("wander", wanderAction);
-            this.hfsm = new HierarchicalStateMachine(wanderState);
+            //WanderAction wanderAction = new WanderAction();
+            //State wanderState = new State(wanderAction);
+            State hideState = new State(new SetTargetToClosestBush(), new HideAction(), null);
+            this.hfsm = new HierarchicalStateMachine(hideState);
 
         }
 
