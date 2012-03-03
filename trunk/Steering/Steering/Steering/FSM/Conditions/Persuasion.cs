@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Steering.FSM.Conditions
 {
-    class Persuasion
+    class Persuasion : ICondition
     {
         public Persuasion()
         {

@@ -30,7 +30,7 @@ namespace Steering
             timer = 1800;
         }
 
-        private void AttatchNewDeerFSM(Deer deer)
+        private void AttatchNewDeerFSM(Deer deer, Game game)
         {
             //add states into fsm
 
@@ -38,7 +38,6 @@ namespace Steering
             WanderAction wanderAction = new WanderAction();
             GrazeAction grazeAction = new GrazeAction();
             FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
-            FlockAction flockAction = new FlockAction();
             resetWander resetWander = new resetWander();
             emptyAction emptyAction = new emptyAction();
 
@@ -46,7 +45,7 @@ namespace Steering
             State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
             State grazeState = new State("graze", grazeAction);
             State fleeState = new State("flee", fleeFromLionAction);
-            State flockState = new State("flock", flockAction);
+            
 
 
 
@@ -55,13 +54,13 @@ namespace Steering
             Persuasion persuasion = new Persuasion();
             ThreatLevel lowThreatLevel = new ThreatLevel(20f);
            
-            //AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
+            AndCondition andConditionGraze = new AndCondition(persuasion, lowThreatLevel);
             TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 1800);
             TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, 600);
             RandomCondition randomCondition = new RandomCondition();
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
             WanderCondition wanderTrue = new WanderCondition();
-            //AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
+            AndCondition andConditionFlock = new AndCondition(fearLessThan40, timerCondition);
             
 
             //FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);

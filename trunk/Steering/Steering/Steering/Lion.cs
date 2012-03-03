@@ -20,12 +20,14 @@ namespace Steering
         public bool visible;
         HierarchicalStateMachine hfsm;
         Game game;
+        bool isVisible;
 
         public Lion(Texture2D image, Vector2 position, Game game)
             : base(image, position, 0.1f, 4)
         {
             //orientation
             AttachLionHFSM();
+            isVisible = true;
         }
 
         void AttachLionHFSM()
