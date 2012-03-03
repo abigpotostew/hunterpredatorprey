@@ -29,6 +29,13 @@ namespace Steering.FSM.HFSM
             //this.states.Add(initialState);
         }
 
+        public override string ToString()
+        {
+            if (currentState != null)
+                return currentState.name;
+            else return "";
+        }
+
         public override List<State> GetStates()
         {
             if ( currentState != null )

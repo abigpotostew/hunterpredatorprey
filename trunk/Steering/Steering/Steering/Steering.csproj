@@ -123,10 +123,10 @@
     <Compile Include="FSM\Actions\resetWander.cs" />
     <Compile Include="FSM\Actions\ScaredAction.cs" />
     <Compile Include="FSM\Actions\SetTargetToClosestBush.cs" />
+    <Compile Include="FSM\Actions\WaitInBushAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountCondition.cs" />
-    <Compile Include="FSM\Conditions\Persuasion.cs" />
     <Compile Include="FSM\Conditions\RandomCondition.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan2.cs" />

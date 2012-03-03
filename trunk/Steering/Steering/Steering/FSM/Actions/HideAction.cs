@@ -12,6 +12,7 @@ namespace Steering.FSM.Actions
         {
             //lion will creep to a bush and wait for a while
             SteeringOutput result = Steerings.arriveBush.getSteering(character, game.lion.closestBushTarget);
+            //slow the lion down
             result.maxSpeed = 1f;
             return result;
         }
