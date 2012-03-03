@@ -18,6 +18,7 @@ namespace Steering
         Random levelRand = new Random();
         int x_dim;
         int y_dim;
+        int numBushes;
         int[,] textures;
         private List<Bush> bushes;
         private Texture2D tile1, tile2, tile3, bush;
@@ -40,15 +41,9 @@ namespace Steering
                 }
 
             }
+            this.numBushes = numBushes;
 
-            for (int l = 0; l < numBushes; l++)
-            {
-                int random_x = levelRand.Next(0, x_dim - 1);
-                int random_y = levelRand.Next(0, y_dim - 1);
-                Vector2 position = new Vector2(random_x * 50, random_y * 50);
-                Bush b = new Bush(position);
-                bushes.Add(b);
-            }
+            
 
         }
 
@@ -63,9 +58,34 @@ namespace Steering
             tile2 = game.Content.Load<Texture2D>("Grass002");
             tile3 = game.Content.Load<Texture2D>("Grass003");
             bush = game.Content.Load<Texture2D>("Bush");
+
+            for (int l = 0; l < numBushes; l++)
+            {
+                int random_x = levelRand.Next(0, x_dim - 1);
+                int random_y = levelRand.Next(0, y_dim - 1);
+                Vector2 position = new Vector2(random_x * 50, random_y * 50);
+                Bush b = new Bush(bush,position);
+                bushes.Add(b);
+            }
         }
 
-        public void draw(SpriteBatch batch)
+        public Bush ClosestBush(Vector2 position)
+        {
+            int closestIndex = 0;
+            float[] distancesSq = new float[bushes.Count];
+            for (int i = 0; i < distancesSq.Length; ++i)
+            {
+                distancesSq[i] = Vector2.DistanceSquared(position, bushes[i].position);
+            }
+            for (int i = 1; i < distancesSq.Length; ++i)
+            {
+                if (distancesSq[i] < distancesSq[closestIndex])
+                    closestIndex = i;
+            }
+            return bushes[closestIndex];
+        }
+
+        public void draw(GameTime time, SpriteBatch batch)
         {
             Texture2D toDraw = null;
             int temp = 0;
@@ -96,7 +116,7 @@ namespace Steering
 
             foreach (Bush b in bushes)
             {
-                b.draw(batch, bush);
+                b.Draw(time,batch);
             }
 
         }

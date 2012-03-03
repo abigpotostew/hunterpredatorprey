@@ -122,7 +122,7 @@ namespace Steering
         {
             if (isColliding) debugCircle.Colour = Color.Tomato;
             else debugCircle.Colour = Color.White;
-            debugCircle.Draw(sb);
+            //debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
             sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);

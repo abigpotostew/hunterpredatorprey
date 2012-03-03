@@ -63,7 +63,17 @@ namespace Steering.Steering
 
         public SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
-            throw new NotImplementedException();
+            if (targets.Count > 0)
+            {
+                Vector2 avgPos = new Vector2();
+                foreach (Entity e in targets)
+                {
+                    avgPos += e.Position;
+                }
+                avgPos /= targets.Count;
+                return this.getSteering(character, new Entity(avgPos));
+            }
+            return new SteeringOutput();
         }
 
         public SteeringOutput getSteering(Entity character)

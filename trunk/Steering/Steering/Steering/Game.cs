@@ -94,7 +94,7 @@ namespace Steering
 
             //timer = new Timer();
 
-            guy = new Hunter(hunter,new Vector2(200,200));
+            guy = new Hunter(hunter, new Vector2(200,200));
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 
@@ -139,7 +139,7 @@ namespace Steering
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            gameWorld.draw(spriteBatch);
+            gameWorld.draw(gameTime, spriteBatch);
 
             lion.Draw(gameTime, spriteBatch);
             guy.Draw(gameTime, spriteBatch);
