@@ -115,6 +115,7 @@
     <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="FSM\Actions\emptyAction.cs" />
+    <Compile Include="FSM\Actions\FleeAction.cs" />
     <Compile Include="FSM\Actions\FleeFromLionAction.cs" />
     <Compile Include="FSM\Actions\FlockAction.cs" />
     <Compile Include="FSM\Actions\GrazeAction.cs" />
@@ -140,7 +141,12 @@
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="FSM\HFSM\SubMachineState.cs" />
     <Compile Include="FSM\HFSM\UpdateResult.cs" />
+    <Compile Include="FSM\States\FleeState.cs" />
+    <Compile Include="FSM\States\FlockState.cs" />
+    <Compile Include="FSM\States\GrazeState.cs" />
+    <Compile Include="FSM\States\ScaredState.cs" />
     <Compile Include="FSM\States\State.cs" />
+    <Compile Include="FSM\States\WanderState.cs" />
     <Compile Include="FSM\Transitions\ITranstition.cs" />
     <Compile Include="FSM\Transitions\Transition.cs" />
     <Compile Include="FSM\HFSM\HierarchicalStateMachine.cs" />
@@ -167,6 +173,8 @@
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\x86\Debug\Steering.exe" />
+    <Content Include="bin\x86\Debug\Steering.pdb" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>

@@ -2,35 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Steering.Collision;
 
 namespace Steering
 {
-    public class Hunter : Entity
+    class Spear : Entity
     {
-        //private KeyboardState keyboard;
-        //private MouseState mouse;
-        int health = 2;
-        
-        public float threat;
-        
-        public bool spearJab;
-        public bool spearThrow;
-        DateTime timing;
         const double holdKeyWait = 0.25;
+        DateTime timing;
+        Circle collide;
+        Vector2 position;
 
-
-        public Hunter(Texture2D image, Vector2 position)
+        public Spear(Texture2D image, Vector2 position)
             : base(image, position, 1, 4)
         {
-            //orientation
-            spearJab = false;
-            spearThrow = false;
+            collide = new Circle((int)position.X + 4, (int)position.Y - 1, 2.0);
+            this.position = position;
         }
 
-        public override void Update(SteeringOutput steering, GameTime time)
+        public override void Update(SteeringOutput steering, GameTime time, Hunter hunter)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
@@ -57,17 +50,20 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
-            if (Game.keyboard.IsKeyDown(Keys.Space))
+            if (hunter.spearJab == true)
             {
-                keyPressed = true;
-                spearJab = true;
+                //goes a certain distance
+                //returns to the hunter's hand
+                hunter.spearJab = false;
             }
-            if (Game.keyboard.IsKeyDown(Keys.Space) &&
-                DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))
+            if (hunter.spearThrow == true)
             {
-                keyPressed = true;
-                spearThrow = true;
-            } 
+                //thrown
+                //goes a certain distance
+                //returns to the hunter's hand
+                hunter.spearThrow = false;
+            }
+            
             if (!keyPressed) velocity = new Vector2();
 
             if (velocity.Length() > MaxSpeed)
