@@ -34,6 +34,7 @@ namespace Steering
 
         public Hunter guy;
         public Lion lion;
+        public Spear spear;
         //Deer deer;
 
         const int deerCt = 50;
@@ -48,6 +49,7 @@ namespace Steering
             
         Texture2D jaguar;
         Texture2D hunter;
+        Texture2D spearImg;
         Texture2D lionImg;
 
         public static Texture2D whitepixel;
@@ -90,11 +92,13 @@ namespace Steering
             gameWorld.loadTiles(this);
             jaguar = Content.Load<Texture2D>("jaguardot");
             hunter = Content.Load<Texture2D>("hunter");
+            spearImg = Content.Load<Texture2D>("spear");
             lionImg = Content.Load<Texture2D>("lion");
 
             //timer = new Timer();
 
             guy = new Hunter(hunter, new Vector2(200,200));
+            spear = new Spear(spearImg, new Vector2(240,195));
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 
@@ -122,6 +126,7 @@ namespace Steering
                 timer.stopTimer(0);*/
             
             guy.Update(Steerings.lookWhereGoing.getSteering(guy), gameTime);
+            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
             deerManager.Update(gameTime);
             base.Update(gameTime);
@@ -143,6 +148,7 @@ namespace Steering
 
             lion.Draw(gameTime, spriteBatch);
             guy.Draw(gameTime, spriteBatch);
+            spear.Draw(gameTime, spriteBatch);
             deerManager.Draw(gameTime, spriteBatch);
 
             //spriteBatch.DrawString(Font, "Timer: " + timer.seconds.ToString(), new Vector2(0, 60), Color.Black);
