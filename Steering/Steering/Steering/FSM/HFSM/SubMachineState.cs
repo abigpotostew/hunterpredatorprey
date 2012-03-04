@@ -9,14 +9,14 @@ namespace Steering.FSM.HFSM
     {
         protected State state;
 
-        public SubMachineState(State initialState)
-            : base(initialState)
+        public SubMachineState(Game g, State initialState)
+            : base(g, initialState)
         {
             this.state = new State();
         }
 
-        public SubMachineState(State initialState, params State[] states)
-            : base(initialState, states)
+        public SubMachineState(Game g, State initialState, params State[] states)
+            : base(g, initialState, states)
         {
             this.state = new State();
             foreach (State s in states)

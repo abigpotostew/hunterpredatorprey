@@ -23,7 +23,7 @@ namespace Steering.Steering
             float targetSpeed;
             Vector2 targetVelocity;
 
-            //Vector2 direction = Character.Position - Target.Position;
+            //Vector2 direction = character.Position - target.Position;
             Vector2 direction = target.Position - character.Position;
             float distance = direction.Length();
 

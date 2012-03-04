@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Steering.Steering;
 
 namespace Steering.FSM.Actions
 {
@@ -13,7 +14,8 @@ namespace Steering.FSM.Actions
         {
             character.Velocity = new Vector2();
             //return look at target
-            return new SteeringOutput();
+            game.lion.closestDeerTarget = game.deerManager.FindClosestDeer(game.lion.Position);
+            return Steerings.face.getSteering(character, game.lion.closestDeerTarget);
         }
     }
 }

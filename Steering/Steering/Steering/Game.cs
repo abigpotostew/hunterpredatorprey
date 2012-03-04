@@ -37,7 +37,7 @@ namespace Steering
         //Deer deer;
 
         const int deerCt = 50;
-        DeerManager deerManager;
+        public DeerManager deerManager;
 
         //Timer timer;
         //float milliseconds;
@@ -85,7 +85,7 @@ namespace Steering
 
             whitepixel = Content.Load<Texture2D>("whitepixel");
 
-            gameWorld = new World(graphics, 7);
+            gameWorld = new World(graphics, 1);
 
             gameWorld.loadTiles(this);
             jaguar = Content.Load<Texture2D>("jaguardot");

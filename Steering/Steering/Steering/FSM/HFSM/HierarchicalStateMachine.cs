@@ -12,8 +12,14 @@ namespace Steering.FSM.HFSM
 
         Game game;
 
-        public HierarchicalStateMachine(State initialState, params State[] states)
+        public HierarchicalStateMachine(Game g)
             :base()
+        {
+            this.game = g;
+        }
+
+        public HierarchicalStateMachine(Game g, State initialState, params State[] states)
+            :this(g)
         {
             this.initialState = initialState;
             this.states = new List<State>();
@@ -21,8 +27,8 @@ namespace Steering.FSM.HFSM
                 this.states.Add(states[i]);
         }
 
-        public HierarchicalStateMachine(State initialState)
-            : base()
+        public HierarchicalStateMachine(Game g, State initialState)
+            : this(g)
         {
             this.initialState = initialState;
             this.states = new List<State>();
