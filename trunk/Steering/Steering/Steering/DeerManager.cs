@@ -185,6 +185,22 @@ namespace Steering
             } 
         }
 
+        public Entity FindClosestDeer(Vector2 position)
+        {
+            float[] distancesSq = new float[deers.Count];
+            for (int i = 0; i < deers.Count; ++i)
+            {
+                distancesSq[i] = Vector2.DistanceSquared(position, deers[i].Position);
+            }
+            float minDist = distancesSq.Min();
+            for (int i = 0; i < deers.Count; ++i)
+            {
+                if (distancesSq[i] == minDist)
+                    return deers[i];
+            }
+            return deers[0];
+        }
+
         void UpdateDeerNeighbors()
         {
             for ( int i = 0; i < deers.Count; ++i)

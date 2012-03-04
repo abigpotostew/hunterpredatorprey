@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Steering.FSM.HFSM;
 using Steering.FSM.Actions;
 using Steering.FSM;
+using Steering.FSM.Conditions;
 
 namespace Steering
 {
@@ -20,7 +21,7 @@ namespace Steering
         HierarchicalStateMachine hfsm;
         Game game;
         public Bush closestBushTarget;
-        public Deer closestDeerTarget;
+        public Entity closestDeerTarget;
         public bool visible = true;
 
         public Lion(Texture2D image, Vector2 position, Game game)
@@ -35,8 +36,14 @@ namespace Steering
         {
             //WanderAction wanderAction = new WanderAction();
             //State wanderState = new State(wanderAction);
-            State hideState = new State("hide",new SetTargetToClosestBush(), new HideAction(), null);
-            this.hfsm = new HierarchicalStateMachine(hideState);
+            State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
+            State waitState = new State("wait",new WaitInBushAction());
+
+            Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
+            //arriveAtBush.addActions(new WaitInBushAction());
+            hideState.addTransition(arriveAtBush);
+
+            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState);
 
         }
 
