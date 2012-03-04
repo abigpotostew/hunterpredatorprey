@@ -142,7 +142,7 @@ namespace Steering
         }
 
         float avgFear;
-        public void calcDeersFear() //change all deer fear
+        public void calcDeersFear() //change all deer fear, if threat is low then dont update fear
         {
             for (int i = 0; i < deers.Count; ++i)
             {
@@ -153,13 +153,13 @@ namespace Steering
                 {
                     d.addFear(100);
                 }
-                else if (distance < 200) //if the lion is within a distance ///////////////////
+                else if (distance < 300) //if the lion is within a distance ///////////////////
                 {
-                    float fear = 200 / distance; //200/dist so 1 to 200 counts (hopefully works right)
+                    float fear = 300 / distance; //200/dist so 1 to 200 counts (hopefully works right)
                     d.addFear(fear * .6f); // did this because fear goes up waay to quick
                     //deers[i].addFear(game.lion.Velocity.Length());
                 }
-                else if (distance > 250)//created a deadzone inbetween, like alert zone
+                else if (distance > 350)//created a deadzone inbetween, like alert zone
                     deers[i].decayFear();
             }
 
