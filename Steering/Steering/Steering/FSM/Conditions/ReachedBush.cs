@@ -11,10 +11,12 @@ namespace Steering.FSM.Conditions
         public bool test(Game g, Entity e)
         {
             Vector2 direction = g.lion.closestBushTarget.posit - g.lion.Position;
-            float len = direction.Length();
-            Console.Write(" " + len);
-            if ( len < 20)
+            float len = direction.LengthSquared();
+            if ( len < 9 )
+            {
+                g.lion.visible = false;
                 return true;
+            }
             return false;
         }
     }
