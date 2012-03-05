@@ -13,7 +13,7 @@ namespace Steering.FSM.Conditions
             Vector2 direction = g.lion.closestBushTarget.position*50 - g.lion.Position;
             float len = direction.Length();
             Console.Write(" " + len);
-            if ( len < 480)
+            if ( len < 20)
                 return true;
             return false;
         }

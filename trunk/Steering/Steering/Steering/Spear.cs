@@ -9,7 +9,7 @@ using Steering.Collision;
 
 namespace Steering
 {
-    class Spear : Entity
+    public class Spear : Entity
     {
         const double holdKeyWait = 0.25;
         DateTime timing;
@@ -19,11 +19,11 @@ namespace Steering
         public Spear(Texture2D image, Vector2 position)
             : base(image, position, 1, 4)
         {
-            collide = new Circle((int)position.X + 4, (int)position.Y - 1, 2.0);
+            collide = new Circle((int)position.X + 4, (int)position.Y - 1, 2);
             this.position = position;
         }
 
-        public override void Update(SteeringOutput steering, GameTime time, Hunter hunter)
+        public void Update(SteeringOutput steering, GameTime time, Hunter hunter)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();

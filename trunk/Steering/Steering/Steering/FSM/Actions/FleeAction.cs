@@ -7,12 +7,8 @@ namespace Steering.FSM.Actions
 {
     class FleeAction : IAction
     {
-        SteeringOutput IAction.execute(Entity character, Entity target)
-        {
-            throw new NotImplementedException();
-        }
 
-        SteeringOutput IAction.execute(Entity character, List<Entity> targets)
+        public SteeringOutput execute(Game game, Entity character)
         {
             throw new NotImplementedException();
         }
