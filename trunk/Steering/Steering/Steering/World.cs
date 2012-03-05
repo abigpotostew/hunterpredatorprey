@@ -64,8 +64,6 @@ namespace Steering
                 int random_x = levelRand.Next(0, x_dim - 1);
                 int random_y = levelRand.Next(0, y_dim - 1);
                 Vector2 position = new Vector2(random_x * 50, random_y * 50);
-                position.X += 25;
-                position.Y += 25;
                 Bush b = new Bush(bush,position);
                 bushes.Add(b);
             }
@@ -77,7 +75,7 @@ namespace Steering
             float[] distancesSq = new float[bushes.Count];
             for (int i = 0; i < bushes.Count; ++i)
             {
-                distancesSq[i] = ( Vector2.DistanceSquared(position*50, bushes[i].posit) );
+                distancesSq[i] = ( Vector2.DistanceSquared(position, bushes[i].posit) );
             }
             
             for (int i = 1; i < distancesSq.Length; ++i)
