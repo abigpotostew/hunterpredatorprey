@@ -75,7 +75,7 @@ namespace Steering
             float[] distancesSq = new float[bushes.Count];
             for (int i = 0; i < bushes.Count; ++i)
             {
-                distancesSq[i] = ( Vector2.DistanceSquared(position, bushes[i].position) );
+                distancesSq[i] = ( Vector2.DistanceSquared(position*50, bushes[i].position) );
             }
             
             for (int i = 1; i < distancesSq.Length; ++i)
