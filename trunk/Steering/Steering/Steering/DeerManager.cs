@@ -247,7 +247,7 @@ namespace Steering
                 }
                 foreach (Bush b in game.gameWorld.getBushes())
                 {
-                    if ((d.Position - b.position).Length() < 33)
+                    if ((d.Position - b.posit).Length() < 33)
                     {
                         if (!b.occupied)
                         {

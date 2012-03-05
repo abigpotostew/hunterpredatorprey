@@ -10,7 +10,7 @@ namespace Steering.FSM.Conditions
     {
         public bool test(Game g, Entity e)
         {
-            Vector2 direction = g.lion.closestBushTarget.position*50 - g.lion.Position;
+            Vector2 direction = g.lion.closestBushTarget.posit - g.lion.Position;
             float len = direction.Length();
             Console.Write(" " + len);
             if ( len < 20)

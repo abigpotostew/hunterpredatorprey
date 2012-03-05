@@ -16,15 +16,15 @@ namespace Steering
 {
     public class Bush : Entity
     {
-        public Vector2 position;
+        public Vector2 posit;
         public bool occupied;
 
         public Bush(Texture2D tex, Vector2 p )
             : base (tex,p,0,0)
         {
-            //position = p;
-            position.X += 25;
-            position.Y += 25;
+            posit = p;
+           /* posit.X += 25;
+            posit.Y += 25;*/
 
             occupied = false;
 
@@ -41,7 +41,7 @@ namespace Steering
             //debugCircle.Draw(batch);
             //sb.Draw(tex, new Vector2(position.X - 25, position.Y - 25), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             base.Draw(time, sb);
-            sb.DrawString(Game.Font, "" + position*50, position*50, Color.White);
+            sb.DrawString(Game.Font, "" + posit, new Vector2(posit.X - 75, posit.Y), Color.White);
         }
 
     }
