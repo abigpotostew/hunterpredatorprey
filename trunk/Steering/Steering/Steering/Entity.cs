@@ -130,6 +130,11 @@ namespace Steering
             //sb.DrawString(Game.Font, 
         }
 
+        public virtual void Draw(GameTime time, SpriteBatch sb, bool invisible)
+        {
+            sb.Draw(image, position, null, new Color(128,128,128,0), (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
+        }
+
         public void updateFear()
         {
             this.fear += this.fearToBeAdded;
