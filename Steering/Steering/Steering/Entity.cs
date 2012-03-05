@@ -55,6 +55,7 @@ namespace Steering
             this.maxSpeed = maxSpe;
             rotation = orientation =  wanderOrientation = 0;
             offsetToCenter = new Vector2(image.Width/2, image.Height/2);
+            position += offsetToCenter;
 
             //for now, make max angular rotation and rotation statndard
             this.maxRotation = 0.2f;
