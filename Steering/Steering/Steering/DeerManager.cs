@@ -57,15 +57,16 @@ namespace Steering
             FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
-            ThreatLevel lowThreatLevel = new ThreatLevel(20f);
+            ThreatLevel hunterHighThreatLevel = new ThreatLevel(80f); //////////////////////threat
             NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
             NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
-            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 2000);
+            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 800);
             TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer); //800 to 1200
             TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, 600);
             TimerCondition grazetoFlockTimer = new TimerCondition(initialTime, 600);
-            RandomCondition randomCondition = new RandomCondition(10, 5);
+            RandomCondition randomCondition = new RandomCondition(3, 2);
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
+            AndCondition andTimerLowFear = new AndCondition(fleetoScaredTimer, fearLessThan40);
             AndCondition andRandomNeighborCountGreater = new AndCondition(randomCondition, neighborCountGreater);
             AndCondition andRandomNeighborCountLess = new AndCondition(grazetoFlockTimer, neighborCountLess);
             //AndCondition andRNCRandom = new AndCondition(andRandomNeighborCount, grazetoFlockTimer);
@@ -73,11 +74,13 @@ namespace Steering
 
             
             //Declaring Transitions
-            Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState, 0);
+            Transition gotoWanderFromScared = new Transition(andTimerLowFear, wanderState, 0);
+            //Transition gotoWanderFromScared = new Transition(andRandomLowFear, wanderState, 0);
             Transition gotoWanderFromGraze = new Transition(wanderTrue, wanderState, 0);
             Transition gotoWanderFromGraze2 = new Transition(andRandomNeighborCountLess, wanderState, 0);
 
-            Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState, 0);
+            Transition gotoGrazeFromScared = new Transition(andTimerLowFear, grazeState, 0);
+            //Transition gotoGrazeFromScared = new Transition(andRandomLowFear, grazeState, 0);
             Transition gotoGrazeFromWander = new Transition(wandertoGrazeTimer, grazeState, 0);
 
             Transition gotoFlockfromGraze = new Transition(andRandomNeighborCountGreater, flockState, 0);
@@ -88,7 +91,8 @@ namespace Steering
             Transition gotoScaredFromFlock = new Transition(fearGreaterThan60, scaredState, 0);
             
             Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
-            Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
+            Transition gotoScaredFromFlee = new Transition(andTimerLowFear, scaredState, 0);
+            //Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
 
             //Declaring actions for transitions
             gotoWanderFromScared.addActions(wanderAction);
@@ -144,45 +148,55 @@ namespace Steering
         float avgFear;
         public void calcDeersFear() //change all deer fear, if threat is low then dont update fear
         {
-            for (int i = 0; i < deers.Count; ++i)
+            if (game.lion.visible == true)
             {
-                Deer d = (Deer) deers[i];
-                Vector2 dirFromLion = (d.Position - game.lion.Position);
-                float distance = dirFromLion.Length();
-                if (distance < 100)
+                for (int i = 0; i < deers.Count; ++i)
                 {
-                    d.addFear(100);
-                }
-                else if (distance < 300) //if the lion is within a distance ///////////////////
-                {
-                    float fear = 300 / distance; //200/dist so 1 to 200 counts (hopefully works right)
-                    d.addFear(fear * .6f); // did this because fear goes up waay to quick
-                    //deers[i].addFear(game.lion.Velocity.Length());
-                }
-                else if (distance > 350)//created a deadzone inbetween, like alert zone
-                    deers[i].decayFear();
-            }
-
-
-            for (int i = 0; i < deers.Count; ++i)
-            {
-                if ( deers[i].neighbors.Count > 0) //if deer has fear greater than 20, and has neighbors
-                {
-                    for (int j = 0; j < deers[i].neighbors.Count; ++j)
+                    Deer d = (Deer)deers[i];
+                    Vector2 dirFromLion = (d.Position - game.lion.Position);
+                    float distance = dirFromLion.Length();
+                    if (distance < 100)
                     {
-                        avgFear += deers[i].neighbors[j].fear;
-                        //loop through them and add deer[i]'s fear to them
-                           // deers[j].addFear(fear);
+                        d.addFear(100);
                     }
-                    avgFear /= deers[i].neighbors.Count;
-                    //avgFear *= .3f;
-                    if(deers[i].fear > avgFear)
-                        deers[i].addFear(-avgFear);
-                    else
-                        deers[i].addFear(avgFear);
+                    else if (distance < 300) //if the lion is within a distance ///////////////////
+                    {
+                        float fear = 300 / distance; //200/dist so 1 to 200 counts (hopefully works right)
+                        d.addFear(fear * .6f); // did this because fear goes up waay to quick
+                        //deers[i].addFear(game.lion.Velocity.Length());
+                    }
+                    else if (distance > 350)//created a deadzone inbetween, like alert zone
+                        deers[i].decayFear();
                 }
-                avgFear = 0;
-            } 
+
+
+                for (int i = 0; i < deers.Count; ++i)
+                {
+                    if (deers[i].neighbors.Count > 0) //if deer has fear greater than 20, and has neighbors
+                    {
+                        for (int j = 0; j < deers[i].neighbors.Count; ++j)
+                        {
+                            avgFear += deers[i].neighbors[j].fear;
+                            //loop through them and add deer[i]'s fear to them
+                            // deers[j].addFear(fear);
+                        }
+                        avgFear /= deers[i].neighbors.Count;
+                        //avgFear *= .3f;
+                        if (deers[i].fear > avgFear)
+                            deers[i].addFear(-avgFear);
+                        else
+                            deers[i].addFear(avgFear);
+                    }
+                    avgFear = 0;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < deers.Count; ++i)
+                {
+                    deers[i].decayFear();
+                }
+            }
         }
 
         public Entity FindClosestDeer(Vector2 position)

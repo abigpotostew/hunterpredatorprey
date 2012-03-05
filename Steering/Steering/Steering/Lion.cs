@@ -23,14 +23,14 @@ namespace Steering
         public Bush closestBushTarget;
         public Entity closestDeerTarget;
         public bool visible = true;
-        private Texture2D lion;
+        public int hunger;
 
         public Lion(Texture2D image, Vector2 position, Game game)
             : base(image, position, 0.1f, 4)
         {
             //orientation
-            lion = image;
             this.game = game;
+            hunger = 0;
             AttachLionHFSM();
         }
 
@@ -51,16 +51,7 @@ namespace Steering
 
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            if (visible)
-            {
-                base.Draw(time, sb);
-            }
-
-            else
-            {
-                base.Draw(time, sb, true);
-            }
-
+            base.Draw(time, sb);
             sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
         }
 
@@ -70,7 +61,7 @@ namespace Steering
             //mouse = Mouse.GetState();
 
             bool keyPressed = false;
-
+            hunger++;
             if (Game.keyboard.IsKeyDown(Keys.Left))
             {
                 velocity.X -= maxAcceleration;
