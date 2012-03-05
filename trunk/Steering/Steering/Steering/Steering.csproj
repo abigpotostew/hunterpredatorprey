@@ -114,6 +114,7 @@
     <Compile Include="Collision\PrimitiveLine.cs" />
     <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="FSM\Actions\FleeFromHunterAction.cs" />
     <Compile Include="FSM\Actions\emptyAction.cs" />
     <Compile Include="FSM\Actions\FleeAction.cs" />
     <Compile Include="FSM\Actions\FleeFromLionAction.cs" />
@@ -121,12 +122,14 @@
     <Compile Include="FSM\Actions\GrazeAction.cs" />
     <Compile Include="FSM\Actions\GoToBushAction.cs" />
     <Compile Include="FSM\Actions\IAction.cs" />
+    <Compile Include="FSM\Actions\NapAction.cs" />
     <Compile Include="FSM\Actions\resetWander.cs" />
     <Compile Include="FSM\Actions\ScaredAction.cs" />
     <Compile Include="FSM\Actions\SetTargetToClosestBush.cs" />
     <Compile Include="FSM\Actions\WaitInBushAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
+    <Compile Include="FSM\Conditions\LionVisibleCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountLessCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountGreaterCondition.cs" />
     <Compile Include="FSM\Conditions\RandomCondition.cs" />

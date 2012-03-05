@@ -90,7 +90,7 @@ namespace Steering
             gameWorld = new World(graphics, 5);
 
             gameWorld.loadTiles(this);
-            jaguar = Content.Load<Texture2D>("deerFace");
+            jaguar = Content.Load<Texture2D>("jaguardot");
             hunter = Content.Load<Texture2D>("hunter");
             spearImg = Content.Load<Texture2D>("spear");
             lionImg = Content.Load<Texture2D>("lion");
