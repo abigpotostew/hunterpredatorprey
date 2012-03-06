@@ -8,10 +8,16 @@ namespace Steering.FSM.Conditions
 {
     class ReachedDeerTarget : ICondition
     {
+        float threshold;
+
+        public ReachedDeerTarget(float killRange)
+        {
+            this.threshold = killRange;
+        }
         public bool test(Game g, Entity e)
         {
             float distToTarget = Vector2.Distance(g.lion.Position, g.lion.closestDeerTarget.Position);
-            if (distToTarget < 25) return true;
+            if (distToTarget < threshold) return true;
             return false;
         }
     }
