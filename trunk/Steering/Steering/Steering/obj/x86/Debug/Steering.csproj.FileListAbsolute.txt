@@ -108,3 +108,5 @@ C:\Users\Stew\Desktop\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debu
 C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\lion.xnb
 C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\Bush.xnb
 C:\Users\Jake\Desktop\HunterPredatorPrey Simulation\Steering\Steering\Steering\bin\x86\Debug\Content\lion.xnb
+C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\spear.xnb
+C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\deerFace.xnb

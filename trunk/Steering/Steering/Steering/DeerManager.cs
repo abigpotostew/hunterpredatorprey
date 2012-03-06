@@ -41,6 +41,7 @@ namespace Steering
             WanderAction wanderAction = new WanderAction();
             GrazeAction grazeAction = new GrazeAction();
             FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
+            FleeFromHunterAction fleeFromHunterAction = new FleeFromHunterAction();
             resetWander resetWander = new resetWander();
             emptyAction emptyAction = new emptyAction();
             FlockAction flockAction = new FlockAction();
@@ -49,7 +50,7 @@ namespace Steering
             State scaredState = new State("scared", scaredAction);
             State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
             State grazeState = new State("graze", grazeAction);
-            State fleeState = new State("flee", fleeFromLionAction);
+            State fleeState = new State("flee", fleeFromLionAction, fleeFromHunterAction);
             State flockState = new State("flock", flockAction);
 
 
@@ -57,7 +58,10 @@ namespace Steering
             FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
-            ThreatLevel hunterHighThreatLevel = new ThreatLevel(80f); //////////////////////threat
+            ThreatLevel hunterHighThreatLevel = new ThreatLevel(75f);
+            DistanceToHunter distanceToHunter = new DistanceToHunter(200f);
+            AndCondition andThreatDistanceHunter = new AndCondition(hunterHighThreatLevel, distanceToHunter);
+            OrCondition orFearThreat = new OrCondition(fearGreaterThan60, andThreatDistanceHunter);
             NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
             NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
             TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 800);
@@ -86,9 +90,9 @@ namespace Steering
             Transition gotoFlockfromGraze = new Transition(andRandomNeighborCountGreater, flockState, 0);
             Transition gotoGrazefromFlock = new Transition(flocktoGrazeTimer, grazeState, 0);
 
-            Transition gotoScaredFromWander = new Transition(fearGreaterThan60, scaredState, 0);
-            Transition gotoScaredFromGraze = new Transition(fearGreaterThan60, scaredState, 0);
-            Transition gotoScaredFromFlock = new Transition(fearGreaterThan60, scaredState, 0);
+            Transition gotoScaredFromWander = new Transition(orFearThreat, scaredState, 0); //old cond was feargreaterthan 60
+            Transition gotoScaredFromGraze = new Transition(orFearThreat, scaredState, 0);
+            Transition gotoScaredFromFlock = new Transition(orFearThreat, scaredState, 0);
             
             Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
             Transition gotoScaredFromFlee = new Transition(andTimerLowFear, scaredState, 0);
