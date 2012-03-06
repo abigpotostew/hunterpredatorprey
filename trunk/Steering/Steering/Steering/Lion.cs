@@ -15,13 +15,14 @@ namespace Steering
     public class Lion : Entity
     {
 
-        //private KeyboardState keyboard;
-        //private MouseState mouse;
+        const int RangeToPounce = 100;
+
         public float threat;
         HierarchicalStateMachine hfsm;
         Game game;
         public Bush closestBushTarget;
         public Entity closestDeerTarget;
+        public Entity pounceTarget;
         public bool visible = true;
         public int hunger;
 
@@ -36,16 +37,22 @@ namespace Steering
 
         void AttachLionHFSM()
         {
-            //WanderAction wanderAction = new WanderAction();
-            //State wanderState = new State(wanderAction);
+            State wanderState = new State("wander", new WanderAction());
             State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
             State waitState = new State("wait",new WaitInBushAction());
+            State pounceState = new State("pounce",new PounceEntryAction(), new PounceAction(), new emptyAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 400),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
+            Transition pounceToWander = new Transition(new ReachedPounceTarget(10),wanderState,0);
+            Transition wanderToHide = new Transition(new TimerCondition(new TimeSpan(), 400),hideState,0);
             //arriveAtBush.addActions(new WaitInBushAction());
             hideState.addTransition(arriveAtBush);
+            waitState.addTransition(waitToPounce);
+            pounceState.addTransition(pounceToWander);
+            wanderState.addTransition(wanderToHide);
 
-            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState);
+            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState,pounceState,wanderState);
 
         }
 
