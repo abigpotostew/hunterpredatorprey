@@ -15,6 +15,7 @@ namespace Steering
         int health = 2;
         
         public float threat;
+        public int threatCooldown;
         
         public bool spearJab;
         public bool spearThrow;
@@ -28,13 +29,28 @@ namespace Steering
             //orientation
             spearJab = false;
             spearThrow = false;
+            threatCooldown = 600;
         }
 
+        public void threaten()
+        {
+            threat = 100f;
+            threatCooldown = 300;
+        }
+        public void decayThreat()
+        {
+            if (threat > 0)
+                threat--;
+            else
+                threat = 0f;
+        }
         public override void Update(SteeringOutput steering, GameTime time)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
-
+            threatCooldown--;
+            if(threatCooldown < 0)
+                decayThreat();
             bool keyPressed = false;
 
             if (Game.keyboard.IsKeyDown(Keys.A))
@@ -61,12 +77,14 @@ namespace Steering
             {
                 keyPressed = true;
                 spearJab = true;
+                threaten();
             }
             if (Game.keyboard.IsKeyDown(Keys.Space) &&
                 DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))
             {
                 keyPressed = true;
                 spearThrow = true;
+                threaten();
             } 
             if (!keyPressed) velocity = new Vector2();
 
@@ -78,6 +96,11 @@ namespace Steering
 
 
             base.Update(steering, time);
+        }
+        public override void Draw(GameTime time, SpriteBatch sb)
+        {
+            sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(10, 10), Color.White);
+            base.Draw(time, sb);
         }
     }
 }

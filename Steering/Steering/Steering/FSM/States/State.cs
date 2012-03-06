@@ -38,7 +38,13 @@ namespace Steering.FSM
              this.name = name;
              actions.Add(action);
          }
-
+         public State(String name, IAction action1, IAction action2)
+             : this()
+         {
+             this.name = name;
+             actions.Add(action1);
+             actions.Add(action2);
+         }
          public override List<State> GetStates()
          {
              List<State> states = base.GetStates();

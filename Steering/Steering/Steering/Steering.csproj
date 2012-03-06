@@ -129,9 +129,11 @@
     <Compile Include="FSM\Actions\WaitInBushAction.cs" />
     <Compile Include="FSM\Actions\WanderAction.cs" />
     <Compile Include="FSM\Conditions\AndCondition.cs" />
+    <Compile Include="FSM\Conditions\DistanceToHunter.cs" />
     <Compile Include="FSM\Conditions\LionVisibleCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountLessCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountGreaterCondition.cs" />
+    <Compile Include="FSM\Conditions\OrCondition.cs" />
     <Compile Include="FSM\Conditions\RandomCondition.cs" />
     <Compile Include="FSM\Conditions\ReachedBush.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />
@@ -144,12 +146,7 @@
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="FSM\HFSM\SubMachineState.cs" />
     <Compile Include="FSM\HFSM\UpdateResult.cs" />
-    <Compile Include="FSM\States\FleeState.cs" />
-    <Compile Include="FSM\States\FlockState.cs" />
-    <Compile Include="FSM\States\GrazeState.cs" />
-    <Compile Include="FSM\States\ScaredState.cs" />
     <Compile Include="FSM\States\State.cs" />
-    <Compile Include="FSM\States\WanderState.cs" />
     <Compile Include="FSM\Transitions\ITranstition.cs" />
     <Compile Include="FSM\Transitions\Transition.cs" />
     <Compile Include="FSM\HFSM\HierarchicalStateMachine.cs" />
