@@ -47,7 +47,7 @@ namespace Steering
              }
 
              //always do look where going 
-             base.Update(Steerings.lookWhereGoing.getSteering(this) + steering, time);
+             base.Update(Steerings.lookWhereGoing.getSteering(this) /*+ Steerings.separationFromDeer.getSteering(this,game.gameWorld.getBushes())*/ + steering, time);
              
          }
 
