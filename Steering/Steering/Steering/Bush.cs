@@ -43,7 +43,7 @@ namespace Steering
             //debugCircle.Draw(batch);
             sb.Draw(t, new Vector2(position.X - 25, position.Y-25), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
            // base.Draw(time, sb);
-            sb.DrawString(Game.Font, "" + posit, new Vector2(posit.X - 75, posit.Y), Color.White);
+            //sb.DrawString(Game.Font, "" + posit, new Vector2(posit.X - 75, posit.Y), Color.White);
         }
 
     }

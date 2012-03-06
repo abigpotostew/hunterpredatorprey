@@ -136,6 +136,11 @@ namespace Steering
             deer.fsm = newFSM;
         }
 
+        public void KillDeer(Entity deer)
+        {
+            deerRemoval.Add(deer);
+        }
+
         public void CreateDeer(int deerCt, Texture2D deerImg)
         {
             for (int i = 0; i < deerCt; ++i)
@@ -243,6 +248,13 @@ namespace Steering
 
         public void Update(GameTime gameTime)
         {
+            if (deerRemoval.Count > 0)
+            {
+                foreach (Entity d in deerRemoval)
+                    deers.Remove(d);
+                deerRemoval.Clear();
+            }
+
             UpdateDeerNeighbors();
             calcDeersFear(); 
             foreach (Entity d in deers)

@@ -15,7 +15,8 @@ namespace Steering
     public class Lion : Entity
     {
 
-        const int RangeToPounce = 100;
+        const int RangeToPounce = 150;
+        const float KillRange = 25;
 
         public float threat;
         HierarchicalStateMachine hfsm;
@@ -41,18 +42,24 @@ namespace Steering
             State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
             State waitState = new State("wait",new WaitInBushAction());
             State pounceState = new State("pounce",new PounceEntryAction(), new PounceAction(), new emptyAction());
+            State eatState = new State("eat",new KillDeerAction(),new EatAction(), new emptyAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
-            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 400),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 500),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
+            Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,0);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(10),wanderState,0);
             Transition wanderToHide = new Transition(new TimerCondition(new TimeSpan(), 400),hideState,0);
-            //arriveAtBush.addActions(new WaitInBushAction());
+            Transition eatToWander = new Transition(new TimerCondition(new TimeSpan(), 500),wanderState,0);
+            
+            //THE LION SHOULD NOT POUNCE IF THE DEERTARGET HAS MORE THAN 3 neighborS
+
             hideState.addTransition(arriveAtBush);
             waitState.addTransition(waitToPounce);
-            pounceState.addTransition(pounceToWander);
+            pounceState.addTransition(pounceToWander,pounceToKill);
             wanderState.addTransition(wanderToHide);
+            eatState.addTransition(eatToWander);
 
-            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState,pounceState,wanderState);
+            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState,pounceState,wanderState,eatState);
 
         }
 

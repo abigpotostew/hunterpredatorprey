@@ -9,7 +9,7 @@ namespace Steering.Steering
     {
         public static ISteering face, arriveGraze, arriveBush, velocityMatch, separationFromDeer, separationFromHunter,
             lookWhereGoing, flee200, cohesion, cohesionGraze, averageVelocityMatch, seek, bushSeparation,
-            wander, separationFromLion, seekPounce;
+            wander, eatWander, separationFromLion, seekPounce;
 
         public static void InitializeSteering()
         {
@@ -29,6 +29,7 @@ namespace Steering.Steering
             seek = new Seek(10, 50, 0.1f);
             seekPounce = new Seek(10, 20, 0.1f);
             wander = new Wander(50, 20, 0.1f, 0.1f, 2, 0.1f);
+            eatWander = new Wander(10, 30, 0.001f, 10, 10, 0.01f);
         }
     }
 }
