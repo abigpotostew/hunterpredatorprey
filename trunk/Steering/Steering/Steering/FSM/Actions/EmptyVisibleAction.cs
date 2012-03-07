@@ -5,13 +5,12 @@ using System.Text;
 
 namespace Steering.FSM.Actions
 {
-    class NapAction : IAction
+    class emptyVisibleAction : IAction
     {
         public SteeringOutput execute(Game game, Entity character)
         {
-            SteeringOutput result = new SteeringOutput();
-            result.maxSpeed = 0.1f;
-            return result;
+            game.lion.visible = true;
+            return new SteeringOutput();
         }
     }
 }

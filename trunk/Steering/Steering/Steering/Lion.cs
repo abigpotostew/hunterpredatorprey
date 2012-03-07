@@ -16,7 +16,7 @@ namespace Steering
     {
 
         const int RangeToPounce = 150;
-        const float KillRange = 25;
+        const float KillRange = 30;
 
         public float threat;
         HierarchicalStateMachine hfsm;
@@ -41,31 +41,46 @@ namespace Steering
             State wanderState = new State("wander", new WanderAction());
             State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
             State waitState = new State("wait",new WaitInBushAction());
-            State pounceState = new State("pounce",new PounceEntryAction(), new PounceAction(), new emptyAction());
+            State pounceState = new State("pounce",new PounceEntryAction(), new PounceAction(), new emptyVisibleAction());
             State eatState = new State("eat",new KillDeerAction(),new EatAction(), new emptyAction());
+            State napState = new State("nap", new NapAction());
+            State creepState = new State("creep", new CreepAction());
+            State chaseState = new State("chase", new ChaseAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
             Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 500),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,0);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(10),wanderState,0);
-            Transition wanderToHide = new Transition(new TimerCondition(new TimeSpan(), 400),hideState,0);
-            Transition eatToWander = new Transition(new TimerCondition(new TimeSpan(), 500),wanderState,0);
+
+            Transition wanderToNap = new Transition(new TimerCondition(new TimeSpan(), 300), napState,0);
+            Transition napToWander = new Transition(new TimerCondition(new TimeSpan(), 300), wanderState, 0);
+            Transition napToCreep = new Transition(new LionHungerCondition(800), creepState, 0);
+            Transition wanderToCreep = new Transition(new LionHungerCondition(800), creepState, 0);
+            Transition creepToHide = new Transition(new LionHungerCondition(1200), hideState, 0);
+            Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
+            Transition waitToChase = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 500), new LionHungerCondition(1800)), chaseState, 0);
+            Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
+
+            Transition eatToWander = new Transition(new TimerCondition(new TimeSpan(), 500), wanderState,0);
             
             //THE LION SHOULD NOT POUNCE IF THE DEERTARGET HAS MORE THAN 3 neighborS
 
             hideState.addTransition(arriveAtBush);
-            waitState.addTransition(waitToPounce);
+            waitState.addTransition(waitToPounce, waitToChase);
             pounceState.addTransition(pounceToWander,pounceToKill);
-            wanderState.addTransition(wanderToHide);
+            wanderState.addTransition(wanderToNap, wanderToCreep);
+            napState.addTransition(napToWander, napToCreep);
             eatState.addTransition(eatToWander);
-
-            this.hfsm = new HierarchicalStateMachine(game,hideState,waitState,pounceState,wanderState,eatState);
+            creepState.addTransition(creepToHide, creepToPounce);
+            chaseState.addTransition(chaseToPounce);
+            this.hfsm = new HierarchicalStateMachine(game,wanderState,hideState,waitState,pounceState,wanderState,eatState, chaseState, creepState, napState);
 
         }
 
         public override void Draw(GameTime time, SpriteBatch sb)
         {
             base.Draw(time, sb);
+            sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
             sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
         }
 
