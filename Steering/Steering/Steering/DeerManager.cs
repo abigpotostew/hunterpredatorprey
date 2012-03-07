@@ -64,10 +64,10 @@ namespace Steering
             OrCondition orFearThreat = new OrCondition(fearGreaterThan60, andThreatDistanceHunter);
             NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
             NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
-            TimerCondition fleetoScaredTimer = new TimerCondition(initialTime, 800);
-            TimerCondition wandertoGrazeTimer = new TimerCondition(initialTime, shortTimer); //800 to 1200
-            TimerCondition flocktoGrazeTimer = new TimerCondition(initialTime, 600);
-            TimerCondition grazetoFlockTimer = new TimerCondition(initialTime, 600);
+            RandomTimerCondition fleetoScaredTimer = new RandomTimerCondition(initialTime, 800);
+            RandomTimerCondition wandertoGrazeTimer = new RandomTimerCondition(initialTime, shortTimer); //800 to 1200
+            RandomTimerCondition flocktoGrazeTimer = new RandomTimerCondition(initialTime, 600);
+            RandomTimerCondition grazetoFlockTimer = new RandomTimerCondition(initialTime, 600);
             RandomCondition randomCondition = new RandomCondition(3, 2);
             AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
             AndCondition andTimerLowFear = new AndCondition(fleetoScaredTimer, fearLessThan40);

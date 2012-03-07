@@ -48,20 +48,21 @@ namespace Steering
             State chaseState = new State("chase", new ChaseAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
-            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 500),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(300),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,0);
-            Transition pounceToWander = new Transition(new ReachedPounceTarget(10),wanderState,0);
+            Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,0);
 
-            Transition wanderToNap = new Transition(new TimerCondition(new TimeSpan(), 300), napState,0);
-            Transition napToWander = new Transition(new TimerCondition(new TimeSpan(), 300), wanderState, 0);
-            Transition napToCreep = new Transition(new LionHungerCondition(800), creepState, 0);
-            Transition wanderToCreep = new Transition(new LionHungerCondition(800), creepState, 0);
-            Transition creepToHide = new Transition(new LionHungerCondition(1200), hideState, 0);
+            Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 300), napState,0);
+            Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 300), wanderState, 0);
+            Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, 0);
+            Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, 0);
+            Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1200), hideState, 0);
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
-            Transition waitToChase = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 300), new LionHungerCondition(1800)), chaseState, 0);
+            //so the lion chases when he's very desperate?
+            Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 300), new LionHungerGreaterThanCondition(1800)), chaseState, 0);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
 
-            Transition eatToWander = new Transition(new TimerCondition(new TimeSpan(), 500), wanderState,0);
+            Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,0);
             
             //THE LION SHOULD NOT POUNCE IF THE DEERTARGET HAS MORE THAN 3 neighborS
 
@@ -73,6 +74,7 @@ namespace Steering
             eatState.addTransition(eatToWander);
             creepState.addTransition(creepToHide, creepToPounce);
             chaseState.addTransition(chaseToPounce);
+
             this.hfsm = new HierarchicalStateMachine(game,wanderState,hideState,waitState,pounceState,wanderState,eatState, chaseState, creepState, napState);
 
         }

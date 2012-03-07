@@ -24,10 +24,7 @@ namespace Steering.Steering
 
             rotation = target.Orientation - character.Orientation;
             rotationDirection =  MathHelper.WrapAngle(rotation);
-            /*if (rotation < -Math.PI || rotation > Math.PI)
-            {
-                rotation = -rotation;
-            }*/
+
             rotationSize = Math.Abs(rotationDirection);
 
             if (rotationSize < targetRadius)

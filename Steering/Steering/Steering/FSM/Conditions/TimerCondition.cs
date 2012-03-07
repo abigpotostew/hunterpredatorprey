@@ -9,32 +9,22 @@ namespace Steering.FSM.Conditions
     class TimerCondition : ICondition
     {
         int timer;
-        int seconds;
-        TimeSpan originalTime;
-        Random random = new Random();
+        int tics;
  
-        public TimerCondition(TimeSpan intialTime, int seconds)
+        public TimerCondition(int tics)
         {
-            originalTime = intialTime;
-            this.seconds = seconds;
-            timer = random.Next(seconds - 400, seconds);
+            this.tics = tics;
+            this.timer = tics;
             //timer = seconds;
             
         }
 
         public bool test(Game game, Entity character)
         {
-            /*  if (gameTime.ElapsedGameTime.Seconds - originalTime.Seconds >= timer)
-              {
-                  originalTime = gameTime.ElapsedGameTime;
-                  return true;
-              }
-              else
-                --timer; */
             --timer;
             if (timer == 0)
             {
-                timer = random.Next(seconds - 400, seconds);
+                timer = tics;
                 return true;
             }
             return false;
