@@ -106,15 +106,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spear.jpg">
-      <Name>spear</Name>
+    <Compile Include="deerFace.png">
+      <Name>deerFace</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="deerFace.png">
-      <Name>deerFace</Name>
+    <Compile Include="spear.png">
+      <Name>spear</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
