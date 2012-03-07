@@ -18,6 +18,9 @@ namespace Steering.Collision
         protected Vector2 center;
         protected float radius;
         protected PrimitiveLine debugCircle;
+        private int p;
+        private int p_2;
+        private double p_3;
 
         #region  CONSTRUCTOR /////////////////////////////////////
         public Circle(int x, int y, float radius)
@@ -34,6 +37,14 @@ namespace Steering.Collision
             this.distanceSquared = 0f;
             this.center = new Vector2(x, y);
             this.radius = radius;
+        }
+
+        public Circle(int p, int p_2, double p_3)
+        {
+            // TODO: Complete member initialization
+            this.p = p;
+            this.p_2 = p_2;
+            this.p_3 = p_3;
         }
         #endregion
 
