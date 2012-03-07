@@ -74,15 +74,6 @@
       <Time>2012-03-02T12:16:25.7770002-08:00</Time>
     </Item>
     <Item>
-      <Source>spear.jpg</Source>
-      <Name>spear</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\spear.xnb</Output>
-      <Time>2012-03-04T14:29:58.0640951-08:00</Time>
-    </Item>
-    <Item>
       <Source>Font.spritefont</Source>
       <Name>Font</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -99,6 +90,15 @@
       <Options>None</Options>
       <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\deerFace.xnb</Output>
       <Time>2012-03-05T13:11:40.9800884-08:00</Time>
+    </Item>
+    <Item>
+      <Source>spear.png</Source>
+      <Name>spear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ranveer\Documents\hunterpredatorprey\Steering\Steering\Steering\bin\x86\Debug\Content\spear.xnb</Output>
+      <Time>2012-03-05T13:11:40.9850887-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
