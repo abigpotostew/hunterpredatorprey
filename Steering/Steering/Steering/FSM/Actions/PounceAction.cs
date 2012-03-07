@@ -11,7 +11,7 @@ namespace Steering.FSM.Actions
         public SteeringOutput execute(Game game, Entity character)
         {
             SteeringOutput result = Steerings.seekPounce.getSteering(character, game.lion.pounceTarget);
-            result.maxSpeed = 10f;
+            result.maxSpeed = 20f;
             //result.linear = game.lion.pounceTarget.Position - game.lion.Position;
 
             return result;

@@ -114,6 +114,9 @@
     <Compile Include="Collision\PrimitiveLine.cs" />
     <Compile Include="DeerManager.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="FSM\Actions\ChaseAction.cs" />
+    <Compile Include="FSM\Actions\CreepAction.cs" />
+    <Compile Include="FSM\Actions\EmptyVisibleAction.cs" />
     <Compile Include="FSM\Actions\FleeFromHunterAction.cs" />
     <Compile Include="FSM\Actions\emptyAction.cs" />
     <Compile Include="FSM\Actions\FleeAction.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="FSM\Actions\IAction.cs" />
     <Compile Include="FSM\Actions\EatAction.cs" />
     <Compile Include="FSM\Actions\KillDeerAction.cs" />
+    <Compile Include="FSM\Conditions\LionHungerCondition.cs" />
     <Compile Include="FSM\Actions\NapAction.cs" />
     <Compile Include="FSM\Actions\PounceAction.cs" />
     <Compile Include="FSM\Actions\PounceEntryAction.cs" />
