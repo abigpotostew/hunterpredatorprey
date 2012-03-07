@@ -58,7 +58,7 @@ namespace Steering
             Transition wanderToCreep = new Transition(new LionHungerCondition(800), creepState, 0);
             Transition creepToHide = new Transition(new LionHungerCondition(1200), hideState, 0);
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
-            Transition waitToChase = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 500), new LionHungerCondition(1800)), chaseState, 0);
+            Transition waitToChase = new Transition(new AndCondition(new TimerCondition(new TimeSpan(), 300), new LionHungerCondition(1800)), chaseState, 0);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
 
             Transition eatToWander = new Transition(new TimerCondition(new TimeSpan(), 500), wanderState,0);
