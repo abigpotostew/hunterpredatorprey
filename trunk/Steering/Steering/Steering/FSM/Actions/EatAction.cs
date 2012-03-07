@@ -15,7 +15,7 @@ namespace Steering.FSM.Actions
             //return result;
             game.lion.hunger = 0;
             SteeringOutput result = Steerings.eatWander.getSteering(game.lion);
-            result.maxSpeed = 0.1f;
+            result.maxSpeed = 0.001f;
             return result;
         }
     }

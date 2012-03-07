@@ -7,6 +7,5 @@ Content\hunter.xnb
 Content\Bush.xnb
 Content\lion.xnb
 Content\deerFace.xnb
-Content\Font.xnb
-Content\deerFace.xnb
 Content\spear.xnb
+Content\Font.xnb

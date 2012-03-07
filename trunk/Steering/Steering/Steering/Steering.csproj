@@ -128,7 +128,8 @@
     <Compile Include="FSM\Actions\IAction.cs" />
     <Compile Include="FSM\Actions\EatAction.cs" />
     <Compile Include="FSM\Actions\KillDeerAction.cs" />
-    <Compile Include="FSM\Conditions\LionHungerCondition.cs" />
+    <Compile Include="FSM\Conditions\TimerCondition.cs" />
+    <Compile Include="FSM\Conditions\LionHungerGreaterThanCondition.cs" />
     <Compile Include="FSM\Actions\NapAction.cs" />
     <Compile Include="FSM\Actions\PounceAction.cs" />
     <Compile Include="FSM\Actions\PounceEntryAction.cs" />
@@ -148,7 +149,7 @@
     <Compile Include="FSM\Conditions\ReachedBush.cs" />
     <Compile Include="FSM\Conditions\ReachedDeerTarget.cs" />
     <Compile Include="FSM\Conditions\ReachedPounceTarget.cs" />
-    <Compile Include="FSM\Conditions\TimerCondition.cs" />
+    <Compile Include="FSM\Conditions\RandomTimerCondition.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan2.cs" />
     <Compile Include="FSM\Conditions\FearGreaterThan.cs" />
     <Compile Include="FSM\Conditions\FearLessThan.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Spear.cs" />
+    <Compile Include="Steering\Pursue.cs" />
     <Compile Include="Steering\SteeringOutput.cs" />
     <Compile Include="Steering\Align.cs" />
     <Compile Include="Steering\Arrive.cs" />

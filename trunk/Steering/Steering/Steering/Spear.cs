@@ -25,7 +25,7 @@ namespace Steering
             this.position = position;
         }
 
-        public void Update(SteeringOutput steering, GameTime time, Hunter hunter, DeerManager deer)
+        public void Update(SteeringOutput steering, GameTime time, Hunter hunter/*, DeerManager deer*/)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();

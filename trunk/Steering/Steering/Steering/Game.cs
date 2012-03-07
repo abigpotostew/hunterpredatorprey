@@ -37,7 +37,7 @@ namespace Steering
         Spear spear;
         //Deer deer;
 
-        const int deerCt = 2;
+        const int deerCt = 20;
         public DeerManager deerManager;
 
         //Timer timer;
@@ -98,7 +98,7 @@ namespace Steering
             //timer = new Timer();
 
             guy = new Hunter(hunter, new Vector2(200,200));
-            spear = new Spear(spearImg, new Vector2(240,180));
+            spear = new Spear(spearImg, new Vector2(240,180), guy);
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 

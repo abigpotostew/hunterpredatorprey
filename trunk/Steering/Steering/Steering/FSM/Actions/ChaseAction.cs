@@ -12,8 +12,8 @@ namespace Steering.FSM.Actions
         public SteeringOutput execute(Game game, Entity character)
         {
             game.lion.closestDeerTarget = game.deerManager.FindClosestDeer(game.lion.Position);
-            SteeringOutput result = Steerings.seek.getSteering(character, game.lion.pounceTarget) +
-                                    Steerings.face.getSteering(character, game.lion.closestDeerTarget);
+            SteeringOutput result = Steerings.pursue.getSteering(character, game.lion.closestDeerTarget);// +
+                                    //Steerings.face.getSteering(character, game.lion.closestDeerTarget);
             result.maxSpeed = 10f;
             return result;
         }

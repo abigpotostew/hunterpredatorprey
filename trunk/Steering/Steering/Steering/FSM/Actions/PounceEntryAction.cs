@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 
 namespace Steering.FSM.Actions
 {
@@ -9,7 +6,12 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
-            game.lion.pounceTarget = new Entity(game.lion.closestDeerTarget.Position);
+            Vector2 target = game.lion.closestDeerTarget.Position;
+            Vector2 direction = target - game.lion.Position;
+            direction.Normalize();
+            target += direction * 20;
+
+            game.lion.pounceTarget = new Entity(target);
             return new SteeringOutput();
         }
     }
