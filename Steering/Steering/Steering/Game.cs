@@ -34,7 +34,7 @@ namespace Steering
 
         public Hunter guy;
         public Lion lion;
-        public Spear spear;
+        Spear spear;
         //Deer deer;
 
         const int deerCt = 50;
@@ -98,7 +98,7 @@ namespace Steering
             //timer = new Timer();
 
             guy = new Hunter(hunter, new Vector2(200,200));
-            spear = new Spear(spearImg, new Vector2(240,195));
+            spear = new Spear(spearImg, new Vector2(240,180),guy);
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 
@@ -126,7 +126,7 @@ namespace Steering
                 timer.stopTimer(0);*/
             
             guy.Update(Steerings.lookWhereGoing.getSteering(guy), gameTime);
-            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime);
+            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime,guy,deerManager);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
             deerManager.Update(gameTime);
             base.Update(gameTime);
