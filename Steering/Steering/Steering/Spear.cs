@@ -14,21 +14,24 @@ namespace Steering
         const double holdKeyWait = 0.25;
         Circle collide;
         Vector2 getPosition;
+        KeyboardState prevState, newState;
         int jabDistance = 25;
         int throwDistance = 100;
         int move = 0;
 
-        public Spear(Texture2D image, Vector2 position, Hunter hunter)
+        public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state)
             : base(image, position, 1, 4)
         {
             collide = new Circle((int)position.X + 4, (int)position.Y - 1, 2);
             this.position = position;
+            prevState = state;
         }
 
         public void Update(SteeringOutput steering, GameTime time, Hunter hunter/*, DeerManager deer*/)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
+            newState = Keyboard.GetState();
 
             bool keyPressed = false;
 
@@ -52,23 +55,24 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
-            if (hunter.spearJab == true)
-            {
-                getPosition = this.position;
-                Vector2 movement = new Vector2();
+            if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
+            {               
+                    getPosition = this.position;
+                    Vector2 movement = new Vector2();
 
-                movement.X = jabDistance * (float)Math.Cos(rotation);
-                movement.Y = jabDistance * (float)Math.Sin(rotation);
+                    movement.X = jabDistance * (float)Math.Cos(rotation);
+                    movement.Y = jabDistance * (float)Math.Sin(rotation);
 
-                while (move < jabDistance)
-                {
-                    this.position.X += ((int)movement.X + 4);
-                    this.position.Y += ((int)movement.Y + 4);
-                    move += 4;
-                }
-                this.position = getPosition;
+                    while (move < jabDistance)
+                    {
+                        this.position.X += ((int)movement.X + 4);
+                        this.position.Y += ((int)movement.Y + 4);
+                        move += 4;
+                    }
+                    this.position = getPosition;
 
-                hunter.spearJab = false;
+                    hunter.spearJab = false;
+                
             }
             if (hunter.spearThrow == true)
             {
