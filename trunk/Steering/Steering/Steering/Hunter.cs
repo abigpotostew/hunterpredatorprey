@@ -20,16 +20,18 @@ namespace Steering
         public bool spearJab;
         public bool spearThrow;
         DateTime timing;
+        KeyboardState newState, prevState;
         const double holdKeyWait = 0.25;
 
 
-        public Hunter(Texture2D image, Vector2 position)
+        public Hunter(Texture2D image, Vector2 position, KeyboardState state)
             : base(image, position, 1, 4)
         {
             //orientation
             spearJab = false;
             spearThrow = false;
             threatCooldown = 600;
+            prevState = state;
         }
 
         public void threaten()
@@ -73,11 +75,12 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
-            if (Game.keyboard.IsKeyDown(Keys.Space))
+            if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
             {
-                keyPressed = true;
-                spearJab = true;
-                threaten();
+                    keyPressed = true;
+                    spearJab = true;
+                    threaten();
+               
             }
             if (Game.keyboard.IsKeyDown(Keys.Space) &&
                 DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))
