@@ -18,6 +18,7 @@ namespace Steering
         int jabDistance = 25;
         int throwDistance = 100;
         int move = 0;
+        Vector2 movement;
 
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state)
             : base(image, position, 1, 4)
@@ -56,38 +57,42 @@ namespace Steering
                 keyPressed = true;
             }
 
+
             if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
-            {               
-                    getPosition = this.position;
-                    Vector2 movement = hunter.Velocity;
+            {
+                keyPressed = true;
+                getPosition = this.position;
+                Vector2 movement = hunter.Velocity;
 
-                    movement.X += 8 * (float)Math.Cos(hunter.rotation);
-                    movement.Y += -(8 * (float)Math.Sin(hunter.rotation));
-                   
-                    move += 4;
-                    if (move < jabDistance)
-                    {
-                        this.position = getPosition;
-                        this.position.X += ((int)movement.X);
-                        this.position.Y += ((int)movement.Y);
-                    }
+                movement.X += 12 * (float)Math.Cos(hunter.orientation);
+                movement.Y += (12 * (float)Math.Sin(hunter.orientation));
 
-                    else
-                    {
-                       this.position = hunter.Position;
-                       this.position.X += 40;
-                       this.position.Y -= 20;
-                       move = 0;
-                    }
+                move += 3;
+                if (move < jabDistance)
+                {
+                    this.position = getPosition;
+                    this.position.X += ((int)movement.X);
+                    this.position.Y += ((int)movement.Y);
+                }
 
-                    hunter.spearJab = false;
+                else
+                {
+                    this.position = hunter.Position;
+                    this.position.X += 40;
+                    this.position.Y -= 20;
+                    move = 0;
+                }
+
+                hunter.spearJab = false;
                 
             }
 
 
-            if (hunter.spearThrow == true)
+
+
+      /*      if (hunter.spearThrow == true)
             {
-                getPosition = this.position;
+                 getPosition = this.position;
                 Vector2 movement = new Vector2();
 
                 movement.X = throwDistance * (float)Math.Cos(rotation);
@@ -102,12 +107,17 @@ namespace Steering
 
                 this.position = getPosition;
                 hunter.spearThrow = false;
+            }*/
+
+
+
+            if (!keyPressed)
+            {
+                this.position = hunter.Position;
+                this.position.X += 40;
+                this.position.Y -= 20;
+                velocity = new Vector2();
             }
-            
-
-            
-            if (!keyPressed) velocity = new Vector2();
-
             if (velocity.Length() > MaxSpeed)
             {
                 velocity.Normalize();
