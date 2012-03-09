@@ -58,18 +58,18 @@ namespace Steering
             if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
             {               
                     getPosition = this.position;
-                    Vector2 movement = new Vector2();
+                    Vector2 movement = hunter.Velocity;
 
                     movement.X = jabDistance * (float)Math.Cos(rotation);
                     movement.Y = jabDistance * (float)Math.Sin(rotation);
-
-                    while (move < jabDistance)
+                    
+                    this.position.X += ((int)movement.X + 4);
+                    this.position.Y += ((int)movement.Y + 4);
+                    move += 4;
+                    if (move < jabDistance)
                     {
-                        this.position.X += ((int)movement.X + 4);
-                        this.position.Y += ((int)movement.Y + 4);
-                        move += 4;
+                        this.position = getPosition;
                     }
-                    this.position = getPosition;
 
                     hunter.spearJab = false;
                 
