@@ -81,9 +81,18 @@ namespace Steering
 
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            base.Draw(time, sb);
-            sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
-            sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
+            if (visible)
+            {
+                base.Draw(time, sb);
+                sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
+                sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
+            }
+
+            else
+            {
+                base.Draw(time, sb, false);
+            }
+
         }
 
         public override void Update(SteeringOutput steering, GameTime time)
