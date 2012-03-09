@@ -1,0 +1,5 @@
+-Deer Flee state should not flee from lion if he's visible
+-Deer flee state should flock together a bit more, with a
+  stronger pull to run from lion than to stay together
+- Lion, if he waits too long in a bush without find a deer, he should creep to the next, or chase
+- lions pounce should be arrive

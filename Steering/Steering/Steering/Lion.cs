@@ -34,18 +34,20 @@ namespace Steering
             this.game = game;
             hunger = 0;
             AttachLionHFSM();
+            health = 4;
+            damage = 3;
         }
 
         void AttachLionHFSM()
         {
             State wanderState = new State("wander", new WanderAction());
             State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
-            State waitState = new State("wait",new WaitInBushAction());
-            State pounceState = new State("pounce",new PounceEntryAction(), new PounceAction(), new emptyVisibleAction());
+            State waitState = new State("wait",new WaitInBushAction(false));
+            State pounceState = new State("pounce",new SetLionTargetToDeerAction(), new PounceAction(), new emptyVisibleAction());
             State eatState = new State("eat",new KillDeerAction(),new EatAction(), new emptyAction());
             State napState = new State("nap", new NapAction());
-            State creepState = new State("creep", new CreepAction());
-            State chaseState = new State("chase", new ChaseAction());
+            State creepState = new State("creep", new CreepDeerAction());
+            State chaseState = new State("chase", new ChaseDeerAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
             Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(300),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
@@ -77,6 +79,23 @@ namespace Steering
 
             this.hfsm = new HierarchicalStateMachine(game,wanderState,hideState,waitState,pounceState,wanderState,eatState, chaseState, creepState, napState);
 
+            /*
+            //State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());
+            State creepHunter = new State("creepHunter", new CreepHunterAction());
+            State chaseHunter = new State("chaseHunter", new ChaseHunterAction());
+            State pounceHunter = new State("pouncePlayer", new SetLionTargetToHunterAction(), new PounceAction(), new emptyVisibleAction());
+            State goToBushState = new State("hideFromPlayer", new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
+            State hideInBush = new State("hide", new WaitInBushAction(true));
+
+            Transition creepToChaseH = new Transition(new DistanceToHunter(200), chaseHunter, -1);
+            Transition creepToPounceH = new Transition(new DistanceToHunter(150), pounceHunter, -1);
+            Transition creepToBushH = new Transition(new NotCondition(new DistanceToHunter(300)), goToBushState, -1);
+            creepHunter.addTransition(creepToPounce, creepToChaseH, creepToBushH);
+
+            Transition chaseToPounceH = new Transition(new DistanceToHunter(150), pounceHunter, -1);
+            chaseHunter.addTransition(chaseToPounceH);
+            */
+
         }
 
         public override void Draw(GameTime time, SpriteBatch sb)
@@ -102,7 +121,7 @@ namespace Steering
 
             bool keyPressed = false;
             hunger++;
-            if (Game.keyboard.IsKeyDown(Keys.Left))
+            /*if (Game.keyboard.IsKeyDown(Keys.Left))
             {
                 velocity.X -= maxAcceleration;
                 keyPressed = true;
@@ -121,7 +140,7 @@ namespace Steering
             {
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
-            }
+            }*/
 
             //if (!keyPressed) velocity = new Vector2();
 

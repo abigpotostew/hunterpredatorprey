@@ -15,7 +15,7 @@ namespace Steering.FSM.Conditions
         }
         public bool test(Game g, Entity e)
         {
-            float dist = (g.guy.Position - e.Position).Length();
+            float dist = (g.playerHunter.Position - e.Position).Length();
             if (dist < thresold) return true;
             return false;
         }

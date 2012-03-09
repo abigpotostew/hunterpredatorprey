@@ -15,7 +15,7 @@ namespace Steering.FSM.Conditions
         }
         public bool test(Game game, Entity character)
         {
-            if (game.guy.threat > threshold)
+            if (game.playerHunter.threat > threshold)
                 return true;
             return false;
         }

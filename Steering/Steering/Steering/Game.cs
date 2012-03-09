@@ -33,7 +33,7 @@ namespace Steering
         public static SpriteFont Font;
         KeyboardState oldState;
 
-        public Hunter guy;
+        public Hunter playerHunter;
         public Lion lion;
         Spear spear;
         //Deer deer;
@@ -99,8 +99,8 @@ namespace Steering
 
             //timer = new Timer();
 
-            guy = new Hunter(hunter, new Vector2(200,200), oldState);
-            spear = new Spear(spearImg, new Vector2(240,180), guy, oldState);
+            playerHunter = new Hunter(hunter, new Vector2(200,200), oldState);
+            spear = new Spear(spearImg, new Vector2(240,180), playerHunter, oldState);
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 
@@ -127,8 +127,8 @@ namespace Steering
             if (timer.seconds == 15)
                 timer.stopTimer(0);*/
             
-            guy.Update(Steerings.lookWhereGoing.getSteering(guy), gameTime);
-            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime,guy);
+            playerHunter.Update(Steerings.lookWhereGoing.getSteering(playerHunter), gameTime);
+            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime,playerHunter);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
             deerManager.Update(gameTime);
             base.Update(gameTime);
@@ -142,14 +142,12 @@ namespace Steering
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
-
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             gameWorld.draw(gameTime, spriteBatch);
 
             lion.Draw(gameTime, spriteBatch);
-            guy.Draw(gameTime, spriteBatch);
+            playerHunter.Draw(gameTime, spriteBatch);
             spear.Draw(gameTime, spriteBatch);
             deerManager.Draw(gameTime, spriteBatch);
 
@@ -157,7 +155,7 @@ namespace Steering
             //spriteBatch.DrawString(Font, "Use WASD to move & Q and E to rotate", Vector2.Zero, Color.Black);
             //spriteBatch.DrawString(Font, "Deer ori: "+deer.orientation, new Vector2(0, 20), Color.Black);
             //spriteBatch.DrawString(Font, "Deer Vel: " + deer.Velocity, new Vector2(0, 40), Color.Black);
-            if (guy.spearJab == true)
+            if (playerHunter.spearJab == true)
                 spriteBatch.DrawString(Font, "True", Vector2.Zero, Color.Black);
             else
                 spriteBatch.DrawString(Font, "False", Vector2.Zero, Color.Black); 
