@@ -58,7 +58,7 @@ namespace Steering
             }
 
 
-            if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
+            if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
             {
                 keyPressed = true;
                 getPosition = this.position;

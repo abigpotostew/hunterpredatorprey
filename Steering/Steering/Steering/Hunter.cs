@@ -78,7 +78,7 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
-            if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
+            if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
             {
                     keyPressed = true;
                     spearJab = true;
