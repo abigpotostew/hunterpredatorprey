@@ -19,6 +19,9 @@ namespace Steering
         
         public bool spearJab;
         public bool spearThrow;
+        public float throwOrientation;
+        public Vector2 throwVelocity;
+
         DateTime timing;
         KeyboardState newState, prevState;
         const double holdKeyWait = 0.25;
@@ -51,6 +54,8 @@ namespace Steering
         }
         public override void Update(SteeringOutput steering, GameTime time)
         {
+            prevState = newState;
+            newState = Keyboard.GetState();
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
             threatCooldown--;
@@ -84,20 +89,21 @@ namespace Steering
                     spearJab = true;
                     threaten();
             }
-            if (Game.keyboard.IsKeyDown(Keys.Space) &&
-                DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))
+            if (newState.IsKeyDown(Keys.K) && prevState.IsKeyUp(Keys.K))
             {
                 keyPressed = true;
                 spearThrow = true;
+                throwOrientation = this.orientation;
+                throwVelocity = this.velocity;
                 threaten();
             }
 
-            if (Game.keyboard.IsKeyUp(Keys.Space))
+            /*if (Game.keyboard.IsKeyUp(Keys.Space))
             {
                 //keyPressed = false;
                 spearJab = false;
                 spearThrow = false;
-            }
+            }*/
 
             if (!keyPressed) velocity = new Vector2();
 

@@ -18,7 +18,7 @@ namespace Steering
         int jabDistance = 25;
         int throwDistance = 100;
         int move = 0;
-        Vector2 movement;
+        Vector2 throwMovement;
 
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state)
             : base(image, position, 1, 4)
@@ -81,35 +81,42 @@ namespace Steering
                     this.position.X += 40;
                     this.position.Y -= 20;
                     move = 0;
+                    hunter.spearJab = false;
                 }
-
-                hunter.spearJab = false;
                 
             }
 
-
-
-
-      /*      if (hunter.spearThrow == true)
+            if (hunter.spearThrow)
             {
-                 getPosition = this.position;
-                Vector2 movement = new Vector2();
+                Vector2 movement = Vector2.Zero;
+                getPosition = this.position;
+                movement = hunter.throwVelocity;
 
-                movement.X = throwDistance * (float)Math.Cos(rotation);
-                movement.Y = (throwDistance * (float)Math.Sin(rotation));
+                movement.X += 8 * (float)Math.Cos(hunter.throwOrientation);
+                movement.Y += (8 * (float)Math.Sin(hunter.throwOrientation));
+                keyPressed = true;
 
-                if (move < jabDistance)
+
+                move += 4;
+                if (move < throwDistance)
                 {
+                    this.position = getPosition;
                     this.position.X += ((int)movement.X);
                     this.position.Y += ((int)movement.Y);
-                    move += 2;
                 }
 
-                this.position = getPosition;
-                hunter.spearThrow = false;
-            }*/
+                else
+                {
+                    this.position = hunter.Position;
+                    this.position.X += 40;
+                    this.position.Y -= 20;
+                    move = 0;
+                    hunter.spearThrow = false;
+                }
 
+                
 
+            }
 
             if (!keyPressed)
             {
