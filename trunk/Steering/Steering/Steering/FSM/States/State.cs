@@ -51,7 +51,13 @@ namespace Steering.FSM
              states.Add(this);
              return states;
          }
-
+         public void AddActions(params IAction[] actions)
+         {
+             for (int i = 0; i < actions.Length; ++i)
+             {
+                 this.actions.Add(actions[i]);
+             }
+         }
 
 
          public List<IAction> getAction()

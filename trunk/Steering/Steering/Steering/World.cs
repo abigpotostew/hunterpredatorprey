@@ -20,7 +20,7 @@ namespace Steering
         int y_dim;
         int numBushes;
         int[,] textures;
-        private List<Bush> bushes;
+        private List<Entity> bushes;
         private Texture2D tile1, tile2, tile3, bush;
 
         public World(GraphicsDeviceManager graphics, int numBushes)
@@ -30,7 +30,7 @@ namespace Steering
             int temp = 0;
 
             textures = new int[x_dim, y_dim];
-            bushes = new List<Bush>();
+            bushes = new List<Entity>();
 
             for (int i = 0; i < y_dim; i++)
             {
@@ -47,7 +47,7 @@ namespace Steering
 
         }
 
-        public List<Bush> getBushes()
+        public List<Entity> getBushes()
         {
             return bushes;
         }
@@ -69,13 +69,13 @@ namespace Steering
             }
         }
 
-        public Bush ClosestBush(Vector2 position)
+        public Entity ClosestBush(Vector2 position)
         {
             int closestIndex = 0;
             float[] distancesSq = new float[bushes.Count];
             for (int i = 0; i < bushes.Count; ++i)
             {
-                distancesSq[i] = ( Vector2.DistanceSquared(position, bushes[i].posit) );
+                distancesSq[i] = ( Vector2.DistanceSquared(position, ((Bush)bushes[i]).posit) );
             }
             
             for (int i = 1; i < distancesSq.Length; ++i)

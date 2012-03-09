@@ -32,6 +32,9 @@ namespace Steering
             spearThrow = false;
             threatCooldown = 600;
             prevState = state;
+
+            health = 3;
+            damage = 2;
         }
 
         public void threaten()
@@ -80,7 +83,6 @@ namespace Steering
                     keyPressed = true;
                     spearJab = true;
                     threaten();
-               
             }
             if (Game.keyboard.IsKeyDown(Keys.Space) &&
                 DateTime.Now >= timing + TimeSpan.FromSeconds(holdKeyWait))

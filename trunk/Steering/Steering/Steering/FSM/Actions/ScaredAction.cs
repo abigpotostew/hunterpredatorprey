@@ -13,18 +13,18 @@ namespace Steering.FSM.Actions
             if (game.lion.visible == true)
             {
                 return Steerings.separationFromDeer.getSteering(character, character.neighbors) +
-                       Steerings.separationFromHunter.getSteering(character, game.guy) +
+                       Steerings.separationFromHunter.getSteering(character, game.playerHunter) +
                        Steerings.cohesion.getSteering(character, character.neighbors) +
                        Steerings.velocityMatch.getSteering(character, character.neighbors) +
                        Steerings.flee200.getSteering(character, game.lion) +
-                       Steerings.flee200.getSteering(character, game.guy);
+                       Steerings.flee200.getSteering(character, game.playerHunter);
             }
             else
                 return Steerings.separationFromDeer.getSteering(character, character.neighbors) +
-                  Steerings.separationFromHunter.getSteering(character, game.guy) +
+                  Steerings.separationFromHunter.getSteering(character, game.playerHunter) +
                   Steerings.cohesion.getSteering(character, character.neighbors) +
                   Steerings.velocityMatch.getSteering(character, character.neighbors) +
-                  Steerings.flee200.getSteering(character, game.guy);
+                  Steerings.flee200.getSteering(character, game.playerHunter);
         }
     }
 }

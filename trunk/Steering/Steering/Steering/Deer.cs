@@ -36,6 +36,9 @@ namespace Steering
             if (intelligence > 1) intelligence = 1;
 
             wanderSpeed = 1f;
+
+            health = 1;
+            damage = 0;
         }
 
          public override void Update(SteeringOutput steering, GameTime time)
@@ -47,7 +50,7 @@ namespace Steering
              }
 
              //always do look where going 
-             base.Update(Steerings.lookWhereGoing.getSteering(this) /*+ Steerings.separationFromDeer.getSteering(this,game.gameWorld.getBushes())*/ + steering, time);
+             base.Update(Steerings.lookWhereGoing.getSteering(this) + Steerings.bushSeparation.getSteering(this,game.gameWorld.getBushes()) + steering, time);
              
          }
 

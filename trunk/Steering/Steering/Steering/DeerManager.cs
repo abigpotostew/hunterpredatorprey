@@ -40,8 +40,9 @@ namespace Steering
             ScaredAction scaredAction = new ScaredAction();
             WanderAction wanderAction = new WanderAction();
             GrazeAction grazeAction = new GrazeAction();
-            FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
-            FleeFromHunterAction fleeFromHunterAction = new FleeFromHunterAction();
+            //FleeFromLionAction fleeFromLionAction = new FleeFromLionAction();
+            //FleeFromHunterAction fleeFromHunterAction = new FleeFromHunterAction();
+            DeerFleeAction deerFleeAction = new DeerFleeAction();
             resetWander resetWander = new resetWander();
             emptyAction emptyAction = new emptyAction();
             FlockAction flockAction = new FlockAction();
@@ -50,7 +51,8 @@ namespace Steering
             State scaredState = new State("scared", scaredAction);
             State wanderState = new State("wander", emptyAction, wanderAction, resetWander);
             State grazeState = new State("graze", grazeAction);
-            State fleeState = new State("flee", fleeFromLionAction, fleeFromHunterAction);
+            State fleeState = new State("flee", deerFleeAction);
+            //fleeState.AddActions();
             State flockState = new State("flock", flockAction);
 
 
@@ -107,7 +109,7 @@ namespace Steering
             gotoGrazefromFlock.addActions(grazeAction);
             gotoScaredFromWander.addActions(scaredAction);
             gotoScaredFromGraze.addActions(scaredAction);
-            gotoFlee.addActions(fleeFromLionAction);
+            gotoFlee.addActions(deerFleeAction);
             gotoFlockfromGraze.addActions(flockAction);
             gotoScaredFromFlock.addActions(scaredAction);
             gotoScaredFromFlee.addActions(scaredAction);
@@ -224,6 +226,7 @@ namespace Steering
             return deers[0];
         }
 
+        //Finds neighbors for each deer within 100 pixels.
         void UpdateDeerNeighbors()
         {
             for ( int i = 0; i < deers.Count; ++i)

@@ -6,15 +6,14 @@ using Steering.Steering;
 
 namespace Steering.FSM.Actions
 {
-    class PounceAction : IAction
+    class ChaseHunterAction : IAction
     {
+
+
         public SteeringOutput execute(Game game, Entity character)
         {
-            
-            SteeringOutput result = Steerings.seekPounce.getSteering(character, game.lion.pounceTarget);
-            result.maxSpeed = 20f;
-            //result.linear = game.lion.pounceTarget.Position - game.lion.Position;
-
+            SteeringOutput result = Steerings.pursue.getSteering(character, game.playerHunter);
+            result.maxSpeed = 5f;
             return result;
         }
     }

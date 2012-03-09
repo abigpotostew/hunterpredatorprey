@@ -25,6 +25,9 @@ namespace Steering
         public List<Entity> neighbors;
         public bool isColliding = false, wander;
 
+        public int health;
+        public int damage;
+
         #region Properties
         public Texture2D Image { get { return image; } set { image = value; } }
         public Vector2 Position { get { return position; } }
