@@ -90,7 +90,15 @@ namespace Steering
                 keyPressed = true;
                 spearThrow = true;
                 threaten();
-            } 
+            }
+
+            if (Game.keyboard.IsKeyUp(Keys.Space))
+            {
+                //keyPressed = false;
+                spearJab = false;
+                spearThrow = false;
+            }
+
             if (!keyPressed) velocity = new Vector2();
 
             if (velocity.Length() > MaxSpeed)

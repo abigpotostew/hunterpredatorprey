@@ -55,43 +55,56 @@ namespace Steering
                 velocity.Y += maxAcceleration;
                 keyPressed = true;
             }
+
             if (newState.IsKeyDown(Keys.Space) && prevState.IsKeyUp(Keys.Space))
             {               
                     getPosition = this.position;
                     Vector2 movement = hunter.Velocity;
 
-                    movement.X = jabDistance * (float)Math.Cos(rotation);
-                    movement.Y = jabDistance * (float)Math.Sin(rotation);
-                    
-                    this.position.X += ((int)movement.X + 4);
-                    this.position.Y += ((int)movement.Y + 4);
+                    movement.X += 8 * (float)Math.Cos(hunter.rotation);
+                    movement.Y += -(8 * (float)Math.Sin(hunter.rotation));
+                   
                     move += 4;
                     if (move < jabDistance)
                     {
                         this.position = getPosition;
+                        this.position.X += ((int)movement.X);
+                        this.position.Y += ((int)movement.Y);
+                    }
+
+                    else
+                    {
+                       this.position = hunter.Position;
+                       this.position.X += 40;
+                       this.position.Y -= 20;
+                       move = 0;
                     }
 
                     hunter.spearJab = false;
                 
             }
+
+
             if (hunter.spearThrow == true)
             {
                 getPosition = this.position;
                 Vector2 movement = new Vector2();
 
                 movement.X = throwDistance * (float)Math.Cos(rotation);
-                movement.Y = throwDistance * (float)Math.Sin(rotation);
+                movement.Y = (throwDistance * (float)Math.Sin(rotation));
 
-                while (move < jabDistance)
+                if (move < jabDistance)
                 {
-                    this.position.X += ((int)movement.X + 2);
-                    this.position.Y += ((int)movement.Y + 2);
+                    this.position.X += ((int)movement.X);
+                    this.position.Y += ((int)movement.Y);
                     move += 2;
                 }
 
                 this.position = getPosition;
                 hunter.spearThrow = false;
             }
+            
+
             
             if (!keyPressed) velocity = new Vector2();
 
