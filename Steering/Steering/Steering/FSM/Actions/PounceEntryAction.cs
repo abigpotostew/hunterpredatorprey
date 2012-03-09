@@ -6,6 +6,7 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
+            game.lion.visible = true;
             Vector2 target = game.lion.closestDeerTarget.Position;
             Vector2 direction = target - game.lion.Position;
             direction.Normalize();
