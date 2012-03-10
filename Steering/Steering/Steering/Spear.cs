@@ -11,9 +11,8 @@ namespace Steering
 {
     public class Spear : Entity
     {
-        const double holdKeyWait = 0.25;
         Circle collide;
-        Vector2 getPosition;
+        Vector2 getPosition,dirFromSpear;
         KeyboardState prevState, newState;
         int jabDistance = 25;
         int throwDistance = 100;
@@ -24,9 +23,9 @@ namespace Steering
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state, Game dasGame)
             : base(image, position, 1, 4)
         {
-            collide = new Circle((int)position.X + 10, (int)position.Y + 10, 2);
-            debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
-            debugCircle.CreateCircle(3, 20);
+            collide = new Circle((int)(position.X + 4), (int)(position.Y + 1), 5);
+         //   debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
+           // debugCircle.CreateCircle(2, 20);
             this.position = position;
             prevState = state;
             this.game = dasGame;
@@ -37,6 +36,7 @@ namespace Steering
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
             newState = Keyboard.GetState();
+
 
             bool keyPressed = false;
 
@@ -63,8 +63,21 @@ namespace Steering
                     keyPressed = true;
                 }
             }
-
-
+            
+                for (int i = 0; i < game.deerManager.GetDeerCount(); i++)
+                {
+                    Deer d = (Deer)game.deerManager.deers[i];
+                    dirFromSpear = (d.Position - this.Position);
+                    float distance = dirFromSpear.Length();
+                    if (distance < 30)
+                    {
+                        game.deerManager.KillDeer(d);
+                        game.playerHunter.spearJab = false;
+                        game.playerHunter.spearThrow = false;
+                        break;
+                    }
+                }
+             
             if (game.playerHunter.spearJab)
             {
                 keyPressed = true;
@@ -142,14 +155,18 @@ namespace Steering
 
 
             base.Update(steering, time);
-            debugCircle.Position.X += (float)(((image.Height - 5) / 2) * Math.Cos(this.orientation));
-            debugCircle.Position.Y += (float)(((image.Height - 5) / 2) * Math.Sin(this.orientation));
+            collide.position.X += (float)((((image.Height-5) / 2) * Math.Cos(this.orientation)));
+            collide.position.Y += (float)(((image.Height-5) / 2) * Math.Sin(this.orientation));
         }
+ 
         public override void Draw(GameTime time, SpriteBatch sb)
         {
+            
             base.Draw(time, sb);
-            debugCircle.Draw(sb);
+            /*debugCircle.Draw(sb);
            // sb.DrawString(Game.Font, ""+ debugCircle.Position, debugCircle.Position, Color.Black);
+             */ 
         }
+  
     }
 }

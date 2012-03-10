@@ -28,6 +28,7 @@ namespace Steering
 
         public int health;
         public int damage;
+        
 
         #region Properties
         public Texture2D Image { get { return image; } set { image = value; } }
