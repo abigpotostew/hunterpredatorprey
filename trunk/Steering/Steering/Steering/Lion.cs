@@ -61,7 +61,6 @@ namespace Steering
             Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
             Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1200), hideState, -1);
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
-            //so the lion chases when he's very desperate?
             Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 401), new LionHungerGreaterThanCondition(1800)), chaseState, -1);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
 

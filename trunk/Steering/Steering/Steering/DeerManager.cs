@@ -13,7 +13,7 @@ namespace Steering
 {
     public class DeerManager
     {
-        List<Entity> deers, deerRemoval;
+        List<Entity> deers, deerRemoval, deerDead, deerDeadRemoval;
         int deerCount, wanderTimer;
         int longTimer, shortTimer;
         TimeSpan initialTime;
@@ -25,6 +25,8 @@ namespace Steering
         {
             deers = new List<Entity>();
             deerRemoval = new List<Entity>();
+            deerDead = new List<Entity>();
+            deerDeadRemoval = new List<Entity>();
             deerCount = 0;
             this.game = game;
             random = new Random();
@@ -236,6 +238,7 @@ namespace Steering
         {
             for ( int i = 0; i < deers.Count; ++i)
             {
+             
                 deers[i].isColliding = false;
                 if (deers[i].neighbors.Count > 0) deers[i].neighbors.Clear();
             }
@@ -259,15 +262,33 @@ namespace Steering
             if (deerRemoval.Count > 0)
             {
                 foreach (Entity d in deerRemoval)
+                {
                     deers.Remove(d);
+                    deerDead.Add(d);
+                }
                 deerRemoval.Clear();
             }
-
+            if (deerDeadRemoval.Count > 0)
+            {
+                foreach (Entity d in deerDeadRemoval)
+                {
+                    deerDead.Remove(d);
+                }
+                deerDeadRemoval.Clear();
+            }
+            foreach (Entity d in deerDead)
+            {
+                Vector2 distance = d.Position - game.playerHunter.Position;
+                float dist = distance.Length();
+                if (dist < 10)
+                    deerDeadRemoval.Add(d);
+            }
             UpdateDeerNeighbors();
             calcDeersFear(); 
             foreach (Entity d in deers)
             {
                 d.updateFear();
+
             }
             int deerWander = random.Next(1, deerCount);
             for (int i = 0; i < deers.Count; ++i)
@@ -308,8 +329,10 @@ namespace Steering
             foreach (Entity d in deers)
             {
                 d.Draw(gameTime, sb);
-                
-               
+            }
+            foreach (Entity d in deerDead)
+            {
+                d.Draw(gameTime, sb);
             }
         }
     }
