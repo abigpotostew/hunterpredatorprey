@@ -24,6 +24,7 @@ namespace Steering
 
         public List<Entity> neighbors;
         public bool isColliding = false, wander;
+        public bool dead = false;
 
         public int health;
         public int damage;

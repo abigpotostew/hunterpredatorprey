@@ -36,7 +36,7 @@ namespace Steering
             threatCooldown = 600;
             prevState = state;
 
-            health = 3;
+            health = 4;
             damage = 2;
         }
 
@@ -62,26 +62,28 @@ namespace Steering
             if(threatCooldown < 0)
                 decayThreat();
             bool keyPressed = false;
-
-            if (Game.keyboard.IsKeyDown(Keys.A))
+            if (spearJab == false && spearThrow == false)
             {
-                velocity.X -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.D))
-            {
-                velocity.X += maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.W))
-            {
-                velocity.Y -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.S))
-            {
-                velocity.Y += maxAcceleration;
-                keyPressed = true;
+                if (Game.keyboard.IsKeyDown(Keys.A))
+                {
+                    velocity.X -= maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.D))
+                {
+                    velocity.X += maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.W))
+                {
+                    velocity.Y -= maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.S))
+                {
+                    velocity.Y += maxAcceleration;
+                    keyPressed = true;
+                }
             }
             if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
             {
@@ -97,13 +99,6 @@ namespace Steering
                 throwVelocity = this.velocity;
                 threaten();
             }
-
-            /*if (Game.keyboard.IsKeyUp(Keys.Space))
-            {
-                //keyPressed = false;
-                spearJab = false;
-                spearThrow = false;
-            }*/
 
             if (!keyPressed) velocity = new Vector2();
 

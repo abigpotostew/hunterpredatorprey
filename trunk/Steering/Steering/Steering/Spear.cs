@@ -19,6 +19,7 @@ namespace Steering
         int throwDistance = 100;
         int move = 0;
         Vector2 throwMovement;
+        
 
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state)
             : base(image, position, 1, 4)
@@ -28,7 +29,7 @@ namespace Steering
             prevState = state;
         }
 
-        public void Update(SteeringOutput steering, GameTime time, Hunter hunter/*, DeerManager deer*/)
+        public void Update(SteeringOutput steering, GameTime time, Game game)
         {
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
@@ -36,36 +37,42 @@ namespace Steering
 
             bool keyPressed = false;
 
-            if (Game.keyboard.IsKeyDown(Keys.A))
+            if (game.playerHunter.spearJab == false && game.playerHunter.spearThrow == false)
             {
-                velocity.X -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.D))
-            {
-                velocity.X += maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.W))
-            {
-                velocity.Y -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.S))
-            {
-                velocity.Y += maxAcceleration;
-                keyPressed = true;
+                if (Game.keyboard.IsKeyDown(Keys.A))
+                {
+                    velocity.X -= maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.D))
+                {
+                    velocity.X += maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.W))
+                {
+                    velocity.Y -= maxAcceleration;
+                    keyPressed = true;
+                }
+                if (Game.keyboard.IsKeyDown(Keys.S))
+                {
+                    velocity.Y += maxAcceleration;
+                    keyPressed = true;
+                }
             }
 
+            if (game.playerHunter.spearJab == true || game.playerHunter.spearThrow == true)
+            {
 
-            if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
+            }
+            if (game.playerHunter.spearJab)
             {
                 keyPressed = true;
                 getPosition = this.position;
-                Vector2 movement = hunter.Velocity;
+                Vector2 movement = game.playerHunter.Velocity;
 
-                movement.X += 12 * (float)Math.Cos(hunter.orientation);
-                movement.Y += (12 * (float)Math.Sin(hunter.orientation));
+                movement.X += 12 * (float)Math.Cos(game.playerHunter.orientation);
+                movement.Y += (12 * (float)Math.Sin(game.playerHunter.orientation));
 
                 move += 3;
                 if (move < jabDistance)
@@ -77,23 +84,24 @@ namespace Steering
 
                 else
                 {
-                    this.position = hunter.Position;
+                    this.position = game.playerHunter.Position;
                     this.position.X += 40;
                     this.position.Y -= 20;
                     move = 0;
-                    hunter.spearJab = false;
+                    game.playerHunter.spearJab = false;
                 }
                 
             }
 
-            if (hunter.spearThrow)
+            if (game.playerHunter.spearThrow)
             {
+                //game.playerHunter.spearThrow = true;
                 Vector2 movement = Vector2.Zero;
                 getPosition = this.position;
-                movement = hunter.throwVelocity;
+                movement = game.playerHunter.throwVelocity;
 
-                movement.X += 8 * (float)Math.Cos(hunter.throwOrientation);
-                movement.Y += (8 * (float)Math.Sin(hunter.throwOrientation));
+                movement.X += 8 * (float)Math.Cos(game.playerHunter.throwOrientation);
+                movement.Y += (8 * (float)Math.Sin(game.playerHunter.throwOrientation));
                 keyPressed = true;
 
 
@@ -107,11 +115,11 @@ namespace Steering
 
                 else
                 {
-                    this.position = hunter.Position;
+                    this.position = game.playerHunter.Position;
                     this.position.X += 40;
                     this.position.Y -= 20;
                     move = 0;
-                    hunter.spearThrow = false;
+                    game.playerHunter.spearThrow = false;
                 }
 
                 
@@ -120,7 +128,7 @@ namespace Steering
 
             if (!keyPressed)
             {
-                this.position = hunter.Position;
+                this.position = game.playerHunter.Position;
                 this.position.X += 40;
                 this.position.Y -= 20;
                 velocity = new Vector2();
