@@ -7,9 +7,11 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
+            game.lion.pounceMisses++;
+
+            //set the lion's pounce target to a little behind the target deer's position
             Vector2 target = game.lion.closestDeerTarget.Position;
             Vector2 direction = target - game.lion.Position;
-            //Console.WriteLine("Dist to target: " + direction.Length());
             direction.Normalize();
             target += direction * 20;
 

@@ -7,6 +7,7 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
+            game.lion.pounceMisses++;
             Vector2 target = game.playerHunter.Position;
             Vector2 direction = target - game.lion.Position;
             direction.Normalize();
