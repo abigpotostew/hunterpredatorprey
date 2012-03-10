@@ -100,7 +100,7 @@ namespace Steering
             //timer = new Timer();
 
             playerHunter = new Hunter(hunter, new Vector2(200,200), oldState);
-            spear = new Spear(spearImg, new Vector2(240,180), playerHunter, oldState);
+            spear = new Spear(spearImg, new Vector2(240,180), playerHunter, oldState,this);
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
 

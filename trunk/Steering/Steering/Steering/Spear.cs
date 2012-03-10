@@ -18,15 +18,20 @@ namespace Steering
         int jabDistance = 25;
         int throwDistance = 100;
         int move = 0;
-        Vector2 throwMovement;
+        Game game;
         
 
-        public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state)
+        public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state, Game dasGame)
             : base(image, position, 1, 4)
         {
-            collide = new Circle((int)position.X + 4, (int)position.Y - 1, 2);
+            collide = new Circle((int)position.X + 40, (int)position.Y + 10, 2);
+            debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
+            debugCircle.CreateCircle(5, 20);
+            debugCircle.Position.X = 40;
+            debugCircle.Position.Y = 100;
             this.position = position;
             prevState = state;
+            this.game = dasGame;
         }
 
         public void Update(SteeringOutput steering, GameTime time, Game game)
@@ -34,6 +39,8 @@ namespace Steering
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
             newState = Keyboard.GetState();
+            debugCircle.Position.X += (float)((image.Height/2) * Math.Cos(this.orientation));
+            debugCircle.Position.Y += (float)((image.Height/2) * Math.Sin(this.orientation));
 
             bool keyPressed = false;
 
@@ -141,6 +148,12 @@ namespace Steering
 
 
             base.Update(steering, time);
+        }
+        public override void Draw(GameTime time, SpriteBatch sb)
+        {
+            base.Draw(time, sb);
+            debugCircle.Draw(sb);
+            sb.DrawString(Game.Font, ""+ debugCircle.Position, debugCircle.Position, Color.Black);
         }
     }
 }
