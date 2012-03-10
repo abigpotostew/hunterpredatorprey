@@ -32,7 +32,7 @@ namespace Steering
         SpriteBatch spriteBatch;
         public static SpriteFont Font;
         KeyboardState oldState;
-
+        
         public Hunter playerHunter;
         public Lion lion;
         Spear spear;
@@ -128,7 +128,7 @@ namespace Steering
                 timer.stopTimer(0);*/
             
             playerHunter.Update(Steerings.lookWhereGoing.getSteering(playerHunter), gameTime);
-            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime,playerHunter);
+            spear.Update(Steerings.lookWhereGoing.getSteering(spear), gameTime, this);
             lion.Update(Steerings.lookWhereGoing.getSteering(lion), gameTime);
             deerManager.Update(gameTime);
             base.Update(gameTime);
