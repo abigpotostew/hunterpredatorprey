@@ -137,6 +137,7 @@
     <Compile Include="FSM\Conditions\LionHealthCondition.cs" />
     <Compile Include="FSM\Conditions\NotCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountCondition.cs" />
+    <Compile Include="FSM\Conditions\RandomPounceMissesCondition.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />
     <Compile Include="FSM\Conditions\LionHungerGreaterThanCondition.cs" />
     <Compile Include="FSM\Actions\NapAction.cs" />

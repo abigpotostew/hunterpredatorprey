@@ -9,6 +9,7 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
+            game.lion.pounceMisses = 0;
             game.deerManager.KillDeer(game.lion.closestDeerTarget);
             return new SteeringOutput();
         }
