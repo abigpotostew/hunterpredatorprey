@@ -155,12 +155,8 @@ namespace Steering
             //spriteBatch.DrawString(Font, "Use WASD to move & Q and E to rotate", Vector2.Zero, Color.Black);
             //spriteBatch.DrawString(Font, "Deer ori: "+deer.orientation, new Vector2(0, 20), Color.Black);
             //spriteBatch.DrawString(Font, "Deer Vel: " + deer.Velocity, new Vector2(0, 40), Color.Black);
-            if (playerHunter.spearJab == true)
-                spriteBatch.DrawString(Font, "True", Vector2.Zero, Color.Black);
-            else
-                spriteBatch.DrawString(Font, "False", Vector2.Zero, Color.Black); 
-            spriteBatch.End();
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }

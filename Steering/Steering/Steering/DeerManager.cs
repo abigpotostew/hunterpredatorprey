@@ -13,7 +13,7 @@ namespace Steering
 {
     public class DeerManager
     {
-        List<Entity> deers, deerRemoval, deerDead, deerDeadRemoval;
+        public List<Entity> deers, deerRemoval, deerDead, deerDeadRemoval;
         int deerCount, wanderTimer;
         int longTimer, shortTimer;
         TimeSpan initialTime;
