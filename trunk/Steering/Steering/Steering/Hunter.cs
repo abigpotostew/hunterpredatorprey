@@ -16,7 +16,9 @@ namespace Steering
         
         public float threat;
         public int threatCooldown;
-        
+
+        bool canAttack;
+        int coolDown = 50;
         public bool spearJab;
         public bool spearThrow;
         public float throwOrientation;
@@ -85,19 +87,38 @@ namespace Steering
                     keyPressed = true;
                 }
             }
-            if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
+
+            if (!canAttack)
             {
+                coolDown--;
+
+                if (coolDown <= 0)
+                {
+                    coolDown = 50;
+                    canAttack = true;
+                }
+
+            }
+
+            if (canAttack)
+            {
+                if (newState.IsKeyDown(Keys.J) && prevState.IsKeyUp(Keys.J))
+                {
+                    canAttack = false;
                     keyPressed = true;
                     spearJab = true;
                     threaten();
-            }
-            if (newState.IsKeyDown(Keys.K) && prevState.IsKeyUp(Keys.K))
-            {
-                keyPressed = true;
-                spearThrow = true;
-                throwOrientation = this.orientation;
-                throwVelocity = this.velocity;
-                threaten();
+                }
+
+                if (newState.IsKeyDown(Keys.K) && prevState.IsKeyUp(Keys.K))
+                {
+                    canAttack = false;
+                    keyPressed = true;
+                    spearThrow = true;
+                    throwOrientation = this.orientation;
+                    throwVelocity = this.velocity;
+                    threaten();
+                }
             }
 
             if (!keyPressed) velocity = new Vector2();

@@ -24,11 +24,9 @@ namespace Steering
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state, Game dasGame)
             : base(image, position, 1, 4)
         {
-            collide = new Circle((int)position.X + 40, (int)position.Y + 10, 2);
+            collide = new Circle((int)position.X + 10, (int)position.Y + 10, 2);
             debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
-            debugCircle.CreateCircle(5, 20);
-            debugCircle.Position.X = 40;
-            debugCircle.Position.Y = 100;
+            debugCircle.CreateCircle(3, 20);
             this.position = position;
             prevState = state;
             this.game = dasGame;
@@ -39,8 +37,6 @@ namespace Steering
             //keyboard = Keyboard.GetState();
             //mouse = Mouse.GetState();
             newState = Keyboard.GetState();
-            debugCircle.Position.X += (float)((image.Height/2) * Math.Cos(this.orientation));
-            debugCircle.Position.Y += (float)((image.Height/2) * Math.Sin(this.orientation));
 
             bool keyPressed = false;
 
@@ -68,10 +64,7 @@ namespace Steering
                 }
             }
 
-            if (game.playerHunter.spearJab == true || game.playerHunter.spearThrow == true)
-            {
 
-            }
             if (game.playerHunter.spearJab)
             {
                 keyPressed = true;
@@ -97,7 +90,7 @@ namespace Steering
                     move = 0;
                     game.playerHunter.spearJab = false;
                 }
-                
+
             }
 
             if (game.playerHunter.spearThrow)
@@ -129,9 +122,10 @@ namespace Steering
                     game.playerHunter.spearThrow = false;
                 }
 
-                
-
             }
+
+
+            
 
             if (!keyPressed)
             {
@@ -148,12 +142,14 @@ namespace Steering
 
 
             base.Update(steering, time);
+            debugCircle.Position.X += (float)(((image.Height - 5) / 2) * Math.Cos(this.orientation));
+            debugCircle.Position.Y += (float)(((image.Height - 5) / 2) * Math.Sin(this.orientation));
         }
         public override void Draw(GameTime time, SpriteBatch sb)
         {
             base.Draw(time, sb);
             debugCircle.Draw(sb);
-            sb.DrawString(Game.Font, ""+ debugCircle.Position, debugCircle.Position, Color.Black);
+           // sb.DrawString(Game.Font, ""+ debugCircle.Position, debugCircle.Position, Color.Black);
         }
     }
 }
