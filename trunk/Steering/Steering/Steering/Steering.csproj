@@ -116,6 +116,8 @@
     <Compile Include="Entity.cs" />
     <Compile Include="FSM\Actions\ChaseDeerAction.cs" />
     <Compile Include="FSM\Actions\ChaseHunterAction.cs" />
+    <Compile Include="FSM\Actions\BiteHunterAction.cs" />
+    <Compile Include="FSM\Actions\DebugPrintAction.cs" />
     <Compile Include="FSM\Actions\SetLionTargetToHunterAction.cs" />
     <Compile Include="FSM\Actions\CreepHunterAction.cs" />
     <Compile Include="FSM\Actions\CreepDeerAction.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="FSM\Actions\IAction.cs" />
     <Compile Include="FSM\Actions\EatAction.cs" />
     <Compile Include="FSM\Actions\KillDeerAction.cs" />
+    <Compile Include="FSM\Conditions\DeerCount.cs" />
+    <Compile Include="FSM\Conditions\LionHealthCondition.cs" />
     <Compile Include="FSM\Conditions\NotCondition.cs" />
     <Compile Include="FSM\Conditions\NeighborCountCondition.cs" />
     <Compile Include="FSM\Conditions\TimerCondition.cs" />

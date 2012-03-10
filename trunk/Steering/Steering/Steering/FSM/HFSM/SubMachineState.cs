@@ -13,12 +13,14 @@ namespace Steering.FSM.HFSM
             : base(g, initialState)
         {
             this.state = new State();
+            initialState.parent = this;
         }
 
         public SubMachineState(Game g, State initialState, params State[] states)
             : base(g, initialState, states)
         {
             this.state = new State();
+            initialState.parent = this;
             foreach (State s in states)
                 s.parent = this;
         }
@@ -26,6 +28,7 @@ namespace Steering.FSM.HFSM
         public List<IAction> getActions()
         {
             return state.getAction();
+            //return state.getAction();
         }
 
         public List<State> getStates()
@@ -40,7 +43,20 @@ namespace Steering.FSM.HFSM
             else
                 states.Add(state);
                 return states;
-
         }
+
+        public override string ToString()
+        {
+            if (currentState != null)
+            {
+                return base.currentState.name;
+            }
+            else return "NULL SMS";
+        }
+
+        /*public override UpdateResult Update()
+        {
+            return base.Update();
+        }*/
     }
 }

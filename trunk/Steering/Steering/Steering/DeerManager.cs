@@ -33,6 +33,11 @@ namespace Steering
             wanderTimer = random.Next(600, 1500);
         }
 
+        public int GetDeerCount()
+        {
+            return deers.Count;
+        }
+
         private void AttatchNewDeerFSM(Deer deer, Game game)
         {
 

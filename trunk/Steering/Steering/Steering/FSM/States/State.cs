@@ -9,7 +9,7 @@ namespace Steering.FSM
 {
      public class State : HSMBase
     {
-         List<IAction> actions, entryActions, exitActions;
+         public List<IAction> actions, entryActions, exitActions;
          List<ITransition> transitions;
          public String name;
          //Deer deer;

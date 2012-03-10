@@ -40,31 +40,32 @@ namespace Steering
 
         void AttachLionHFSM()
         {
-            State wanderState = new State("wander", new WanderAction());
-            State hideState = new State("hide",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
-            State waitState = new State("wait",new WaitInBushAction(false));
-            State pounceState = new State("pounce",new SetLionTargetToDeerAction(), new PounceAction(), new emptyVisibleAction());
+            State wanderState = new State("wander deer", new WanderAction());
+            State hideState = new State("hide deer",new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
+            State waitState = new State("wait for deer",new WaitInBushAction(false));
+            State pounceState = new State("pounce deer",new SetLionTargetToDeerAction(), new PounceAction(), new emptyAction());
+            pounceState.entryActions.Add(new emptyVisibleAction());
             State eatState = new State("eat",new KillDeerAction(),new EatAction(), new emptyAction());
             State napState = new State("nap", new NapAction());
-            State creepState = new State("creep", new CreepDeerAction());
-            State chaseState = new State("chase", new ChaseDeerAction());
+            State creepState = new State("creep deer", new CreepDeerAction());
+            State chaseState = new State("chase deer", new ChaseDeerAction());
 
-            Transition arriveAtBush = new Transition(new ReachedBush(), waitState, 0);
-            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(300),new DeerInRangeCondition(RangeToPounce)), pounceState, 0);
-            Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,0);
-            Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,0);
+            Transition arriveAtBush = new Transition(new ReachedBush(), waitState, -1);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(300),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
+            Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,-1);
+            Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,-1);
 
-            Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 300), napState,0);
-            Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 300), wanderState, 0);
-            Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, 0);
-            Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, 0);
-            Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1200), hideState, 0);
-            Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
+            Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 401), napState,-1);
+            Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),401), wanderState, -1);
+            Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
+            Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
+            Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1200), hideState, -1);
+            Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
             //so the lion chases when he's very desperate?
-            Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 300), new LionHungerGreaterThanCondition(1800)), chaseState, 0);
-            Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, 0);
+            Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 401), new LionHungerGreaterThanCondition(1800)), chaseState, -1);
+            Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
 
-            Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,0);
+            Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,-1);
             
             //THE LION SHOULD NOT POUNCE IF THE DEERTARGET HAS MORE THAN 3 neighborS
 
@@ -77,15 +78,29 @@ namespace Steering
             creepState.addTransition(creepToHide, creepToPounce);
             chaseState.addTransition(chaseToPounce);
 
-            this.hfsm = new HierarchicalStateMachine(game,wanderState,hideState,waitState,pounceState,wanderState,eatState, chaseState, creepState, napState);
+            //this.hfsm = new HierarchicalStateMachine(game,wanderState,hideState,waitState,pounceState,wanderState,eatState, chaseState, creepState, napState);
+            SubMachineState HuntDeerSubMachineState = new SubMachineState(game, wanderState, hideState, waitState, pounceState, wanderState, eatState, chaseState, creepState, napState);
+            //HuntDeerSubMachineState.name = "hunt deer";
 
-            /*
-            //State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());
+            //top level machine
+            State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());
+            Transition huntDeerToFleeHunter = new Transition(new AndCondition(
+                                              new DistanceToHunter(150), new NotCondition(new LionHungerGreaterThanCondition(1000))),
+                                              fleeHunterState, 0);
+            HuntDeerSubMachineState.addTransition(huntDeerToFleeHunter);
+
+            Transition fleeHunterToHunt = new Transition(new NotCondition(new DistanceToHunter(200)), HuntDeerSubMachineState, 0);
+            fleeHunterState.addTransition(fleeHunterToHunt);
+
+            
+
+            // HUNT HUNTER SUBMACHINE STATE /////////////////////////////////////////////////
             State creepHunter = new State("creepHunter", new CreepHunterAction());
             State chaseHunter = new State("chaseHunter", new ChaseHunterAction());
             State pounceHunter = new State("pouncePlayer", new SetLionTargetToHunterAction(), new PounceAction(), new emptyVisibleAction());
             State goToBushState = new State("hideFromPlayer", new SetTargetToClosestBush(), new GoToBushAction(), new emptyAction());
             State hideInBush = new State("hide", new WaitInBushAction(true));
+            State hurtHunterState = new State("bite!", new BiteHunterAction(), new NapAction(), new emptyAction());
 
             Transition creepToChaseH = new Transition(new DistanceToHunter(200), chaseHunter, -1);
             Transition creepToPounceH = new Transition(new DistanceToHunter(150), pounceHunter, -1);
@@ -94,8 +109,36 @@ namespace Steering
 
             Transition chaseToPounceH = new Transition(new DistanceToHunter(150), pounceHunter, -1);
             chaseHunter.addTransition(chaseToPounceH);
-            */
 
+            Transition pounceToHurtHunter = new Transition(new DistanceToHunter(10), hurtHunterState, -1);
+            Transition pounceToCreepHunter = new Transition(new ReachedPounceTarget(20), creepHunter, -1);
+            pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter);
+
+            Transition hurtHunterToCreep = new Transition(new TimerCondition(50), creepHunter, -1);
+            hurtHunterState.addTransition(hurtHunterToCreep);
+
+            Transition bushToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
+            Transition goToBushToHide = new Transition(new ReachedBush(), hideInBush, -1);
+            goToBushState.addTransition(bushToChase, goToBushToHide);
+
+            Transition hideToPounce = new Transition(new DistanceToHunter(150), pounceHunter, -1);
+            Transition hideToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
+            hideInBush.addTransition(hideToPounce, hideToChase);
+
+            SubMachineState HuntHunterSubMachine = new SubMachineState(game, creepHunter, chaseHunter, pounceHunter, hurtHunterState, goToBushState, hideInBush);
+            HuntHunterSubMachine.name = "hunt Hunter";
+
+
+            Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
+            HuntHunterSubMachine.addTransition(huntHunterToFleeHunter);
+
+            Transition huntDeerToHuntHunter = new Transition(new OrCondition(new AndCondition(
+                    new NotCondition(new LionHealthCondition(4)),new LionHungerGreaterThanCondition(1200)),
+                    new DeerCount(0)), HuntHunterSubMachine, 0);
+            //huntDeerToHuntHunter.addActions(new DebugPrintAction("tranition to hunt hunter triggered"));
+            HuntDeerSubMachineState.addTransition(huntDeerToHuntHunter);
+
+            this.hfsm = new HierarchicalStateMachine(game, /*HuntDeerSubMachineState,*/ fleeHunterState, HuntHunterSubMachine );
         }
 
         public override void Draw(GameTime time, SpriteBatch sb)
@@ -105,6 +148,7 @@ namespace Steering
                 base.Draw(time, sb);
                 sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
                 sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
+                //Console.WriteLine("State: "+hfsm.ToString()+" Hunger: "+hunger);
             }
 
             else
