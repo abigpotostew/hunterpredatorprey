@@ -10,7 +10,9 @@ namespace Steering.FSM.Actions
     {
         SteeringOutput IAction.execute(Game game, Entity character)
         {
-            return Steerings.flee200.getSteering(character, game.playerHunter);
+            SteeringOutput result = Steerings.flee200.getSteering(character, game.playerHunter);
+            result.maxSpeed = 5f;
+            return result;
         }
     }
 }

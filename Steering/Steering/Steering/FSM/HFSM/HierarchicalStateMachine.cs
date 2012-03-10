@@ -23,8 +23,13 @@ namespace Steering.FSM.HFSM
         {
             this.initialState = initialState;
             this.states = new List<State>();
-            for(int i = 0; i < states.Length; ++i)
+            this.states.Add(initialState);
+            initialState.parent = this;
+            for (int i = 0; i < states.Length; ++i)
+            {
                 this.states.Add(states[i]);
+                states[i].parent = this;
+            }
         }
 
         public HierarchicalStateMachine(Game g, State initialState)
@@ -32,14 +37,19 @@ namespace Steering.FSM.HFSM
         {
             this.initialState = initialState;
             this.states = new List<State>();
-            //this.states.Add(initialState);
+            this.states.Add(initialState);
+            initialState.parent = this;
         }
 
         public override string ToString()
         {
             if (currentState != null)
-                return currentState.name;
-            else return "";
+            {
+                if (currentState is SubMachineState)
+                    return ((SubMachineState)currentState).ToString();
+                else return currentState.name;
+            }
+            else return "NULL";
         }
 
         public override List<State> GetStates()
@@ -81,8 +91,10 @@ namespace Steering.FSM.HFSM
 
             else
             {
-                
-                result = currentState.Update();
+                if (currentState is SubMachineState)
+                    result = ((SubMachineState)currentState).Update();
+                else 
+                    result = currentState.Update();
             }
 
             if (result.transition != null)

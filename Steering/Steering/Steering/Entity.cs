@@ -129,7 +129,7 @@ namespace Steering
             //debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
-            sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
+            if ( this is Deer ) sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
             //sb.DrawString(Game.Font, 
         }
 
