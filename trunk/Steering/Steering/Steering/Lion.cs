@@ -112,7 +112,7 @@ namespace Steering
 
             Transition hideToPounce = new Transition(new DistanceToHunter(RangeToPounce), pounceHunter, -1);
             //Transition hideToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
-            Transition hideToCreep = new Transition(new TimerCondition(300), creepHunter, -1);
+            Transition hideToCreep = new Transition(new TimerCondition(200), creepHunter, -1);
             hideInBush.addTransition(hideToPounce, /*hideToChase,*/ hideToCreep);
 
             SubMachineState HuntHunterSubMachine = new SubMachineState(game, creepHunter, chaseHunter, pounceHunter, hurtHunterState, goToBushState, hideInBush);
@@ -126,16 +126,23 @@ namespace Steering
             HuntDeerSubMachineState.addTransition(huntDeerToHuntHunter);
 
             State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());
-            Transition fleeHunterToHuntDeer = new Transition(new NotCondition(new DistanceToHunter(200)), HuntDeerSubMachineState, 0);
+            Transition fleeHunterToHuntDeer = new Transition(new AndCondition(new NotCondition(new DistanceToHunter(200)),new NotCondition(new DeerCount(0))) , HuntDeerSubMachineState, 0);
             fleeHunterState.addTransition(fleeHunterToHuntDeer);
 
-            Transition huntHunterToHuntDeer = new Transition(new NotCondition(new DistanceToHunter(300)), HuntDeerSubMachineState, 0);
-            Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
+            Transition huntHunterToHuntDeer = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new NotCondition(new DistanceToHunter(300))), HuntDeerSubMachineState, 0);
+            Transition huntHunterToFleeHunter = new Transition(new LionHealthCondition(4), fleeHunterState, 0);
+            //Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
+        
             HuntHunterSubMachine.addTransition(huntHunterToHuntDeer,huntHunterToFleeHunter);
 
             Transition huntDeerToFleeHunter = new Transition(new AndCondition(
-                                              new DistanceToHunter(150), new NotCondition(new LionHungerGreaterThanCondition(1000))),
+                                              new DistanceToHunter(300), new LionHealthCondition(5)),
                                               fleeHunterState, 0);
+            /*Transition huntDeerToFleeHunter = new Transition(new AndCondition(
+                                              new DistanceToHunter(150), new NotCondition(new LionHungerGreaterThanCondition(1000))),
+                                              fleeHunterState, 0);*/
+
+
             HuntDeerSubMachineState.addTransition(huntDeerToFleeHunter);
 
 
