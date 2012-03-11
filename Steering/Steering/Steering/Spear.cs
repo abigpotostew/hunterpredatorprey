@@ -63,7 +63,8 @@ namespace Steering
                     keyPressed = true;
                 }
             }
-            
+            if (game.playerHunter.spearJab == true || game.playerHunter.spearThrow == true)
+            {
                 for (int i = 0; i < game.deerManager.GetDeerCount(); i++)
                 {
                     Deer d = (Deer)game.deerManager.deers[i];
@@ -92,7 +93,7 @@ namespace Steering
                         game.playerHunter.spearThrow = false;
                     }
                 }
-             
+            } 
             if (game.playerHunter.spearJab)
             {
                 keyPressed = true;
