@@ -14,7 +14,7 @@ namespace Steering
     public class DeerManager
     {
         public List<Entity> deers, deerRemoval, deerDead, deerDeadRemoval;
-        int deerCount, wanderTimer;
+        int deerCount, wanderTimer, deerWander;
         int longTimer, shortTimer;
         TimeSpan initialTime;
         Game game;
@@ -73,12 +73,12 @@ namespace Steering
             OrCondition orFearThreat = new OrCondition(fearGreaterThan60, andThreatDistanceHunter);
             NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
             NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
-            RandomTimerCondition fleetoScaredTimer = new RandomTimerCondition(initialTime, 800);
+            RandomTimerCondition fleetoScaredTimer = new RandomTimerCondition(initialTime, 500);
             RandomTimerCondition wandertoGrazeTimer = new RandomTimerCondition(initialTime, shortTimer); //800 to 1200
             RandomTimerCondition flocktoGrazeTimer = new RandomTimerCondition(initialTime, 600);
             RandomTimerCondition grazetoFlockTimer = new RandomTimerCondition(initialTime, 600);
-            RandomCondition randomCondition = new RandomCondition(3, 2);
-            AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
+            RandomCondition randomCondition = new RandomCondition(2, 2);
+            //AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
             AndCondition andTimerLowFear = new AndCondition(fleetoScaredTimer, fearLessThan40);
             AndCondition andRandomNeighborCountGreater = new AndCondition(randomCondition, neighborCountGreater);
             AndCondition andRandomNeighborCountLess = new AndCondition(grazetoFlockTimer, neighborCountLess);
@@ -278,9 +278,14 @@ namespace Steering
             }
             foreach (Entity d in deerDead)
             {
-                Vector2 distance = d.Position - game.playerHunter.Position;
-                float dist = distance.Length();
-                if (dist < 10)
+                Vector2 distanceHtoD = d.Position - game.playerHunter.Position;
+                float distHtoD = distanceHtoD.Length();
+                if (distHtoD < 30)
+                    deerDeadRemoval.Add(d);
+
+                Vector2 distanceLtoD = d.Position - game.lion.Position;
+                float distLtoD = distanceLtoD.Length();
+                if (distLtoD < 30)
                     deerDeadRemoval.Add(d);
             }
             UpdateDeerNeighbors();
@@ -290,7 +295,9 @@ namespace Steering
                 d.updateFear();
 
             }
-            int deerWander = random.Next(1, deerCount);
+            if(deerCount > 0)
+                 deerWander = random.Next(1, deerCount);
+            else  deerWander = -1;
             for (int i = 0; i < deers.Count; ++i)
             {
                 Deer d = (Deer)deers[i];
