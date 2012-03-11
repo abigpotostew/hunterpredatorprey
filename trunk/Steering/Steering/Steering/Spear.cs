@@ -77,6 +77,21 @@ namespace Steering
                         break;
                     }
                 }
+
+                float distStoL = (game.lion.Position - this.Position).Length();
+                if (distStoL < 30)
+                {
+                    if (game.playerHunter.spearJab)
+                    {
+                        game.lion.health -= 2;
+                        game.playerHunter.spearJab = false;
+                    }
+                    if (game.playerHunter.spearThrow)
+                    {
+                        game.lion.health -= 1;
+                        game.playerHunter.spearThrow = false;
+                    }
+                }
              
             if (game.playerHunter.spearJab)
             {
@@ -136,8 +151,6 @@ namespace Steering
                 }
 
             }
-
-
             
 
             if (!keyPressed)

@@ -35,7 +35,7 @@ namespace Steering
             this.game = game;
             hunger = 0;
             AttachLionHFSM();
-            health = 4;
+            health = 6;
             damage = 3;
         }
 
@@ -53,7 +53,7 @@ namespace Steering
             State chaseState = new State("chase deer", new ChaseDeerAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, -1);
-            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(300),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(100),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,-1);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,-1);
 
@@ -61,9 +61,10 @@ namespace Steering
             Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),401), wanderState, -1);
             Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
             Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
-            Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1200), hideState, -1);
+            Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1300), hideState, -1);
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
-            Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 401), new LionHungerGreaterThanCondition(1800)), chaseState, -1);
+            Transition waitToChase = new Transition(new LionHungerGreaterThanCondition(1800), chaseState, -1);
+            //Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 401), new LionHungerGreaterThanCondition(1800)), chaseState, -1);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
 
             Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,-1);
@@ -128,7 +129,7 @@ namespace Steering
             Transition fleeHunterToHuntDeer = new Transition(new NotCondition(new DistanceToHunter(200)), HuntDeerSubMachineState, 0);
             fleeHunterState.addTransition(fleeHunterToHuntDeer);
 
-            Transition huntHunterToHuntDeer = new Transition(new DistanceToHunter(300), HuntDeerSubMachineState, 0);
+            Transition huntHunterToHuntDeer = new Transition(new NotCondition(new DistanceToHunter(300)), HuntDeerSubMachineState, 0);
             Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
             HuntHunterSubMachine.addTransition(huntHunterToHuntDeer,huntHunterToFleeHunter);
 
@@ -149,6 +150,7 @@ namespace Steering
                 base.Draw(time, sb);
                 sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
                 sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
+                sb.DrawString(Game.Font, "" + this.health, position - new Vector2(10, 30), Color.White);
             }
 
             else
@@ -195,12 +197,15 @@ namespace Steering
             }*/
 
             this.threat = velocity.Length();
-
-            UpdateResult result = hfsm.Update();
-            foreach (IAction a in result.actions)
-                steering += a.execute(game, this);
-            //Console.Write(" " + result.actions.Count + " ");
-
+            if (this.health > 0)
+            {
+                UpdateResult result = hfsm.Update();
+                foreach (IAction a in result.actions)
+                    steering += a.execute(game, this);
+                //Console.Write(" " + result.actions.Count + " ");
+            }
+            else
+                velocity = Vector2.Zero;
             base.Update(steering, time);
         }
         
