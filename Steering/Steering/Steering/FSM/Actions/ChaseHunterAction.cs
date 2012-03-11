@@ -12,6 +12,7 @@ namespace Steering.FSM.Actions
 
         public SteeringOutput execute(Game game, Entity character)
         {
+            game.lion.visible = true;
             SteeringOutput result = Steerings.pursue.getSteering(character, game.playerHunter);
             result.maxSpeed = 3.5f;
             return result;
