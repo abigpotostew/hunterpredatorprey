@@ -119,10 +119,10 @@ namespace Steering
             HuntHunterSubMachine.name = "hunt Hunter";
 
             //top level machine
-            Transition huntDeerToHuntHunter = new Transition(new OrCondition( /*new AndCondition(new DistanceToHunter(200),*/ 
+            Transition huntDeerToHuntHunter = new Transition(new OrCondition (new OrCondition( /*new AndCondition(new DistanceToHunter(200),*/ 
                                                              new AndCondition( new NotCondition(new LionHealthCondition(4)),
                                                              new LionHungerGreaterThanCondition(2500)),
-                                                             new DeerCount(0)), HuntHunterSubMachine, 0);
+                                                             new DeerCount(0)), new AndCondition(new ThreatLevel(75f), new DistanceToHunter(300))), HuntHunterSubMachine, 0);
             HuntDeerSubMachineState.addTransition(huntDeerToHuntHunter);
 
             State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());

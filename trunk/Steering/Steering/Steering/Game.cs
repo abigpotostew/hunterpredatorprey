@@ -38,7 +38,7 @@ namespace Steering
         Spear spear;
         //Deer deer;
 
-        const int deerCt = 5;
+        const int deerCt = 20;
         public DeerManager deerManager;
 
         //Timer timer;

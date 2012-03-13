@@ -135,8 +135,8 @@ namespace Steering
         }
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            sb.DrawString(Game.Font, "" + this.health, this.position - new Vector2(20, 10), Color.White);
-            sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(10, 10), Color.White);
+            sb.DrawString(Game.Font, "" + this.health, this.position + new Vector2(10, 10), Color.White);
+            sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(40, 10), Color.White);
             base.Draw(time, sb);
         }
     }
