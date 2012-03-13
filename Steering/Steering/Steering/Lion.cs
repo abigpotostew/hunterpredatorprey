@@ -27,6 +27,7 @@ namespace Steering
         public bool visible = true;
         public int hunger;
         public int pounceMisses = 0;
+        public int deathTimer = 300;
 
         public Lion(Texture2D image, Vector2 position, Game game)
             : base(image, position, 0.1f, 4)
@@ -99,8 +100,8 @@ namespace Steering
             Transition chaseToPounceH = new Transition(new DistanceToHunter(150), pounceHunter, -1);
             chaseHunter.addTransition(chaseToPounceH);
 
-            Transition pounceToHurtHunter = new Transition(new DistanceToHunter(10), hurtHunterState, -1);
-            Transition pounceToCreepHunter = new Transition(new ReachedPounceTarget(20), creepHunter, -1);
+            Transition pounceToHurtHunter = new Transition(new DistanceToHunter(40), hurtHunterState, -1);
+            Transition pounceToCreepHunter = new Transition(new ReachedPounceTarget(40), creepHunter, -1);
             pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter); //weird pouncing problem
 
             Transition hurtHunterToCreep = new Transition(new TimerCondition(50), creepHunter, -1);
@@ -154,10 +155,11 @@ namespace Steering
         {
             if (visible)
             {
-                base.Draw(time, sb);
-                sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
+                if (health <= 0) sb.Draw(Game.deadLionImg, (position), null, Color.White, (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
+                else base.Draw(time, sb);
+                //sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
                 sb.DrawString(Game.Font, "" + this.hfsm.ToString(), position - new Vector2(10, 10), Color.White);
-                sb.DrawString(Game.Font, "" + this.health, position - new Vector2(10, 30), Color.White);
+                //sb.DrawString(Game.Font, "" + this.health, position - new Vector2(10, 30), Color.White);
             }
 
             else
@@ -169,39 +171,7 @@ namespace Steering
 
         public override void Update(SteeringOutput steering, GameTime time)
         {
-            //keyboard = Keyboard.GetState();
-            //mouse = Mouse.GetState();
-
-            bool keyPressed = false;
             hunger++;
-            /*if (Game.keyboard.IsKeyDown(Keys.Left))
-            {
-                velocity.X -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.Right))
-            {
-                velocity.X += maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.Up))
-            {
-                velocity.Y -= maxAcceleration;
-                keyPressed = true;
-            }
-            if (Game.keyboard.IsKeyDown(Keys.Down))
-            {
-                velocity.Y += maxAcceleration;
-                keyPressed = true;
-            }*/
-
-            //if (!keyPressed) velocity = new Vector2();
-
-            /*if (velocity.Length() > MaxSpeed)
-            {
-                velocity.Normalize();
-                velocity *= maxSpeed;
-            }*/
 
             this.threat = velocity.Length();
             if (this.health > 0)
@@ -209,10 +179,17 @@ namespace Steering
                 UpdateResult result = hfsm.Update();
                 foreach (IAction a in result.actions)
                     steering += a.execute(game, this);
-                //Console.Write(" " + result.actions.Count + " ");
             }
             else
+            {
+                --deathTimer;
+                if (deathTimer <= 0)
+                {
+                    health = 4;
+                    deathTimer = 300;
+                }
                 velocity = Vector2.Zero;
+            }
             base.Update(steering, time);
         }
         

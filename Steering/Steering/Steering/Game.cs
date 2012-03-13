@@ -48,11 +48,12 @@ namespace Steering
         public static KeyboardState keyboard;
         public static MouseState mouse;
             
-        Texture2D jaguar;
+        Texture2D jaguarImg;
         Texture2D deadDeer;
         Texture2D hunter;
         Texture2D spearImg;
         Texture2D lionImg;
+        public static Texture2D deadLionImg, deadHunterImg;
 
         public static Texture2D whitepixel;
 
@@ -93,20 +94,20 @@ namespace Steering
             gameWorld = new World(graphics, 5);
 
             gameWorld.loadTiles(this);
-            jaguar = Content.Load<Texture2D>("deer");
+            jaguarImg = Content.Load<Texture2D>("deer");
             hunter = Content.Load<Texture2D>("hunter");
             spearImg = Content.Load<Texture2D>("spear");
             lionImg = Content.Load<Texture2D>("lion");
             deadDeer = Content.Load<Texture2D>("deaddeer");
-
+            deadHunterImg = Content.Load<Texture2D>("hunterDead");
+            deadLionImg = Content.Load<Texture2D>("lionDead");
             //timer = new Timer();
 
             playerHunter = new Hunter(hunter, new Vector2(200,200), oldState);
             spear = new Spear(spearImg, new Vector2(240,180), playerHunter, oldState,this);
-            lion = new Lion(lionImg , new Vector2(400, 400),this);
-            //deer = new Deer(jaguar, new Vector2(600,450));
+            lion = new Lion(lionImg , new Vector2(400, 400),this); 
             deerManager.deadDeer = deadDeer;
-            deerManager.CreateDeer(deerCt, jaguar);
+            deerManager.CreateDeer(deerCt, jaguarImg);
 
         }
 
@@ -145,19 +146,16 @@ namespace Steering
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            gameWorld.draw(gameTime, spriteBatch);
 
+            gameWorld.draw(gameTime, spriteBatch);
             lion.Draw(gameTime, spriteBatch);
             playerHunter.Draw(gameTime, spriteBatch);
             spear.Draw(gameTime, spriteBatch);
             deerManager.Draw(gameTime, spriteBatch);
-
-            //spriteBatch.DrawString(Font, "Timer: " + timer.seconds.ToString(), new Vector2(0, 60), Color.Black);
-            //spriteBatch.DrawString(Font, "Use WASD to move & Q and E to rotate", Vector2.Zero, Color.Black);
-            //spriteBatch.DrawString(Font, "Deer ori: "+deer.orientation, new Vector2(0, 20), Color.Black);
-            //spriteBatch.DrawString(Font, "Deer Vel: " + deer.Velocity, new Vector2(0, 40), Color.Black);
-            base.Draw(gameTime);
+            
             spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }

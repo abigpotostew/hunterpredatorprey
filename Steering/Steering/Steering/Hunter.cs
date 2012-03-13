@@ -135,9 +135,12 @@ namespace Steering
         }
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            sb.DrawString(Game.Font, "" + this.health, this.position + new Vector2(10, 10), Color.White);
-            sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(40, 10), Color.White);
-            base.Draw(time, sb);
+            //sb.DrawString(Game.Font, "" + this.health, this.position + new Vector2(10, 10), Color.White);
+            //sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(40, 10), Color.White);
+            if (health <= 0)
+                sb.Draw(Game.deadHunterImg, (position), null, Color.White, (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
+            else
+                base.Draw(time, sb);
         }
     }
 }
