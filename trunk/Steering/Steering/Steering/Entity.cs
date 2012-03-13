@@ -131,8 +131,8 @@ namespace Steering
             //debugCircle.Draw(sb);
             //+offsetToCenter
             sb.Draw(image, (position), null, Color.White, (float)(orientation+Math.PI/2), offsetToCenter,1f,SpriteEffects.None,0);
-            if ( this is Deer ) sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
-            //sb.DrawString(Game.Font, 
+            //if ( this is Deer ) sb.DrawString(Game.Font, "" + (int)this.fear, position, Color.White);
+            
         }
 
         public virtual void Draw(GameTime time, SpriteBatch sb, bool invisible)
