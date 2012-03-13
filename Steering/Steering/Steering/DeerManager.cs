@@ -67,7 +67,7 @@ namespace Steering
             FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
-            FearLessThan fearLessThan10 = new FearLessThan(10);
+            FearLessThan fearLessThan20 = new FearLessThan(20);
             ThreatLevel hunterHighThreatLevel = new ThreatLevel(75f);
             DistanceToHunter distanceToHunter = new DistanceToHunter(200f);
             AndCondition andThreatDistanceHunter = new AndCondition(hunterHighThreatLevel, distanceToHunter);
@@ -80,7 +80,7 @@ namespace Steering
             RandomTimerCondition grazetoFlockTimer = new RandomTimerCondition(initialTime, 600);
             RandomCondition randomCondition = new RandomCondition(2, 2);
             //AndCondition andRandomLowFear = new AndCondition(randomCondition, fearLessThan40);
-            AndCondition andTimerLowFear = new AndCondition(fleetoScaredTimer, fearLessThan40);
+            AndCondition andTimerLowFear = new AndCondition(fleetoScaredTimer, fearLessThan20);
             AndCondition andRandomNeighborCountGreater = new AndCondition(randomCondition, neighborCountGreater);
             AndCondition andRandomNeighborCountLess = new AndCondition(grazetoFlockTimer, neighborCountLess);
             //AndCondition andRNCRandom = new AndCondition(andRandomNeighborCount, grazetoFlockTimer);
@@ -106,7 +106,7 @@ namespace Steering
             
             Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
             //Transition gotoScaredFromFlee = new Transition(andTimerLowFear, scaredState, 0);
-            Transition gotoScaredFromFlee = new Transition(fearLessThan10, scaredState, 0);
+            Transition gotoScaredFromFlee = new Transition(fearLessThan40, scaredState, 0);
 
             //Declaring actions for transitions
             gotoWanderFromScared.addActions(wanderAction);
@@ -283,14 +283,18 @@ namespace Steering
                 float distHtoD = distanceHtoD.Length();
                 if (distHtoD < 30)
                 {
-                    game.playerHunter.health += 2;
+                    if (game.playerHunter.health <= 4)
+                        game.playerHunter.health += 2;
+                    else game.playerHunter.health = 4;
                     deerDeadRemoval.Add(d);
                 }
                 Vector2 distanceLtoD = d.Position - game.lion.Position;
                 float distLtoD = distanceLtoD.Length();
                 if (distLtoD < 30)
                 {
-                    game.lion.health += 2;
+                    if (game.lion.health <= 6)
+                        game.lion.health += 2;
+                    else game.lion.health = 6;
                     deerDeadRemoval.Add(d);
                 }
             }
