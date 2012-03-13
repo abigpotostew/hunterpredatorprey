@@ -22,7 +22,8 @@ namespace Steering.FSM.Conditions
         {
             if (threshold == -1)
             {
-                threshold = r.Next(0, maxMisses);
+                //threshold = r.Next(0, maxMisses);
+                threshold = StaticRandom.random.Next(0, maxMisses);
             }
             if (g.lion.pounceMisses >= threshold)
             {

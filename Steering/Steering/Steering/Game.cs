@@ -38,7 +38,7 @@ namespace Steering
         Spear spear;
         //Deer deer;
 
-        const int deerCt = 1;
+        const int deerCt = 5;
         public DeerManager deerManager;
 
         //Timer timer;
@@ -49,6 +49,7 @@ namespace Steering
         public static MouseState mouse;
             
         Texture2D jaguar;
+        Texture2D deadDeer;
         Texture2D hunter;
         Texture2D spearImg;
         Texture2D lionImg;
@@ -69,7 +70,7 @@ namespace Steering
             r = new Random();
 
             deerManager = new DeerManager(this);
-
+            
             Steerings.InitializeSteering();
         }
 
@@ -92,10 +93,11 @@ namespace Steering
             gameWorld = new World(graphics, 5);
 
             gameWorld.loadTiles(this);
-            jaguar = Content.Load<Texture2D>("jaguardot");
+            jaguar = Content.Load<Texture2D>("deer");
             hunter = Content.Load<Texture2D>("hunter");
             spearImg = Content.Load<Texture2D>("spear");
             lionImg = Content.Load<Texture2D>("lion");
+            deadDeer = Content.Load<Texture2D>("deaddeer");
 
             //timer = new Timer();
 
@@ -103,7 +105,7 @@ namespace Steering
             spear = new Spear(spearImg, new Vector2(240,180), playerHunter, oldState,this);
             lion = new Lion(lionImg , new Vector2(400, 400),this);
             //deer = new Deer(jaguar, new Vector2(600,450));
-
+            deerManager.deadDeer = deadDeer;
             deerManager.CreateDeer(deerCt, jaguar);
 
         }
@@ -142,7 +144,6 @@ namespace Steering
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
             gameWorld.draw(gameTime, spriteBatch);
 

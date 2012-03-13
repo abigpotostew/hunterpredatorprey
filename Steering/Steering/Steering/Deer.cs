@@ -14,7 +14,6 @@ namespace Steering
     {
         const float maxDeerSpeed = 2f;
         const float maxAccelleration = 0.5f;
-
         //INTELLIGENCE is between 0 and 1,
         //1 is smart and will rarely wander away from herd
         //0 is very dumb and has a higher cahnce of wandering away and getting eaten
@@ -36,7 +35,6 @@ namespace Steering
             if (intelligence > 1) intelligence = 1;
 
             wanderSpeed = 1f;
-
             health = 1;
             damage = 0;
         }
@@ -48,7 +46,7 @@ namespace Steering
              {
                  steering += steeringAction.execute(game, this);
              }
-
+             
              //always do look where going 
              base.Update(Steerings.lookWhereGoing.getSteering(this) + Steerings.bushSeparation.getSteering(this,game.gameWorld.getBushes()) + steering, time);
              

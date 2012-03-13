@@ -17,7 +17,7 @@ namespace Steering.FSM.Conditions
         }
         public bool test(Game g, Entity e)
         {
-            testrandom = r.Next(1, range);
+            testrandom = StaticRandom.random.Next(1, range);
             if (testrandom == chance) return true;
             else return false;
         }

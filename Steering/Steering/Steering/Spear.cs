@@ -24,8 +24,8 @@ namespace Steering
             : base(image, position, 1, 4)
         {
             collide = new Circle((int)(position.X + 4), (int)(position.Y + 1), 5);
-         //   debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
-           // debugCircle.CreateCircle(2, 20);
+            // debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
+            // debugCircle.CreateCircle(2, 20);
             this.position = position;
             prevState = state;
             this.game = dasGame;
@@ -40,7 +40,7 @@ namespace Steering
 
             bool keyPressed = false;
 
-            if (game.playerHunter.spearJab == false && game.playerHunter.spearThrow == false)
+            if (game.playerHunter.health > 0 && game.playerHunter.spearJab == false && game.playerHunter.spearThrow == false)
             {
                 if (Game.keyboard.IsKeyDown(Keys.A))
                 {
@@ -178,8 +178,10 @@ namespace Steering
             
             base.Draw(time, sb);
             /*debugCircle.Draw(sb);
-           // sb.DrawString(Game.Font, ""+ debugCircle.Position, debugCircle.Position, Color.Black);
+            
              */ 
+            //sb.DrawString(Game.Font, ""+ game.playerHunter.spearJab, debugCircle.Position, Color.Black);
+            //sb.DrawString(Game.Font, "" + game.playerHunter.spearThrow, game.playerHunter.Position, Color.Black);
         }
   
     }

@@ -181,6 +181,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Spear.cs" />
+    <Compile Include="StaticRandom.cs" />
     <Compile Include="Steering\Pursue.cs" />
     <Compile Include="Steering\SteeringOutput.cs" />
     <Compile Include="Steering\Align.cs" />

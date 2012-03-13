@@ -12,7 +12,7 @@ namespace Steering
     {
         //private KeyboardState keyboard;
         //private MouseState mouse;
-        int health = 2;
+        //int health = 2;
         
         public float threat;
         public int threatCooldown;
@@ -56,6 +56,7 @@ namespace Steering
         }
         public override void Update(SteeringOutput steering, GameTime time)
         {
+            if (health > 4) health = 4;
             prevState = newState;
             newState = Keyboard.GetState();
             //keyboard = Keyboard.GetState();
@@ -64,7 +65,7 @@ namespace Steering
             if(threatCooldown < 0)
                 decayThreat();
             bool keyPressed = false;
-            if (spearJab == false && spearThrow == false)
+            if (health > 0 && spearJab == false && spearThrow == false)
             {
                 if (Game.keyboard.IsKeyDown(Keys.A))
                 {
@@ -134,6 +135,7 @@ namespace Steering
         }
         public override void Draw(GameTime time, SpriteBatch sb)
         {
+            sb.DrawString(Game.Font, "" + this.health, this.position - new Vector2(20, 10), Color.White);
             sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(10, 10), Color.White);
             base.Draw(time, sb);
         }

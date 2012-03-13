@@ -16,7 +16,7 @@ namespace Steering.FSM.Conditions
         public bool test(Game game, Entity character)
         {
             //if fear is less than a certain number and if lion is visible then return true
-            if (character.fear < threshold && game.lion.visible == false)
+            if (character.fear < threshold && game.lion.visible == true)
                 return true;
             return false;
         }

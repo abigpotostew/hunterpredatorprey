@@ -11,13 +11,13 @@ namespace Steering.FSM.Conditions
         int timer;
         int seconds;
         TimeSpan originalTime;
-        Random random = new Random();
  
         public RandomTimerCondition(TimeSpan intialTime, int seconds)
         {
             originalTime = intialTime;
             this.seconds = seconds;
-            timer = random.Next(seconds - 400, seconds);
+            //timer = random.Next(seconds - 400, seconds);
+            timer = StaticRandom.random.Next(seconds - 400, seconds);
             //timer = seconds;
             
         }
@@ -34,7 +34,7 @@ namespace Steering.FSM.Conditions
             --timer;
             if (timer == 0)
             {
-                timer = random.Next(seconds - 400, seconds);
+                timer = StaticRandom.random.Next(seconds - 400, seconds);
                 return true;
             }
             return false;
