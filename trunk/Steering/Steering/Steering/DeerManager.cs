@@ -19,7 +19,7 @@ namespace Steering
         TimeSpan initialTime;
         Game game;
         Random random;
-
+        public Texture2D deadDeer;
 
         public DeerManager(Game game)
         {
@@ -67,13 +67,14 @@ namespace Steering
             FearGreaterThan fearGreaterThan80 = new FearGreaterThan(80);
             FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
             FearLessThan fearLessThan40 = new FearLessThan(40);
+            FearLessThan fearLessThan10 = new FearLessThan(10);
             ThreatLevel hunterHighThreatLevel = new ThreatLevel(75f);
             DistanceToHunter distanceToHunter = new DistanceToHunter(200f);
             AndCondition andThreatDistanceHunter = new AndCondition(hunterHighThreatLevel, distanceToHunter);
             OrCondition orFearThreat = new OrCondition(fearGreaterThan60, andThreatDistanceHunter);
             NeighborCountGreaterCondition neighborCountGreater = new NeighborCountGreaterCondition(5);
             NeighborCountLessCondition neighborCountLess = new NeighborCountLessCondition(2);
-            RandomTimerCondition fleetoScaredTimer = new RandomTimerCondition(initialTime, 500);
+            RandomTimerCondition fleetoScaredTimer = new RandomTimerCondition(initialTime, 600);
             RandomTimerCondition wandertoGrazeTimer = new RandomTimerCondition(initialTime, shortTimer); //800 to 1200
             RandomTimerCondition flocktoGrazeTimer = new RandomTimerCondition(initialTime, 600);
             RandomTimerCondition grazetoFlockTimer = new RandomTimerCondition(initialTime, 600);
@@ -104,8 +105,8 @@ namespace Steering
             Transition gotoScaredFromFlock = new Transition(orFearThreat, scaredState, 0);
             
             Transition gotoFlee = new Transition(fearGreaterThan80, fleeState, 0);
-            Transition gotoScaredFromFlee = new Transition(andTimerLowFear, scaredState, 0);
-            //Transition gotoScaredFromFlee = new Transition(andRandomLowFear, scaredState, 0);
+            //Transition gotoScaredFromFlee = new Transition(andTimerLowFear, scaredState, 0);
+            Transition gotoScaredFromFlee = new Transition(fearLessThan10, scaredState, 0);
 
             //Declaring actions for transitions
             gotoWanderFromScared.addActions(wanderAction);
@@ -147,6 +148,7 @@ namespace Steering
 
         public void KillDeer(Entity deer)
         {
+            deer.Image = deadDeer;
             deerRemoval.Add(deer);
         }
 
@@ -160,7 +162,6 @@ namespace Steering
                 AttatchNewDeerFSM(deerTmp, game);
                 
             }
-            //return d;
         }
 
         float avgFear;
@@ -177,13 +178,13 @@ namespace Steering
                     {
                         d.addFear(100);
                     }
-                    else if (distance < 300) //if the lion is within a distance ///////////////////
+                    else if (distance < 250) //if the lion is within a distance ///////////////////
                     {
-                        float fear = 300 / distance; //200/dist so 1 to 200 counts (hopefully works right)
+                        float fear = 250 / distance; //200/dist so 1 to 200 counts (hopefully works right)
                         d.addFear(fear * .6f); // did this because fear goes up waay to quick
                         //deers[i].addFear(game.lion.Velocity.Length());
                     }
-                    else if (distance > 350)//created a deadzone inbetween, like alert zone
+                    else if (distance > 300)//created a deadzone inbetween, like alert zone
                         deers[i].decayFear();
                 }
 
@@ -281,12 +282,17 @@ namespace Steering
                 Vector2 distanceHtoD = d.Position - game.playerHunter.Position;
                 float distHtoD = distanceHtoD.Length();
                 if (distHtoD < 30)
+                {
+                    game.playerHunter.health += 2;
                     deerDeadRemoval.Add(d);
-
+                }
                 Vector2 distanceLtoD = d.Position - game.lion.Position;
                 float distLtoD = distanceLtoD.Length();
                 if (distLtoD < 30)
+                {
+                    game.lion.health += 2;
                     deerDeadRemoval.Add(d);
+                }
             }
             UpdateDeerNeighbors();
             calcDeersFear(); 

@@ -53,12 +53,12 @@ namespace Steering
             State chaseState = new State("chase deer", new ChaseDeerAction());
 
             Transition arriveAtBush = new Transition(new ReachedBush(), waitState, -1);
-            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(100),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
+            Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(200),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,-1);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,-1);
 
-            Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 401), napState,-1);
-            Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),401), wanderState, -1);
+            Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 600), napState,-1);
+            Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),600), wanderState, -1);
             Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
             Transition wanderToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
             Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1300), hideState, -1);
@@ -101,7 +101,7 @@ namespace Steering
 
             Transition pounceToHurtHunter = new Transition(new DistanceToHunter(10), hurtHunterState, -1);
             Transition pounceToCreepHunter = new Transition(new ReachedPounceTarget(20), creepHunter, -1);
-            pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter);
+            pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter); //weird pouncing problem
 
             Transition hurtHunterToCreep = new Transition(new TimerCondition(50), creepHunter, -1);
             hurtHunterState.addTransition(hurtHunterToCreep);
@@ -130,7 +130,7 @@ namespace Steering
             fleeHunterState.addTransition(fleeHunterToHuntDeer);
 
             Transition huntHunterToHuntDeer = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new NotCondition(new DistanceToHunter(300))), HuntDeerSubMachineState, 0);
-            Transition huntHunterToFleeHunter = new Transition(new LionHealthCondition(4), fleeHunterState, 0);
+            Transition huntHunterToFleeHunter = new Transition(new LionHealthCondition(5), fleeHunterState, 0);
             //Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
         
             HuntHunterSubMachine.addTransition(huntHunterToHuntDeer,huntHunterToFleeHunter);
