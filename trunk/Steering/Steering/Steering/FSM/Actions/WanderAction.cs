@@ -10,7 +10,8 @@ namespace Steering.FSM.Actions
     {
         public SteeringOutput execute(Game game, Entity character)
         {
-            SteeringOutput result = Steerings.wander.getSteering(character);
+            SteeringOutput result = Steerings.wander.getSteering(character)
+                + Steerings.separationFromHunter.getSteering(character, game.playerHunter);
             /*if (result.linear.LengthSquared() >character.WanderSpeed*character.WanderSpeed ){
                 result.linear.Normalize();
                 result.linear *= character.WanderSpeed;
