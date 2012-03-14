@@ -1,0 +1,5 @@
+There were a couple of problems that I ran into while the spear implementation was underway. 
+
+The first problem I ran into was getting the spear to move when spacebar was pressed. After a while, we concluded the making a while loop in the update function (while the spear moving does not reach a certain distance) was not the best idea to go. We converted the while loop into a for loop and that managed to fix the problem.
+
+The second problem that I ran into was to get the collision point on the tip of the spear. When the game starts, the circle always spawns at the center of the spear and never at the tip of the spear. We then (by we I mean Matt) managed to apply trigonometry to get the collision point to the tip of the spear. When that didn't work, we finally figured out a way to get the circle on the tip. We learned that it is always the best idea to implement a certain part on a certain image after the base update function.
