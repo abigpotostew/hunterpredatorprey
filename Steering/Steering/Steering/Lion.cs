@@ -78,7 +78,7 @@ namespace Steering
             wanderState.addTransition(wanderToNap, wanderToCreep);
             napState.addTransition(napToWander, napToCreep);
             eatState.addTransition(eatToWander);
-            creepState.addTransition(creepToHide, creepToPounce);
+            creepState.addTransition(waitToChase,creepToPounce, creepToHide );
             chaseState.addTransition(chaseToPounce);
 
             SubMachineState HuntDeerSubMachineState = new SubMachineState(game, wanderState, hideState, waitState, pounceState, wanderState, eatState, chaseState, creepState, napState);
@@ -121,8 +121,8 @@ namespace Steering
 
             //top level machine
             Transition huntDeerToHuntHunter = new Transition(new OrCondition (new OrCondition( /*new AndCondition(new DistanceToHunter(200),*/ 
-                                                             new AndCondition( new NotCondition(new LionHealthCondition(4)),
-                                                             new LionHungerGreaterThanCondition(2500)),
+                                                             new AndCondition (new DistanceToHunter(300),new AndCondition( new NotCondition(new LionHealthCondition(4)),
+                                                             new LionHungerGreaterThanCondition(2500))),
                                                              new DeerCount(0)), new AndCondition(new ThreatLevel(75f), new DistanceToHunter(299))), HuntHunterSubMachine, 0);
             HuntDeerSubMachineState.addTransition(huntDeerToHuntHunter);
 
