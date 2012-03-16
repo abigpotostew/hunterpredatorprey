@@ -148,6 +148,7 @@ namespace Steering
             spriteBatch.Begin();
 
             gameWorld.draw(gameTime, spriteBatch);
+            
             lion.Draw(gameTime, spriteBatch);
             playerHunter.Draw(gameTime, spriteBatch);
             spear.Draw(gameTime, spriteBatch);
