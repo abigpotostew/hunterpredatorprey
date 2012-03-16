@@ -163,24 +163,10 @@ namespace Steering
             }
 
 
-            //base.Update(steering, time);
+            base.Update(steering, time);
 
-            position += velocity; //*time
-            orientation += rotation; //*time
-
-            velocity += steering.linear;
-            orientation += steering.angular;
-
-            //velocity needs to be capped based on steering maxspeed
-            float tmpMaxSpeed;
-            if (steering.maxSpeed > 0) tmpMaxSpeed = steering.maxSpeed;
-            else tmpMaxSpeed = maxSpeed;
-
-            if (velocity.LengthSquared() > tmpMaxSpeed * tmpMaxSpeed)
-            {
-                velocity.Normalize();
-                velocity *= tmpMaxSpeed;
-            }
+            //position += velocity;
+            //orientation += rotation;
 
             collide.position.X += (float)((((image.Height-5) / 2) * Math.Cos(this.orientation)));
             collide.position.Y += (float)(((image.Height-5) / 2) * Math.Sin(this.orientation));
