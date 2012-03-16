@@ -24,7 +24,6 @@ namespace Steering.Steering
             Vector2 targetVelocity;
 
             Vector2 direction = target.Position - character.Position;
-            //Vector2 direction = character.Position - target.Position;
             float distance = direction.Length();
 
             if (distance < targetRadius)

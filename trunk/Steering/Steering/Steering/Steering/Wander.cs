@@ -28,8 +28,6 @@ namespace Steering.Steering
 
             float targetOrientation = character.WanderOrientation + character.orientation;
 
-           // Vector2 orientationVector = new Vector2();
-
             //find center of wander circle
             Vector2 characterOrientationVector = asVector(character.orientation);
             Vector2 targetPos = character.Position + wanderOffset * characterOrientationVector;

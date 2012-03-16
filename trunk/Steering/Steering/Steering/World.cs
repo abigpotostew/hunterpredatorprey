@@ -42,9 +42,6 @@ namespace Steering
 
             }
             this.numBushes = numBushes;
-
-            
-
         }
 
         public List<Entity> getBushes()
@@ -69,6 +66,7 @@ namespace Steering
             }
         }
 
+        //Doesn't always return the closest bush, but it always returns A bush. Which is fine.
         public Entity ClosestBush(Vector2 position)
         {
             int closestIndex = 0;
@@ -83,7 +81,6 @@ namespace Steering
                 if (distancesSq[i] < distancesSq[closestIndex])
                     closestIndex = i;
             }
-            //distancesSq.Sort();
             return bushes[closestIndex];
         }
 
@@ -94,7 +91,6 @@ namespace Steering
 
             for (int i = 0; i < y_dim; i++)
             {
-
                 for (int j = 0; j < x_dim; j++)
                 {
                     temp = textures[j, i];
@@ -111,7 +107,6 @@ namespace Steering
                     {
                         batch.Draw(toDraw, new Vector2((50f * j), (50 * i)), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
                     }
-
                 }
 
             }
@@ -120,8 +115,6 @@ namespace Steering
             {
                 b.Draw(time,batch);
             }
-
         }
-
     }
 }
