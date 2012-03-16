@@ -114,7 +114,8 @@ namespace Steering
 
             Transition hideToPounce = new Transition(new DistanceToHunter(RangeToPounce), pounceHunter, -1);
             //Transition hideToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
-            Transition hideToCreep = new Transition(new TimerCondition(200), creepHunter, -1);
+            Transition hideToCreep = new Transition(new TimerCondition(400), chaseHunter, -1);
+            //Transition hideToChase = new Transition(new
             hideInBush.addTransition(hideToPounce, /*hideToChase,*/ hideToCreep);
 
             SubMachineState HuntHunterSubMachine = new SubMachineState(game, creepHunter, creepHunter, chaseHunter, pounceHunter, hurtHunterState, goToBushState, hideInBush);
@@ -191,7 +192,9 @@ namespace Steering
             this.threat = velocity.Length();
             if (this.health > 0)
             {
+                //Console.WriteLine("Time before HFSM Update: " + time.TotalGameTime.Milliseconds);
                 UpdateResult result = hfsm.Update();
+                //Console.WriteLine("Time after HFSM Update: " + time.TotalGameTime.Milliseconds+"\n");
                 foreach (IAction a in result.actions)
                     steering += a.execute(game, this);
                 if (this.hunger > 4000) health = 0;
