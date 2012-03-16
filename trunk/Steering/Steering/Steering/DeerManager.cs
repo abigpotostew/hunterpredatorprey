@@ -23,6 +23,7 @@ namespace Steering
 
         public DeerManager(Game game)
         {
+           
             deers = new List<Entity>();
             deerRemoval = new List<Entity>();
             deerDead = new List<Entity>();

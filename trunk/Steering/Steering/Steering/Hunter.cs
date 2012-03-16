@@ -24,7 +24,6 @@ namespace Steering
         public float throwOrientation;
         public Vector2 throwVelocity;
 
-        DateTime timing;
         KeyboardState newState, prevState;
         const double holdKeyWait = 0.25;
 
