@@ -22,7 +22,6 @@ namespace Steering.Steering
 
         public SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
-            //Console.Write(" yo ");
             SteeringOutput steering = new SteeringOutput();
 
             //loop through each target here
@@ -31,13 +30,11 @@ namespace Steering.Steering
                 Vector2 direction = target.Position - character.Position;
                 float distanceSquared = direction.LengthSquared();
                 float strength = Math.Min(decayCoefficient / (distanceSquared), character.MaxAcceleration);
-                   // strength *= 5f;
 
                 direction.Normalize();
                 direction *= character.MaxSpeed;
 
                 steering.linear -= strength * direction;
-                //}
             }
             return steering;
         }

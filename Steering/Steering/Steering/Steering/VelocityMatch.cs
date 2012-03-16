@@ -37,19 +37,13 @@ namespace Steering.Steering
         public virtual SteeringOutput getSteering(Entity character, List<Entity> targets)
         {
             Vector2 averageVelocity = new Vector2();
-            //averageVelocity += character.Position;
             int averageCt = 0;
 
             //loop through each target here
             foreach (Entity target in targets)
             {
-                //Vector2 direction = target.Position - character.Position;
-                //float distanceSquared = direction.LengthSquared();
-                //if (distanceSquared < thresholdSquared)
-                //{
-                    averageVelocity += target.Velocity;
-                    ++averageCt;
-                //}
+                averageVelocity += target.Velocity;
+                ++averageCt;
             }
 
 

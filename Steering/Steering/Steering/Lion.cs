@@ -30,9 +30,8 @@ namespace Steering
         public int deathTimer = 600;
 
         public Lion(Texture2D image, Vector2 position, Game game)
-            : base(image, position, .2f, 4)
+            : base(image, position, 0.15f, 4)
         {
-            //orientation
             this.game = game;
             hunger = 0;
             AttachLionHFSM();
@@ -58,7 +57,6 @@ namespace Steering
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,-1);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,-1);
             Transition pounceMissToWander = new Transition(new NotCondition(new ReachedPounceTarget(200)),wanderState,-1);
-
             Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 600), napState,-1);
             Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),600), wanderState, -1);
             Transition napToCreep = new Transition(new LionHungerGreaterThanCondition(800), creepState, -1);
@@ -66,12 +64,8 @@ namespace Steering
             Transition creepToHide = new Transition(new LionHungerGreaterThanCondition(1300), hideState, -1);
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
             Transition waitToChase = new Transition(new LionHungerGreaterThanCondition(1800), chaseState, -1);
-            //Transition waitToChase = new Transition(new AndCondition(new RandomTimerCondition(new TimeSpan(), 401), new LionHungerGreaterThanCondition(1800)), chaseState, -1);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
-
             Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,-1);
-            
-            //THE LION SHOULD NOT POUNCE IF THE DEERTARGET HAS MORE THAN 3 neighborS
 
             hideState.addTransition(arriveAtBush);
             waitState.addTransition(waitToPounce, waitToChase);
@@ -103,7 +97,7 @@ namespace Steering
 
             Transition pounceToHurtHunter = new Transition(new DistanceToHunter(40), hurtHunterState, -1);
             Transition pounceToCreepHunter = new Transition(new ReachedPounceTarget(40), creepHunter, -1);
-            pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter); //weird pouncing problem
+            pounceHunter.addTransition(pounceToHurtHunter, pounceToCreepHunter);
 
             Transition hurtHunterToCreep = new Transition(new TimerCondition(50), creepHunter, -1);
             hurtHunterState.addTransition(hurtHunterToCreep);
@@ -113,7 +107,6 @@ namespace Steering
             goToBushState.addTransition(bushToChase, goToBushToHide);
 
             Transition hideToPounce = new Transition(new DistanceToHunter(RangeToPounce), pounceHunter, -1);
-            //Transition hideToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
             Transition hideToCreep = new Transition(new TimerCondition(400), chaseHunter, -1);
             hideInBush.addTransition(hideToPounce, hideToCreep);
 
@@ -121,13 +114,12 @@ namespace Steering
             HuntHunterSubMachine.name = "hunt Hunter";
 
             //top level machine
-            Transition huntDeerToHuntHunter = new Transition(new OrCondition (new OrCondition( /*new AndCondition(new DistanceToHunter(200),*/ 
+            Transition huntDeerToHuntHunter = new Transition(new OrCondition (new OrCondition(
                                                              new AndCondition (new DistanceToHunter(300),new AndCondition( new NotCondition(new LionHealthCondition(4)),
                                                              new LionHungerGreaterThanCondition(2500))),
                                                              new DeerCount(0)), new AndCondition(new ThreatLevel(75f), new DistanceToHunter(299))), HuntHunterSubMachine, 0);
             HuntDeerSubMachineState.addTransition(huntDeerToHuntHunter);
 
-            //State fleeHunterState = new State("flee hunter", new FleeFromHunterAction());
             
             State fleeFromHunterState = new State("flee hunter", new FleeFromHunterAction());
             State fleeWanderState = new State("wandering", new WanderAction());
@@ -146,20 +138,14 @@ namespace Steering
                                                              new AndCondition(new NotCondition(new DeerCount(0)), 
                                                              new NotCondition(new DistanceToHunter(300))))), HuntDeerSubMachineState, 0);
             Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new LionDesperateCondition()), new OrCondition(new PlayerHealthCondition(0), new LionHealthCondition(5))), fleeHunterSubMachine, 0);
-            //Transition huntHunterToFleeHunter = new Transition(new AndCondition(new NotCondition(new DeerCount(0)), new LionHealthCondition(4)), fleeHunterState, 0);
-  
+            
             HuntHunterSubMachine.addTransition(huntHunterToHuntDeer,huntHunterToFleeHunter);
 
             Transition huntDeerToFleeHunter = new Transition(new AndCondition(
                                               new DistanceToHunter(200), new LionHealthCondition(5)),
                                               fleeHunterSubMachine, 0);
-            /*Transition huntDeerToFleeHunter = new Transition(new AndCondition(
-                                              new DistanceToHunter(150), new NotCondition(new LionHungerGreaterThanCondition(1000))),
-                                              fleeHunterState, 0);*/
-
 
             HuntDeerSubMachineState.addTransition(huntDeerToFleeHunter);
-
 
             //finalize machine and attach to lion. PHEW
             this.hfsm = new HierarchicalStateMachine(game, HuntDeerSubMachineState, fleeHunterSubMachine, HuntHunterSubMachine );
@@ -171,17 +157,11 @@ namespace Steering
             {
                 if (health <= 0) sb.Draw(Game.deadLionImg, (position), null, Color.White, (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
                 else base.Draw(time, sb);
-                //sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
-                //sb.DrawString(Game.Font, "" + this.hfsm.ToString(), new Vector2(10, 10), Color.White);
-                //sb.DrawString(Game.Font, "" + this.desperate, new Vector2(10, 30), Color.White);
-                //sb.DrawString(Game.Font, "" + this.health, position - new Vector2(10, 30), Color.White);
             }
-
             else
             {
                 base.Draw(time, sb, false);
             }
-
         }
 
         public override void Update(SteeringOutput steering, GameTime time)
@@ -191,9 +171,7 @@ namespace Steering
             this.threat = velocity.Length();
             if (this.health > 0)
             {
-                //Console.WriteLine("Time before HFSM Update: " + time.TotalGameTime.Milliseconds);
                 UpdateResult result = hfsm.Update();
-                //Console.WriteLine("Time after HFSM Update: " + time.TotalGameTime.Milliseconds+"\n");
                 foreach (IAction a in result.actions)
                     steering += a.execute(game, this);
                 if (this.hunger > 4000) health = 0;

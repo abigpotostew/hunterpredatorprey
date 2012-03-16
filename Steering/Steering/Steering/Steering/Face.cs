@@ -24,7 +24,6 @@ namespace Steering.Steering
 
             Entity temp = new Entity();
             temp.orientation = (float)Math.Atan2(direction.Y, direction.X);
-            //base.Target = temp;
 
             return base.getSteering(character, temp);
         }

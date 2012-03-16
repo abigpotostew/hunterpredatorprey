@@ -8,8 +8,8 @@ namespace Steering
 {
     public struct SteeringOutput
     {
-        public Vector2 linear;// = Vector2.Zero;
-        public float angular;// = 0;
+        public Vector2 linear;
+        public float angular;
         public float maxSpeed;
 
         public static SteeringOutput operator +(SteeringOutput s1, SteeringOutput s2)
