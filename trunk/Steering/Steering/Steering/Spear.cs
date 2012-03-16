@@ -89,7 +89,7 @@ namespace Steering
                     }
                 }
             } 
-            if (game.playerHunter.spearJab)
+            if (game.playerHunter.spearJab && game.playerHunter.health > 0)
             {
                 keyPressed = true;
                 getPosition = this.position;
@@ -117,7 +117,7 @@ namespace Steering
 
             }
 
-            if (game.playerHunter.spearThrow)
+            if (game.playerHunter.spearThrow && game.playerHunter.health > 0)
             {
                 //game.playerHunter.spearThrow = true;
                 Vector2 movement = Vector2.Zero;
