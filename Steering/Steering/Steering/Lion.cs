@@ -57,6 +57,7 @@ namespace Steering
             Transition waitToPounce = new Transition(new AndCondition(new TimerCondition(200),new DeerInRangeCondition(RangeToPounce)), pounceState, -1);
             Transition pounceToKill = new Transition(new ReachedDeerTarget(KillRange), eatState,-1);
             Transition pounceToWander = new Transition(new ReachedPounceTarget(30),wanderState,-1);
+            Transition pounceMissToWander = new Transition(new NotCondition(new ReachedPounceTarget(200)),wanderState,-1);
 
             Transition wanderToNap = new Transition(new RandomTimerCondition(new TimeSpan(), 600), napState,-1);
             Transition napToWander = new Transition(new RandomTimerCondition(new TimeSpan(),600), wanderState, -1);
@@ -74,7 +75,7 @@ namespace Steering
 
             hideState.addTransition(arriveAtBush);
             waitState.addTransition(waitToPounce, waitToChase);
-            pounceState.addTransition(pounceToWander,pounceToKill);
+            pounceState.addTransition(pounceToWander,pounceToKill,pounceMissToWander);
             wanderState.addTransition(wanderToNap, wanderToCreep);
             napState.addTransition(napToWander, napToCreep);
             eatState.addTransition(eatToWander);
@@ -201,7 +202,7 @@ namespace Steering
                 if (deathTimer <= 0)
                 {
                     health = 4;
-                    deathTimer = 600;
+                    deathTimer = 1800;
                 }
                 velocity = Vector2.Zero;
             }

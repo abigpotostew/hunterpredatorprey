@@ -12,7 +12,7 @@ namespace Steering.FSM.Actions
         {
             game.lion.visible = true;
             SteeringOutput result = Steerings.seekPounce.getSteering(character, game.lion.pounceTarget);
-            result.maxSpeed = 20f;
+            result.maxSpeed = 24f;
             //result.linear = game.lion.pounceTarget.Position - game.lion.Position;
 
             return result;
