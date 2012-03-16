@@ -30,7 +30,7 @@ namespace Steering
         public int deathTimer = 600;
 
         public Lion(Texture2D image, Vector2 position, Game game)
-            : base(image, position, 0.1f, 4)
+            : base(image, position, .2f, 4)
         {
             //orientation
             this.game = game;
@@ -115,8 +115,7 @@ namespace Steering
             Transition hideToPounce = new Transition(new DistanceToHunter(RangeToPounce), pounceHunter, -1);
             //Transition hideToChase = new Transition(new DistanceToHunter(200), chaseHunter, -1);
             Transition hideToCreep = new Transition(new TimerCondition(400), chaseHunter, -1);
-            //Transition hideToChase = new Transition(new
-            hideInBush.addTransition(hideToPounce, /*hideToChase,*/ hideToCreep);
+            hideInBush.addTransition(hideToPounce, hideToCreep);
 
             SubMachineState HuntHunterSubMachine = new SubMachineState(game, creepHunter, creepHunter, chaseHunter, pounceHunter, hurtHunterState, goToBushState, hideInBush);
             HuntHunterSubMachine.name = "hunt Hunter";
@@ -172,9 +171,9 @@ namespace Steering
             {
                 if (health <= 0) sb.Draw(Game.deadLionImg, (position), null, Color.White, (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
                 else base.Draw(time, sb);
-                sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
-                sb.DrawString(Game.Font, "" + this.hfsm.ToString(), new Vector2(10, 10), Color.White);
-                sb.DrawString(Game.Font, "" + this.desperate, new Vector2(10, 30), Color.White);
+                //sb.DrawString(Game.Font, "" + this.hunger, position + new Vector2(40, 10), Color.White);
+                //sb.DrawString(Game.Font, "" + this.hfsm.ToString(), new Vector2(10, 10), Color.White);
+                //sb.DrawString(Game.Font, "" + this.desperate, new Vector2(10, 30), Color.White);
                 //sb.DrawString(Game.Font, "" + this.health, position - new Vector2(10, 30), Color.White);
             }
 
@@ -204,7 +203,7 @@ namespace Steering
                 --deathTimer;
                 if (deathTimer <= 0)
                 {
-                    health = 4;
+                    health = 6;
                     deathTimer = 1800;
                 }
                 velocity = Vector2.Zero;

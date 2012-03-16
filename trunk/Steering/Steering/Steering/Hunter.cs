@@ -29,7 +29,7 @@ namespace Steering
 
 
         public Hunter(Texture2D image, Vector2 position, KeyboardState state)
-            : base(image, position, 1, 4)
+            : base(image, position, 1,3)
         {
             //orientation
             spearJab = false;
@@ -58,8 +58,6 @@ namespace Steering
             if (health > 4) health = 4;
             prevState = newState;
             newState = Keyboard.GetState();
-            //keyboard = Keyboard.GetState();
-            //mouse = Mouse.GetState();
             threatCooldown--;
             if(threatCooldown < 0)
                 decayThreat();
@@ -134,8 +132,6 @@ namespace Steering
         }
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            //sb.DrawString(Game.Font, "" + this.health, this.position + new Vector2(10, 10), Color.White);
-            //sb.DrawString(Game.Font, "" + this.threat, this.position + new Vector2(40, 10), Color.White);
             if (health <= 0)
                 sb.Draw(Game.deadHunterImg, (position), null, Color.White, (float)(orientation + Math.PI / 2), offsetToCenter, 1f, SpriteEffects.None, 0);
             else

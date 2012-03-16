@@ -14,16 +14,9 @@ namespace Steering
     {
         const float maxDeerSpeed = 2f;
         const float maxAccelleration = 0.5f;
-        //INTELLIGENCE is between 0 and 1,
-        //1 is smart and will rarely wander away from herd
-        //0 is very dumb and has a higher cahnce of wandering away and getting eaten
-        //a deer has a higher chance of being smart than dumb
         public float intelligence;
 
         Game game;
-        
-
-        //public List<Entity> neighbors;
 
         public FiniteStateMachine fsm;
 
@@ -55,7 +48,6 @@ namespace Steering
          public override void Draw(GameTime gt, SpriteBatch sb)
          {
              base.Draw(gt, sb);
-             //sb.DrawString(Game.Font, "" + this.fsm.toString(), position - new Vector2(10, 10), Color.White);
          }
          
     }

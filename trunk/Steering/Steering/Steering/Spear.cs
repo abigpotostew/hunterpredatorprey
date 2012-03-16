@@ -21,11 +21,9 @@ namespace Steering
         
 
         public Spear(Texture2D image, Vector2 position, Hunter hunter, KeyboardState state, Game dasGame)
-            : base(image, position, 1, 4)
+            : base(image, position, 1, 3)
         {
             collide = new Circle((int)(position.X + 4), (int)(position.Y + 1), 5);
-            // debugCircle = new PrimitiveLine(collide.Center, Color.CornflowerBlue);
-            // debugCircle.CreateCircle(2, 20);
             this.position = position;
             prevState = state;
             this.game = dasGame;
@@ -33,10 +31,7 @@ namespace Steering
 
         public void Update(SteeringOutput steering, GameTime time, Game game)
         {
-            //keyboard = Keyboard.GetState();
-            //mouse = Mouse.GetState();
             newState = Keyboard.GetState();
-
 
             bool keyPressed = false;
 
@@ -168,20 +163,32 @@ namespace Steering
             }
 
 
-            base.Update(steering, time);
+            //base.Update(steering, time);
+
+            position += velocity; //*time
+            orientation += rotation; //*time
+
+            velocity += steering.linear;
+            orientation += steering.angular;
+
+            //velocity needs to be capped based on steering maxspeed
+            float tmpMaxSpeed;
+            if (steering.maxSpeed > 0) tmpMaxSpeed = steering.maxSpeed;
+            else tmpMaxSpeed = maxSpeed;
+
+            if (velocity.LengthSquared() > tmpMaxSpeed * tmpMaxSpeed)
+            {
+                velocity.Normalize();
+                velocity *= tmpMaxSpeed;
+            }
+
             collide.position.X += (float)((((image.Height-5) / 2) * Math.Cos(this.orientation)));
             collide.position.Y += (float)(((image.Height-5) / 2) * Math.Sin(this.orientation));
         }
  
         public override void Draw(GameTime time, SpriteBatch sb)
         {
-            
             base.Draw(time, sb);
-            /*debugCircle.Draw(sb);
-            
-             */ 
-            //sb.DrawString(Game.Font, ""+ game.playerHunter.spearJab, debugCircle.Position, Color.Black);
-            //sb.DrawString(Game.Font, "" + game.playerHunter.spearThrow, game.playerHunter.Position, Color.Black);
         }
   
     }
