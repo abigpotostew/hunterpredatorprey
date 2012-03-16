@@ -14,7 +14,6 @@ using System.Timers;
 namespace Steering
 {
 
-
     /*
      * Notes from TA
      * random speeds at prey start
@@ -56,6 +55,7 @@ namespace Steering
         public static Texture2D deadLionImg, deadHunterImg;
 
         public static Texture2D whitepixel;
+        //int delta = 0;
 
         public World gameWorld;
         public static Random r;
@@ -77,8 +77,10 @@ namespace Steering
 
         protected override void Initialize()
         {
+            //change denominator to set framerate to that number.
+            //this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 1000.0f);
+
             this.IsMouseVisible = true;
-            // TODO: Add your initialization logic here
             oldState = Keyboard.GetState(); 
 
             base.Initialize();
@@ -118,7 +120,13 @@ namespace Steering
 
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
+            /*++delta;
+            if (delta == 1000)
+            {
+                delta = 0;
+                Console.WriteLine("Time since last Update: " + gameTime.ElapsedGameTime.Milliseconds);
+            }*/
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
