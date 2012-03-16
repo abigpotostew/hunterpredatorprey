@@ -1,0 +1,40 @@
+Technical implementation
+
+  When we were figuring out what the AI was going to be for the deer, it was pretty simple to come to an agreement on how the deer would behave. It was a no brainer that the deer would have many states and transitions, so we agreed to implement a finite state machine for the deer. 
+
+  I had to read up more into the finite state machine concept in order to contribute my part into implement the finite state machine. It was really an easy concept. I did not implement any actions or transitions, but I connected all of the states with the right transitions into the deerManager class as well as declaring all of the actions, states, transitions, conditions for transitions, and actions for transitions.
+
+  To make our finite state machine, we first had to declare our actions from each action class we implemented. Like for example, we declared a variable from the ScaredAction class we implemented: 
+
+  ScaredAction scaredAction = new ScaredAction();
+
+  Then, for each state for FSM we had to declare, we had to put in the text input for the first parameter (for debugging reasons) and put in the state action for the second parameter. We have an example for scared state:
+
+  State scaredState = new State("scared", scaredAction);
+
+  We then declared all of our conditions for transitions on our next block of code like a transition to the scared state here:
+
+  FearGreaterThan fearGreaterThan60 = new FearGreaterThan(60);
+
+  Then, of course, we declared our transtitions:  
+
+  Transition gotoWanderFromScared = new Transition(andTimerLowFear, wanderState, 0);
+
+  Then declaring actions for transitions
+
+  gotoWanderFromScared.addActions(wanderAction);
+
+  Last but not least, we had to hook up the transitions
+
+  scaredState.addTransition(gotoWanderFromScared);
+
+  I also had to implement the spear for the game. It wasn't as bad as it was going to be. I have had a few major problems making the spear, but other than that it was really simple. I just had to make certain actions based on input for throw and stab as well as making the spear move with the  hunter. In order to make the spear kill the deer and harm the lion, I figured that it would make sense to make a circle collision point and make it small enough to where it would fit the tip of the spear and have the center of the circle be down on the spear below the tip. 
+
+Playtesting (old version)
+
+  It seems that every person played the game, they ended up enjoying it. They have displayed signs of fear when the lion starts to chase after them. Some of the playtesters didn't seem to be fully aware of the fact that the lion can actually chase after the player at first due to the fact that they didn't survive within the first few seconds of their playtesting session. Once they realized, they just stop hunting the deer and flee away from the lion when it starts to pursue the player. Other people who were watching their friends play made comments on how they liked how the deer tend to flock together.
+
+
+Playtesting (new version)
+
+  The players who played the game before saw that the game was a bit harder this time around. They have managed to outrun the lion with his new speed adjustment. Other than that things were the same as before.
