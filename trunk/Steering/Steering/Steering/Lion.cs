@@ -30,7 +30,7 @@ namespace Steering
         public int deathTimer = 600;
 
         public Lion(Texture2D image, Vector2 position, Game game)
-            : base(image, position, 0.15f, 4)
+            : base(image, position, 0.1f, 4)
         {
             this.game = game;
             hunger = 0;
@@ -65,7 +65,7 @@ namespace Steering
             Transition creepToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
             Transition waitToChase = new Transition(new LionHungerGreaterThanCondition(1800), chaseState, -1);
             Transition chaseToPounce = new Transition(new DeerInRangeCondition(RangeToPounce), pounceState, -1);
-            Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 500), wanderState,-1);
+            Transition eatToWander = new Transition(new RandomTimerCondition(new TimeSpan(), 200), wanderState,-1);
 
             hideState.addTransition(arriveAtBush);
             waitState.addTransition(waitToPounce, waitToChase);
