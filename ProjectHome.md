@@ -1,0 +1,1 @@
+Wildlife simulation for CMPS146 Game AI at UCSC Winter Quarter.
